@@ -1,12 +1,12 @@
 import numpy as np
 
-from ResultsClasses import DesaturationsMeasuresResults
+from _spo2._ResultsClasses import DesaturationsMeasuresResults
 
 
-def processing_desat_(signal, desaturations_signal):
+def _processing_desat_(signal, desaturations_signal):
     desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
     desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
-    desaturation_slope_all = desat_embedding_(desaturations_signal)
+    desaturation_slope_all = _desat_embedding_(desaturations_signal)
 
     time_spo2_array = np.array(range(len(signal)))
 
@@ -77,7 +77,7 @@ def processing_desat_(signal, desaturations_signal):
     return desaturation_features
 
 
-def desat_embedding_(desaturations_signal):
+def _desat_embedding_(desaturations_signal):
     table_desat_aa = desaturations_signal['begin']
     table_desat_cc = desaturations_signal['end']
 

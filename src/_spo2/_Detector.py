@@ -12,7 +12,7 @@ import numpy as np
 from scipy import signal
 
 
-def sc_resamp(data, fs):
+def _sc_resamp_(data, fs):
     # this function is used to resample the data at 1Hz. It takes the median spo2 value
     # over each window of length fs so that the resulting output signal is sampled at 1Hz.
     #
@@ -34,7 +34,7 @@ def sc_resamp(data, fs):
     return data_out
 
 
-def sc_median(data, medfilt_lg=9):
+def _sc_median_(data, medfilt_lg=9):
     # median filter used to smooth the spo2 time series and avoid sporadic
     # increase/decrease of spo2 which could affect the detection of the desaturations.
     #
@@ -52,7 +52,7 @@ def sc_median(data, medfilt_lg=9):
     return data_med
 
 
-def sc_desaturations(data, thres=2):
+def _sc_desaturations_(data, thres=2):
     # this function implements the algorithm of:
     #
     #   Hwang, Su Hwan, et al. "Real-time automatic apneic event detection using nocturnal pulse oximetry."

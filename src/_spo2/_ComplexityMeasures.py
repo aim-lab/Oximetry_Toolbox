@@ -2,39 +2,39 @@ import numpy as np
 from lempel_ziv_complexity import lempel_ziv_complexity
 from scipy import integrate, stats
 
-from ErrorHandler import check_len_ApEn
+from _spo2._ErrorHandler import _check_len_ApEn_
 
 
-def CompApEn_(signal):
+def _CompApEn_(signal):
     # Reference: Utility of Approximate Entropy From Overnight Pulse Oximetry Data
     #               in the Diagnosis of the Obstructive Sleep Apnea Syndrome
     signal = np.array(signal)
     signal = signal[np.logical_not(np.isnan(signal))]
 
-    phi_m = ApEN_m_(2, signal)
-    phi_m1 = ApEN_m_(3, signal)
+    phi_m = _ApEN_(2, signal)
+    phi_m1 = _ApEN_(3, signal)
     with np.errstate(invalid='ignore'):
         res = phi_m - phi_m1
 
     return res
 
 
-def ApEN_m_(m, signal):
+def _ApEN_(m, signal):
     # Help function of CompApEn
     N = len(signal)
     r = 0.25 * np.nanstd(signal)
-    check_len_ApEn(N, m)
+    _check_len_ApEn_(N, m)
     C = np.zeros(shape=(N - m + 1))
 
     res = [signal[i:i + m] for i in range(0, N - m + 1)]
     for i in range(0, N - m + 1):
-        C[i] = np.nansum(dist_(res[i], res, r)) / (N - m + 1)
+        C[i] = np.nansum(_dist_(res[i], res, r)) / (N - m + 1)
 
     phi_m = np.nansum(np.log(C)) / (N - m + 1)
     return phi_m
 
 
-def dist_(window1, window2, r):
+def _dist_(window1, window2, r):
     # Help function of ApEN_m
     window1 = np.array(window1)
     window2 = np.array(window2)
@@ -43,7 +43,7 @@ def dist_(window1, window2, r):
         return np.nanmax(abs(window1 - window2), axis=1) < r
 
 
-def CompLZ_(signal):
+def _CompLZ_(signal):
     # Reference :Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
     #           for obstructive sleep apnoea detection
     median = np.median(signal)
@@ -52,23 +52,23 @@ def CompLZ_(signal):
     return lempel_ziv_complexity(''.join(byte))
 
 
-def CompCTM_(signal, p):
+def _CompCTM_(signal, p):
     # Reference: Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
     #           for obstructive sleep apnoea detection
     res = 0
     for i in range(len(signal) - 2):
-        res += d_CTM_(i, p, signal)
+        res += _dCTM_(i, p, signal)
     return res / (len(signal) - 2)
 
 
-def d_CTM_(i, p, signal):
+def _dCTM_(i, p, signal):
     # Help function of CompCTM
     if np.sqrt(((signal[i + 2] - signal[i + 1]) ** 2) + ((signal[i + 1] - signal[i]) ** 2)) < p:
         return 1
     return 0
 
 
-def CompSampEn_(signal, m=3, r=0.2):
+def _CompSampEn_(signal, m=3, r=0.2):
     N = len(signal)
 
     # Split time series and save all templates of length m
@@ -90,7 +90,7 @@ def CompSampEn_(signal, m=3, r=0.2):
     return -np.log(A / B)
 
 
-def CompDFA_(signal, n=20):
+def _CompDFA_(signal, n=20):
     y = integrate.cumtrapz(signal - np.nanmean(signal))
     least_square = np.zeros(len(y))
 

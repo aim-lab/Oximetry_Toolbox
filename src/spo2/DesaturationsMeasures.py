@@ -1,6 +1,6 @@
-from DesaturationsMeasures_ import processing_desat_
-from ErrorHandler import check_shape
-from ResultsClasses import DesaturationsMeasuresResults
+from _spo2._DesaturationsMeasures import _processing_desat_
+from _spo2._ErrorHandler import _check_shape_
+from _spo2._ResultsClasses import DesaturationsMeasuresResults
 
 
 def DesaturationsMeasures(signal, begin, end) -> DesaturationsMeasuresResults:
@@ -31,8 +31,8 @@ def DesaturationsMeasures(signal, begin, end) -> DesaturationsMeasuresResults:
             -   TD_sd: Standard deviation of time between 2 consecutive desaturation events.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
     desaturations = {'begin': begin, 'end': end}
 
-    return processing_desat_(signal, desaturations)
+    return _processing_desat_(signal, desaturations)

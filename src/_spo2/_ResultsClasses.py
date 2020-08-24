@@ -67,6 +67,7 @@ class ComplexityMeasuresResults(NamedTuple):
     def __str__(self):
         return str(dict(self._asdict()))
 
+
 class PRSAResults(NamedTuple):
     PRSAc: float
     PRSAad: float
@@ -77,6 +78,7 @@ class PRSAResults(NamedTuple):
 
     def __str__(self):
         return str(dict(self._asdict()))
+
 
 class PSDResults(NamedTuple):
     PSD_total: float

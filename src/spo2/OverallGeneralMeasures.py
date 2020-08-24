@@ -1,8 +1,8 @@
 import numpy as np
 
-from ErrorHandler import check_shape
-from OverallGeneralMeasures_ import ApplyPercentile, BelowMedian_, NumZC_, DeltaIndex_, ComputeRange
-from ResultsClasses import OverallGeneralMeasuresResult
+from _spo2._ErrorHandler import _check_shape_
+from _spo2._OverallGeneralMeasures import _ApplyPercentile_, _BelowMedian_, _NumZC_, _DeltaIndex_, _ComputeRange_
+from _spo2._ResultsClasses import OverallGeneralMeasuresResult
 
 
 def OverallGeneralMeasures(signal, ZC_Baseline=None, percentile=1, M_Threshold=2, DI_Window=12) \
@@ -29,15 +29,15 @@ def OverallGeneralMeasures(signal, ZC_Baseline=None, percentile=1, M_Threshold=2
             -	ZC: Number of zero-crossing points.
             -	DI: Delta Index.
     """
-    check_shape(signal)
+    _check_shape_(signal)
 
     if ZC_Baseline is None:
         ZC_Baseline = np.nanmean(signal)
 
     return OverallGeneralMeasuresResult(np.nanmean(signal), np.nanmedian(signal), np.nanmin(signal), np.nanstd(signal),
-                                        ComputeRange(signal), ApplyPercentile(signal, percentile),
-                                        BelowMedian_(signal, M_Threshold), NumZC_(signal, ZC_Baseline),
-                                        DeltaIndex_(signal, DI_Window))
+                                        _ComputeRange_(signal), _ApplyPercentile_(signal, percentile),
+                                        _BelowMedian_(signal, M_Threshold), _NumZC_(signal, ZC_Baseline),
+                                        _DeltaIndex_(signal, DI_Window))
 
 
 def BelowMedian(signal, M_Threshold=2) -> float:
@@ -52,9 +52,9 @@ def BelowMedian(signal, M_Threshold=2) -> float:
         M: Percentage of the signal x% below median oxygen saturation.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
-    return BelowMedian_(signal, M_Threshold)
+    return _BelowMedian_(signal, M_Threshold)
 
 
 def NumZC(signal, ZC_Baseline=None) -> float:
@@ -69,11 +69,11 @@ def NumZC(signal, ZC_Baseline=None) -> float:
         ZC: Number of zero-crossing points.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
     if ZC_Baseline is None:
         ZC_Baseline = np.nanmean(signal)
-    return NumZC_(signal, ZC_Baseline)
+    return _NumZC_(signal, ZC_Baseline)
 
 
 def DeltaIndex(signal, DI_Window=12) -> float:
@@ -88,6 +88,6 @@ def DeltaIndex(signal, DI_Window=12) -> float:
         DI: Delta Index.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
-    return DeltaIndex_(signal, DI_Window)
+    return _DeltaIndex_(signal, DI_Window)

@@ -1,8 +1,8 @@
 import numpy as np
 
-from ErrorHandler import check_shape
-from HypoxicBurdenMeasures_ import CompHBMeasures_, CompCA_, CompCT_
-from ResultsClasses import HypoxicBurdenMeasuresResults
+from _spo2._ErrorHandler import _check_shape_
+from _spo2._HypoxicBurdenMeasures import _CompHBMeasures_, _CompCA_, _CompCT_
+from _spo2._ResultsClasses import HypoxicBurdenMeasuresResults
 
 
 def HypoxicBurdenMeasures(signal, begin, end, CT_Threshold=90, CA_Baseline=None) -> HypoxicBurdenMeasuresResults:
@@ -29,14 +29,14 @@ def HypoxicBurdenMeasures(signal, begin, end, CT_Threshold=90, CA_Baseline=None)
 
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
     desaturations = {'begin': begin, 'end': end}
 
     if CA_Baseline is None:
         CA_Baseline = np.nanmean(signal)
 
-    return CompHBMeasures_(signal, desaturations, CT_Threshold, CA_Baseline)
+    return _CompHBMeasures_(signal, desaturations, CT_Threshold, CA_Baseline)
 
 
 def CA(signal, CA_baseline=None) -> float:
@@ -52,11 +52,11 @@ def CA(signal, CA_baseline=None) -> float:
 
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
     if CA_baseline is None:
         CA_baseline = np.mean(signal)
-    return CompCA_(signal, CA_baseline)
+    return _CompCA_(signal, CA_baseline)
 
 
 def CT(signal, CT_baseline=90) -> float:
@@ -72,6 +72,6 @@ def CT(signal, CT_baseline=90) -> float:
 
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
-    return CompCT_(signal, CT_baseline)
+    return _CompCT_(signal, CT_baseline)

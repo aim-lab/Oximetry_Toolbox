@@ -1,5 +1,5 @@
 import numpy as np
-import Detector
+from _spo2._Detector import _sc_resamp_, _sc_median_
 
 
 def SetRange(signal, Range_min=50, Range_max=100):
@@ -33,7 +33,7 @@ def ResampSpO2(signal, OriginalFreq):
             resampled signal, 1-d numpy array.
     """
 
-    return Detector.sc_resamp(signal, OriginalFreq)
+    return _sc_resamp_(signal, OriginalFreq)
 
 
 def DeltaFilter(signal, Diff=4):
@@ -70,7 +70,7 @@ def MedianSpO2(signal, FilterLength=9):
             preprocessed signal, 1-d numpy array.
     """
 
-    return Detector.sc_median(signal, medfilt_lg=FilterLength)
+    return _sc_median_(signal, medfilt_lg=FilterLength)
 
 
 def BlockData(signal, treshold=50):

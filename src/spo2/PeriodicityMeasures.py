@@ -1,6 +1,6 @@
-from ErrorHandler import check_shape
-from PeriodicityMeasures_ import PRSAFeatures_, SpectralAnalysis_
-from ResultsClasses import PRSAResults, PSDResults
+from _spo2._ErrorHandler import _check_shape_
+from _spo2._PeriodicityMeasures import _PRSAFeatures_, _SpectralAnalysis_
+from _spo2._ResultsClasses import PRSAResults, PSDResults
 
 
 def PRSAMeasures(signal, PRSA_Window=10, K_AC=2) -> PRSAResults:
@@ -23,9 +23,9 @@ def PRSAMeasures(signal, PRSA_Window=10, K_AC=2) -> PRSAResults:
             -	AC: Autocorrelation.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
-    return PRSAFeatures_(signal, PRSA_Window, K_AC)
+    return _PRSAFeatures_(signal, PRSA_Window, K_AC)
 
 
 def PSDMeasures(signal) -> PSDResults:
@@ -44,6 +44,6 @@ def PSDMeasures(signal) -> PSDResults:
             -   PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
-    return SpectralAnalysis_(signal)
+    return _SpectralAnalysis_(signal)

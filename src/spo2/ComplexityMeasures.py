@@ -1,6 +1,6 @@
-from ComplexityMeasures_ import CompApEn_, CompLZ_, CompSampEn_, CompDFA_, CompCTM_
-from ErrorHandler import check_shape
-from ResultsClasses import ComplexityMeasuresResults
+from _spo2._ComplexityMeasures import _CompApEn_, _CompLZ_, _CompSampEn_, _CompDFA_, _CompCTM_
+from _spo2._ErrorHandler import _check_shape_
+from _spo2._ResultsClasses import ComplexityMeasuresResults
 
 
 def ComplexityMeasures(signal, CTM_Threshold=0.25, DFA_Window=20, M_Sampen=3, R_Sampen=0.2) -> ComplexityMeasuresResults:
@@ -24,10 +24,10 @@ def ComplexityMeasures(signal, CTM_Threshold=0.25, DFA_Window=20, M_Sampen=3, R_
             -	DFA: Detrended Fluctuation Analysis.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
-    return ComplexityMeasuresResults(CompApEn_(signal[100:1000]), CompLZ_(signal), CompCTM_(signal, CTM_Threshold),
-                                     CompSampEn_(signal[100:1000], M_Sampen, R_Sampen), CompDFA_(signal, DFA_Window))
+    return ComplexityMeasuresResults(_CompApEn_(signal[100:1000]), _CompLZ_(signal), _CompCTM_(signal, CTM_Threshold),
+                                     _CompSampEn_(signal[100:1000], M_Sampen, R_Sampen), _CompDFA_(signal, DFA_Window))
 
 
 def ApEn(signal) -> float:
@@ -41,9 +41,9 @@ def ApEn(signal) -> float:
         Approximate Entropy.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
-    return CompApEn_(signal)
+    return _CompApEn_(signal)
 
 
 def LZ(signal) -> float:
@@ -57,9 +57,9 @@ def LZ(signal) -> float:
         Lempel-Ziv complexity.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
-    return CompLZ_(signal)
+    return _CompLZ_(signal)
 
 
 def CTM(signal, CTM_Threshold=0.25) -> float:
@@ -73,9 +73,9 @@ def CTM(signal, CTM_Threshold=0.25) -> float:
         Central Tendency Measure.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
-    return CompCTM_(signal, CTM_Threshold)
+    return _CompCTM_(signal, CTM_Threshold)
 
 
 def SampEn(signal, M_sampen=3, R_sampen=0.2) -> float:
@@ -91,9 +91,9 @@ def SampEn(signal, M_sampen=3, R_sampen=0.2) -> float:
         Sample Entropy.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
-    return CompSampEn_(signal, M_sampen, R_sampen)
+    return _CompSampEn_(signal, M_sampen, R_sampen)
 
 
 def DFA(signal, DFA_Window=20) -> float:
@@ -107,6 +107,6 @@ def DFA(signal, DFA_Window=20) -> float:
         Detrended Fluctuation Analysis.
     """
 
-    check_shape(signal)
+    _check_shape_(signal)
 
-    return CompDFA_(signal, DFA_Window)
+    return _CompDFA_(signal, DFA_Window)

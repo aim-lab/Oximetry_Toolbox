@@ -1,12 +1,12 @@
 import numpy as np
 from scipy.signal import hamming, welch
 
-from ErrorHandler import check_fragment_PRSA
-from ResultsClasses import PRSAResults, PSDResults
+from _spo2._ErrorHandler import _check_fragment_PRSA_
+from _spo2._ResultsClasses import PRSAResults, PSDResults
 
 
-def PRSAFeatures_(signal, d, K_AC=2):
-    check_fragment_PRSA(d)
+def _PRSAFeatures_(signal, d, K_AC=2):
+    _check_fragment_PRSA_(d)
     anchor_points = []
     for i in range(len(signal)):
         if i < d:
@@ -29,11 +29,11 @@ def PRSAFeatures_(signal, d, K_AC=2):
     return PRSA_features
 
 
-def SpectralAnalysis_(signal):
+def _SpectralAnalysis_(signal):
     signal = np.array(signal)
     signal = signal[np.logical_not(np.isnan(signal))]
 
-    freq, signal_fft = get_PSD(signal)
+    freq, signal_fft = _get_PSD_(signal)
     amplitude_signal = np.sqrt((signal_fft.real ** 2) + (signal_fft.imag ** 2))
 
     # taking only positive frequencies, since the signal is real.
@@ -41,13 +41,13 @@ def SpectralAnalysis_(signal):
     amplitude_signal = amplitude_signal[0:int(len(amplitude_signal) / 2)]
 
     # Taking the spectral signal in the relevant band
-    amplitude_bp = get_bandpass_(amplitude_signal, freq, 0.014, 0.033)
+    amplitude_bp = _get_bandpass_(amplitude_signal, freq, 0.014, 0.033)
 
     return PSDResults(np.nansum(amplitude_signal), np.nansum(amplitude_bp), np.nansum(amplitude_bp) / np.nansum(amplitude_signal),
                       np.nanmax(amplitude_bp))
 
 
-def get_bandpass_(signal, freq, lower_f, higher_f):
+def _get_bandpass_(signal, freq, lower_f, higher_f):
     amplitude_bp = signal[lower_f < freq]
     freq_bp = freq[lower_f < freq]
 
@@ -55,7 +55,7 @@ def get_bandpass_(signal, freq, lower_f, higher_f):
     return amplitude_bp
 
 
-def get_PSD(signal):
+def _get_PSD_(signal):
     # N = len(signal)
     # w = hamming(N)
     # signal_fft = np.fft.fft(signal * w) / N

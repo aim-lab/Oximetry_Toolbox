@@ -1,5 +1,5 @@
-from ODIMeasure_ import DesaturationDetector
-from ResultsClasses import ODIMeasureResult
+from _spo2._ODIMeasure import _DesaturationDetector_
+from _spo2._ResultsClasses import ODIMeasureResult
 
 
 def ODIMeasure(signal, ODI_Threshold=3) -> ODIMeasureResult:
@@ -21,4 +21,4 @@ def ODIMeasure(signal, ODI_Threshold=3) -> ODIMeasureResult:
     if len(signal) == 0:
         ODIMeasureResult(0, [], [])
 
-    return DesaturationDetector(signal, ODI_Threshold)
+    return _DesaturationDetector_(signal, ODI_Threshold)
