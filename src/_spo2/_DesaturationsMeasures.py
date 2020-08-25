@@ -1,9 +1,11 @@
 import numpy as np
+import warnings
 
 from _spo2._ResultsClasses import DesaturationsMeasuresResults
 
 
 def _processing_desat_(signal, desaturations_signal):
+    warnings.simplefilter('ignore', np.RankWarning)
     desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
     desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
     desaturation_slope_all = _desat_embedding_(desaturations_signal)
@@ -39,7 +41,7 @@ def _processing_desat_(signal, desaturations_signal):
         # Due to mislabeling, the max value may be after the min value, in which case ignore the desaturation.
         if len(desaturation_idx_max_min) > 0:
             p = np.polyfit(np.int64(desaturation_time[desaturation_idx_max_min]),
-                           desaturation_spo2[desaturation_idx_max_min], 1)
+                          desaturation_spo2[desaturation_idx_max_min], 1)
 
             desaturation_slope_all[i] = p[0]
 

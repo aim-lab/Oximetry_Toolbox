@@ -1,4 +1,5 @@
 import numpy as np
+import warnings
 
 from _spo2._ErrorHandler import _check_window_delta_
 
@@ -38,6 +39,8 @@ def _DeltaIndex_(signal, window_size):
     signal_splitted = [signal[i:i + window_size] for i in range(0, len(signal), window_size)]
     if len(signal_splitted[-1]) != window_size:
         signal_splitted.pop()
-    mean_window = np.nanmean(signal_splitted, axis=1)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", category=RuntimeWarning)
+        mean_window = np.nanmean(signal_splitted, axis=1)
     diff = abs(mean_window - np.roll(mean_window, 1))
     return np.nanmean(diff[1:])

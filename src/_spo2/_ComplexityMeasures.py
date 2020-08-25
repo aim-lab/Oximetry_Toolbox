@@ -1,6 +1,7 @@
 import numpy as np
 from lempel_ziv_complexity import lempel_ziv_complexity
 from scipy import integrate, stats
+import warnings
 
 from _spo2._ErrorHandler import _check_len_ApEn_
 
@@ -102,7 +103,9 @@ def _CompDFA_(signal, n=20):
             least_square[-1] = y[-1]
             break
         x = np.array(range(0, n))
-        slope, intercept, _, _, _ = stats.linregress(x, y[i:i + n])
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=RuntimeWarning)
+            slope, intercept, _, _, _ = stats.linregress(x, y[i:i + n])
         least_square[i:i + n] = slope * x + intercept
         i += n
 
