@@ -2,8 +2,12 @@ import pyedflib
 import numpy as np
 import os
 
-from spo2 import ComplexityMeasures, DesaturationsMeasures, ODIMeasure, OverallGeneralMeasures, PeriodicityMeasures, \
-    HypoxicBurdenMeasures
+from src.ComplexityMeasures import ComplexityMeasures
+from src.DesaturationsMeasures import DesaturationsMeasures
+from src.HypoxicBurdenMeasures import HypoxicBurdenMeasures
+from src.ODIMeasure import ODIMeasure
+from src.OverallGeneralMeasures import OverallGeneralMeasures
+from src.PeriodicityMeasures import PRSAMeasures, PSDMeasures
 
 
 class OBMTests():
@@ -18,20 +22,27 @@ class OBMTests():
 
     def ComplexityMeasuresTest(self):
         signal = self.read_spo2("spo2_example.edf")
-        results = ComplexityMeasures.ComplexityMeasures(signal[100:1000])
+        complexity_class = ComplexityMeasures()
+        results = complexity_class.compute(signal[100:1000])
 
-        assert results.ApEn == 0.044152221609467746
+        print(results)
+        assert results.ApEn == 0.22837941628374647
         assert results.LZ == 41
         assert results.CTM == 0.7906458797327395
-        assert results.SampEn == 0.17561312346104577
+        assert results.SampEn == 0.1775722812097163
         assert results.DFA == 7.130216399460569
 
     def DesaturationsMeasuresTest(self):
         signal = self.read_spo2("spo2_example.edf")
 
-        results_ODI = ODIMeasure.ODIMeasure(signal)
-        results_desat = DesaturationsMeasures.DesaturationsMeasures(signal, results_ODI.begin, results_ODI.end)
-        results_hypoxic = HypoxicBurdenMeasures.HypoxicBurdenMeasures(signal, results_ODI.begin, results_ODI.end)
+        odi_class = ODIMeasure()
+        results_ODI = odi_class.compute(signal)
+
+        desat_class = DesaturationsMeasures(results_ODI.begin, results_ODI.end)
+        results_desat = desat_class.compute(signal)
+
+        hypoxic_class = HypoxicBurdenMeasures(results_ODI.begin, results_ODI.end)
+        results_hypoxic = hypoxic_class.compute(signal)
 
         assert results_ODI.ODI == 1.8819188191881917
 
@@ -59,7 +70,8 @@ class OBMTests():
     def OverallMeasuresTest(self):
         signal = self.read_spo2("spo2_example.edf")
 
-        results = OverallGeneralMeasures.OverallGeneralMeasures(signal)
+        statistics_class = OverallGeneralMeasures()
+        results = statistics_class.compute(signal)
 
         assert results.AV == 79.4466424568114
         assert results.MED == 93.35927367055771
@@ -74,8 +86,11 @@ class OBMTests():
     def PeriodicityMeasuresTest(self):
         signal = self.read_spo2("spo2_example.edf")
 
-        results_PRSA = PeriodicityMeasures.PRSAMeasures(signal)
-        results_PSD = PeriodicityMeasures.PSDMeasures(signal)
+        prsa_class = PRSAMeasures()
+        results_PRSA = prsa_class.compute(signal)
+
+        psd_class = PSDMeasures()
+        results_PSD = psd_class.compute(signal)
 
         assert results_PRSA.PRSAc == -0.9476063739183793
         assert results_PRSA.PRSAad == 2.2225394756134165
