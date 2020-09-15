@@ -74,12 +74,9 @@ class HypoxicBurdenMeasures:
                                                              self.__CompCT(signal),
                                                              0.0, 0.0, 0.0)
         if np.sum(desaturation_valid) != 0:
-            desaturation_features = desaturation_features._replace(
-                POD=np.nansum(desaturation_length_all[desaturation_valid]) / len(signal))
-            desaturation_features = desaturation_features._replace(
-                AODmax=np.nansum(desaturation_int_max_all[desaturation_valid]) / len(signal))
-            desaturation_features = desaturation_features._replace(
-                AOD100=np.nansum(desaturation_int_100_all[desaturation_valid]) / len(signal))
+            desaturation_features.POD = np.nansum(desaturation_length_all[desaturation_valid]) / len(signal)
+            desaturation_features.AODmax = np.nansum(desaturation_int_max_all[desaturation_valid]) / len(signal)
+            desaturation_features.AOD100 = np.nansum(desaturation_int_100_all[desaturation_valid]) / len(signal)
 
         return desaturation_features
 

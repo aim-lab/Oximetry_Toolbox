@@ -1,8 +1,10 @@
-from typing import NamedTuple
 import numpy as np
+from dataclasses import dataclass
+import dataclasses
 
 
-class OverallGeneralMeasuresResult(NamedTuple):
+@dataclass
+class OverallGeneralMeasuresResult:
     AV: float
     MED: float
     Min: float
@@ -14,10 +16,11 @@ class OverallGeneralMeasuresResult(NamedTuple):
     DI: float
 
     def __str__(self):
-        return str(dict(self._asdict()))
+        return str(dict(dataclasses.asdict(self)))
 
 
-class ODIMeasureResult(NamedTuple):
+@dataclass
+class ODIMeasureResult:
     ODI: float
     begin: np.array
     end: np.array
@@ -26,7 +29,8 @@ class ODIMeasureResult(NamedTuple):
         return str({"ODI": self.ODI, "begin": self.begin.flatten().tolist(), "end": self.end.flatten().tolist()})
 
 
-class DesaturationsMeasuresResults(NamedTuple):
+@dataclass
+class DesaturationsMeasuresResults:
     DL_u: float
     DL_sd: float
     DA100_u: float
@@ -43,10 +47,11 @@ class DesaturationsMeasuresResults(NamedTuple):
     TD_sd: float
 
     def __str__(self):
-        return str(dict(self._asdict()))
+        return str(dict(dataclasses.asdict(self)))
 
 
-class HypoxicBurdenMeasuresResults(NamedTuple):
+@dataclass
+class HypoxicBurdenMeasuresResults:
     CA: float
     CT: float
     POD: float
@@ -54,10 +59,11 @@ class HypoxicBurdenMeasuresResults(NamedTuple):
     AOD100: float
 
     def __str__(self):
-        return str(dict(self._asdict()))
+        return str(dict(dataclasses.asdict(self)))
 
 
-class ComplexityMeasuresResults(NamedTuple):
+@dataclass
+class ComplexityMeasuresResults:
     ApEn: float
     LZ: float
     CTM: float
@@ -65,10 +71,11 @@ class ComplexityMeasuresResults(NamedTuple):
     DFA: float
 
     def __str__(self):
-        return str(dict(self._asdict()))
+        return str(dict(dataclasses.asdict(self)))
 
 
-class PRSAResults(NamedTuple):
+@dataclass
+class PRSAResults:
     PRSAc: float
     PRSAad: float
     PRSAos: float
@@ -77,14 +84,15 @@ class PRSAResults(NamedTuple):
     AC: float
 
     def __str__(self):
-        return str(dict(self._asdict()))
+        return str(dict(dataclasses.asdict(self)))
 
 
-class PSDResults(NamedTuple):
+@dataclass
+class PSDResults:
     PSD_total: float
     PSD_band: float
     PSD_ratio: float
     PSD_peak: float
 
     def __str__(self):
-        return str(dict(self._asdict()))
+        return str(dict(dataclasses.asdict(self)))

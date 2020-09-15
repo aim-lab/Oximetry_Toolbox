@@ -10,7 +10,7 @@ from src.OverallGeneralMeasures import OverallGeneralMeasures
 from src.PeriodicityMeasures import PRSAMeasures, PSDMeasures
 
 
-class OBMTests():
+class OBMTests:
     def read_spo2(self, filename):
         database_dir = "resources"
         edf = pyedflib.EdfReader(os.path.join(database_dir, filename))
@@ -25,7 +25,6 @@ class OBMTests():
         complexity_class = ComplexityMeasures()
         results = complexity_class.compute(signal[100:1000])
 
-        print(results)
         assert results.ApEn == 0.22837941628374647
         assert results.LZ == 41
         assert results.CTM == 0.7906458797327395
@@ -103,3 +102,10 @@ class OBMTests():
         assert results_PSD.PSD_band == 0.11099710485334692
         assert results_PSD.PSD_ratio == 0.2894136911928894
         assert results_PSD.PSD_peak == 0.02640691195954759
+
+
+test = OBMTests()
+test.ComplexityMeasuresTest()
+test.DesaturationsMeasuresTest()
+test.OverallMeasuresTest()
+test.PeriodicityMeasuresTest()
