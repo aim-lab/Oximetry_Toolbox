@@ -1,5 +1,5 @@
 import numpy as np
-from _spo2._Detector import _sc_resamp_, _sc_median_
+from scipy import signal
 
 
 def SetRange(signal, Range_min=50, Range_max=100):
@@ -24,16 +24,23 @@ def SetRange(signal, Range_min=50, Range_max=100):
 def ResampSpO2(signal, OriginalFreq):
     """
         Resample the SpO2 signal to 1Hz.
+        Assumption: any missing/abnormal values are represented as 'np.nan'
 
         :param
             signal: 1-d array, of shape (N,) where N is the length of the signal
             OriginalFreq: the original frequency.
 
         :return:
-            resampled signal, 1-d numpy array.
+            resampled signal, 1-d numpy array, the resampled spo2 time series at 1Hz
     """
 
-    return _sc_resamp_(signal, OriginalFreq)
+    len_in = len(signal)
+    len_out = round(len_in / OriginalFreq)
+    data_out = []
+    for jj in range(len_out):
+        data_out = np.append(data_out, np.median(signal[jj * OriginalFreq:(jj + 1) * OriginalFreq]))
+
+    return data_out
 
 
 def DeltaFilter(signal, Diff=4):
@@ -58,9 +65,12 @@ def DeltaFilter(signal, Diff=4):
     return signal_filtered
 
 
-def MedianSpO2(signal, FilterLength=9):
+def MedianSpO2(signal_spo2, FilterLength=9):
     """
         Apply a median filter to the SpO2 signal.
+        Median filter used to smooth the spo2 time series and avoid sporadic increase/decrease of spo2 which could
+         affect the detection of the desaturations.
+        Assumption: any missing/abnormal values are represented as 'np.nan'
 
         :param
             signal: 1-d array, of shape (N,) where N is the length of the signal
@@ -70,7 +80,9 @@ def MedianSpO2(signal, FilterLength=9):
             preprocessed signal, 1-d numpy array.
     """
 
-    return _sc_median_(signal, medfilt_lg=FilterLength)
+    data_med = signal.medfilt(np.round(signal_spo2), FilterLength)
+
+    return data_med
 
 
 def BlockData(signal, treshold=50):
