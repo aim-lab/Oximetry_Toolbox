@@ -16,8 +16,8 @@ Python package for extracting biomarkers from oximetry signal, the SpO2.
 
 ## Installation
 
-TODO
+Available on pip.
 
 ## Documentation
 
-TODO
+TODO: add link of documentation
