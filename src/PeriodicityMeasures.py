@@ -11,18 +11,9 @@ class PRSAMeasures:
     Suppose that the data has been preprocessed.
 
     :param
-        signal: 1-d array, of shape (N,) where N is the length of the signal
         PRSA_Window: Fragment duration of PRSA.
         K_AC: Number of values to shift when computing autocorrelation
 
-    :return:
-        PRSAResults class containing the following features:
-            -	PRSAc: PRSA capacity.
-            -	PRSAad: PRSA amplitude difference.
-            -	PRSAos: PRSA overall slope.
-            -	PRSAsb: PRSA slope before the anchor point.
-            -	PRSAsa: PRSA slope after the anchor point.
-            -	AC: Autocorrelation.
     """
 
     def __init__(self, PRSA_Window=10, K_AC=2):
@@ -30,11 +21,19 @@ class PRSAMeasures:
         self.K_AC = K_AC
 
     def compute(self, signal) -> PRSAResults:
+        """
+        :param signal: 1-d array, of shape (N,) where N is the length of the signal
+        :return:
+        PRSAResults class containing the following features:
+            -	PRSAc: PRSA capacity.
+            -	PRSAad: PRSA amplitude difference.
+            -	PRSAos: PRSA overall slope.
+            -	PRSAsb: PRSA slope before the anchor point.
+            -	PRSAsa: PRSA slope after the anchor point.
+            -	AC: Autocorrelation.
+        """
         _check_shape_(signal)
 
-        return self.__PRSAFeatures(signal)
-
-    def __PRSAFeatures(self, signal):
         d = self.PRSA_Window
         _check_fragment_PRSA_(d)
         anchor_points = []
@@ -65,23 +64,22 @@ class PSDMeasures:
     Function that calculates PSD Features from spo2 time series.
     Suppose that the data has been preprocessed.
 
-    :param
-        signal: The SpO2 signal, of shape (N,)
-
-    :return:
-        PSDResults class containing the following features:
-            -   PSD_total: The amplitude of the spectral signal.
-            -   PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.
-            -   PSD_ratio: The ratio between PSD_total and PSD_band.
-            -   PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.
     """
 
     def compute(self, signal) -> PSDResults:
+        """
+        :param
+            signal: The SpO2 signal, of shape (N,)
+
+        :return:
+            PSDResults class containing the following features:
+                -   PSD_total: The amplitude of the spectral signal.
+                -   PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.
+                -   PSD_ratio: The ratio between PSD_total and PSD_band.
+                -   PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.
+        """
         _check_shape_(signal)
 
-        return self._SpectralAnalysis_(signal)
-
-    def _SpectralAnalysis_(self, signal):
         signal = np.array(signal)
         signal = signal[np.logical_not(np.isnan(signal))]
 
@@ -100,6 +98,15 @@ class PSDMeasures:
                           np.nanmax(amplitude_bp))
 
     def __get_bandpass(self, signal, freq, lower_f, higher_f):
+        """
+        Helper function, to get the amplitude within the desired band.
+        :param signal: The amplitude signal, of shape (L,)
+        :param freq: Array of frequencies, of shape (L,)
+        :param lower_f: The lower frequency of the band
+        :param higher_f: The higher frequency of the band
+        :return:
+        The amplitude within the band
+        """
         amplitude_bp = signal[lower_f < freq]
         freq_bp = freq[lower_f < freq]
 
@@ -107,6 +114,13 @@ class PSDMeasures:
         return amplitude_bp
 
     def __get_PSD(self, signal):
+        """
+        Helper function, compute the PSD
+        :param signal: The SpO2 signal, of shape (N,)
+        :return:
+        freq: array of frequencies, of shape (L,)
+        signal_fft: The PSD of the signal, of shape (L,)
+        """
         # N = len(signal)
         # w = hamming(N)
         # signal_fft = np.fft.fft(signal * w) / N

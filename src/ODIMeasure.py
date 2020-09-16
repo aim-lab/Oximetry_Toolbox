@@ -5,31 +5,42 @@ from src._ResultsClasses import ODIMeasureResult
 
 class ODIMeasure:
     """
-    Function that calculates the ODI from spo2 time series.
+    Class that calculates the ODI from spo2 time series.
     Suppose that the data has been preprocessed.
 
     :param
-        signal: The SpO2 signal, of shape (N,)
         ODI_Threshold: Threshold to compute Oxygen Desaturation Index.
 
-    :return:
-        ODIMeasureResult class containing the following features:
-            -	ODI: the average number of desaturation events per hour.
-            -	begin: List of indices of beginning of each desaturation event.
-            -	end: List of indices of end of each desaturation event.
     """
 
     def __init__(self, ODI_Threshold=3):
         self.ODI_Threshold = ODI_Threshold
 
     def compute(self, signal) -> ODIMeasureResult:
+        """
+        :param
+        signal: The SpO2 signal, of shape (N,)
+        :return:
+        ODIMeasureResult class containing the following features:
+            -	ODI: the average number of desaturation events per hour.
+            -	begin: List of indices of beginning of each desaturation event.
+            -	end: List of indices of end of each desaturation event.
+        """
         if len(signal) == 0:
             ODIMeasureResult(0, [], [])
 
         return self.__DesaturationDetector(signal)
 
     def __DesaturationDetector(self, signal):
-        # run desaturation detector, implemented by Dr. Joachim Behar
+        """
+        run desaturation detector, implemented by Dr. Joachim Behar
+        :param signal: The SpO2 signal, of shape (N,)
+        :return:
+        ODIMeasureResult class containing the following features:
+            -	ODI: the average number of desaturation events per hour.
+            -	begin: List of indices of beginning of each desaturation event.
+            -	end: List of indices of end of each desaturation event.
+        """
         _, table_desat_aa, _, table_desat_cc = self.__sc_desaturations(signal)
         table_desat_cc = np.array(table_desat_cc).astype(int)
         table_desat_aa = np.array(table_desat_aa).astype(int)
@@ -39,6 +50,15 @@ class ODIMeasure:
         return ODIMeasureResult(ODI, table_desat_aa, table_desat_dd)
 
     def __FindD_Points(self, signal, table_desat_aa, table_desat_cc):
+        """
+        Helper function, to findfiducials points D of each desaturation
+        :param signal: The SpO2 signal, of shape (N,)
+        :param table_desat_aa: List of fiducials points A, of shape (M,)
+        :param table_desat_cc: List of fiducials points C, of shape (M,)
+        table_desat_aa and table_desat_cc must have the same dimension
+        :return:
+        List of fiducials points D, of shape (M,)
+        """
         table_desat_dd = []
         for i in range(len(table_desat_aa)):
             if signal[table_desat_cc[i]] >= signal[table_desat_aa[i]] - 1:
@@ -55,27 +75,27 @@ class ODIMeasure:
         return table_desat_dd
 
     def __sc_desaturations(self, data):
-        # this function implements the algorithm of:
-        #
-        #   Hwang, Su Hwan, et al. "Real-time automatic apneic event detection using nocturnal pulse oximetry."
-        #   IEEE Transactions on Biomedical Engineering 65.3 (2018): 706-712.
-        #
-        # NOTE: The original function search desaturations that are minimum 10 seconds long and maximum 90 seconds long.
-        # In addition the original algorithm actually looked to me more like an estimate of the ODI4 than ODI3. This
-        # implementation is updated to allow the estimation of ODI3 and allows desaturations that are up to 120 seconds
-        # based on some of our observations. In addition, some conditions were added to avoid becoming blocked in
-        # infinite while loops.
-        #
-        # Important: The algorithm assumes a sampling rate of 1Hz and a quantization of 1% to the input data.
-        #
-        # inputs: data (int): spo2 time series sampled at 1Hz and with a quantization of 1%. thres (int): desaturation
-        # threshold below 'a' point (default 2%). IMPORTANT NOTE: 2% below 'a' corresponds to a 3% desaturation.
-        #
-        # outputs:
-        #   desat (int): number of desaturations
-        #   table_desat_aa (float): location of the aa feature points
-        #   table_desat_bb (float): location of the bb feature points
-        #   table_desat_cc (float): location of the cc feature points
+        """
+        This function implements the algorithm of:
+
+        Hwang, Su Hwan, et al. "Real-time automatic apneic event detection using nocturnal pulse oximetry."
+        IEEE Transactions on Biomedical Engineering 65.3 (2018): 706-712.
+
+        NOTE: The original function search desaturations that are minimum 10 seconds long and maximum 90 seconds long.
+        In addition the original algorithm actually looked to me more like an estimate of the ODI4 than ODI3. This
+        implementation is updated to allow the estimation of ODI3 and allows desaturations that are up to 120 seconds
+        based on some of our observations. In addition, some conditions were added to avoid becoming blocked in
+        infinite while loops.
+
+        Important: The algorithm assumes a sampling rate of 1Hz and a quantization of 1% to the input data.
+
+        :param data: The SpO2 signal, of shape (N,)
+        :return:
+          desat: number of desaturations
+          table_desat_aa: location of the aa feature points
+          table_desat_bb: location of the bb feature points
+          table_desat_cc: location of the cc feature points
+        """
 
         aa = 1
         desat = 0

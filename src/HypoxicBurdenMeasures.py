@@ -11,21 +11,10 @@ class HypoxicBurdenMeasures:
     Suppose that the data has been preprocessed.
 
     :param
-        signal: 1-d array, of shape (N,) where N is the length of the signal
         begin: List of indices of beginning of each desaturation event.
         end: List of indices of end of each desaturation event.
         CT_Threshold: Percentage of the time spent below the “CT_Threshold” % oxygen saturation level.
         CA_Baseline: Baseline to compute the CA feature. Default value is mean of the signal.
-
-    :return:
-        HypoxicBurdenMeasuresResults class containing the following features:
-            -	CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time
-            -   CT: Percentage of the time spent below the xx% oxygen saturation level
-            -   POD: Percentage of oxygen desaturation events
-            -   AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline
-                and normalized by the total recording time
-            -   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized
-                by the total recording time
 
     """
 
@@ -36,6 +25,19 @@ class HypoxicBurdenMeasures:
         self.CA_Baseline = CA_Baseline
 
     def compute(self, signal):
+        """
+        :param
+        signal: 1-d array, of shape (N,) where N is the length of the signal
+        :return:
+        HypoxicBurdenMeasuresResults class containing the following features:
+            -	CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time
+            -   CT: Percentage of the time spent below the xx% oxygen saturation level
+            -   POD: Percentage of oxygen desaturation events
+            -   AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline
+                and normalized by the total recording time
+            -   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized
+                by the total recording time
+        """
 
         _check_shape_(signal)
 
@@ -47,6 +49,23 @@ class HypoxicBurdenMeasures:
         return self.__CompHBMeasures(signal, desaturations)
 
     def __CompHBMeasures(self, signal, desaturations_signal):
+        """
+        Helper function, to calculate the Hypoxic Burden biomarkers from the desaturations
+        :param
+        signal: 1-d array, of shape (N,) where N is the length of the signal
+        desaturations_signal: dict with 2 keys:
+            -   begin: indices of begininning of each desaturation
+            -   end: indices of end of each desaturation
+        :return:
+        HypoxicBurdenMeasuresResults class containing the following features:
+            -	CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time
+            -   CT: Percentage of the time spent below the xx% oxygen saturation level
+            -   POD: Percentage of oxygen desaturation events
+            -   AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline
+                and normalized by the total recording time
+            -   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized
+                by the total recording time
+        """
         desat_class = DesaturationsMeasures(desaturations_signal['begin'], desaturations_signal['end'])
 
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
@@ -81,6 +100,13 @@ class HypoxicBurdenMeasures:
         return desaturation_features
 
     def __CompCA(self, signal):
+        """
+        Compute the cumulative area biomarker
+        :param
+        signal: 1-d array, of shape (N,) where N is the length of the signal
+        :return:
+        CA, the cumulative area (float)
+        """
         with np.errstate(invalid='ignore'):
             signal_under_baseline = signal[signal < self.CA_Baseline]
         if len(signal_under_baseline) == 0:
@@ -89,5 +115,12 @@ class HypoxicBurdenMeasures:
         return sum(signal_under_baseline) / len(signal)
 
     def __CompCT(self, signal):
+        """
+        Compute the cumulative time biomarker
+        :param
+        signal: 1-d array, of shape (N,) where N is the length of the signal
+        :return:
+        CT, the cumulative time (float)
+        """
         with np.errstate(invalid='ignore'):
             return 100 * len(signal[signal <= self.CT_Threshold]) / len(signal)
