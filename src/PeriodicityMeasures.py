@@ -83,7 +83,7 @@ class PSDMeasures:
         signal = np.array(signal)
         signal = signal[np.logical_not(np.isnan(signal))]
 
-        freq, signal_fft = self.__get_PSD(signal)
+        freq, signal_fft = self.__get_psd(signal)
         amplitude_signal = np.sqrt((signal_fft.real ** 2) + (signal_fft.imag ** 2))
 
         # taking only positive frequencies, since the signal is real.
@@ -113,7 +113,7 @@ class PSDMeasures:
         amplitude_bp = amplitude_bp[freq_bp < higher_f]
         return amplitude_bp
 
-    def __get_PSD(self, signal):
+    def __get_psd(self, signal):
         """
         Helper function, compute the PSD
         :param signal: The SpO2 signal, of shape (N,)

@@ -2,7 +2,7 @@ import numpy as np
 from scipy import signal
 
 
-def SetRange(signal, Range_min=50, Range_max=100):
+def set_range(signal, Range_min=50, Range_max=100):
     """
         Range function. Remove values lower than 50 or greater than 100, considered as non-physiological
 
@@ -21,7 +21,7 @@ def SetRange(signal, Range_min=50, Range_max=100):
     return signal
 
 
-def ResampSpO2(signal, OriginalFreq):
+def resamp_spo2(signal, OriginalFreq):
     """
         Resample the SpO2 signal to 1Hz.
         Assumption: any missing/abnormal values are represented as 'np.nan'
@@ -43,7 +43,7 @@ def ResampSpO2(signal, OriginalFreq):
     return data_out
 
 
-def DeltaFilter(signal, Diff=4):
+def dlta_filter(signal, Diff=4):
     """
         Apply Delta Filter to the signal.
 
@@ -65,7 +65,7 @@ def DeltaFilter(signal, Diff=4):
     return signal_filtered
 
 
-def MedianSpO2(signal_spo2, FilterLength=9):
+def median_spo2(signal_spo2, FilterLength=9):
     """
         Apply a median filter to the SpO2 signal.
         Median filter used to smooth the spo2 time series and avoid sporadic increase/decrease of spo2 which could
@@ -85,7 +85,7 @@ def MedianSpO2(signal_spo2, FilterLength=9):
     return data_med
 
 
-def BlockData(signal, treshold=50):
+def block_data(signal, treshold=50):
     """
         Apply a block data filter to the SpO2 signal.
 

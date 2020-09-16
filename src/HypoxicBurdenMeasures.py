@@ -46,9 +46,9 @@ class HypoxicBurdenMeasures:
         if self.CA_Baseline is None:
             self.CA_Baseline = np.nanmean(signal)
 
-        return self.__CompHBMeasures(signal, desaturations)
+        return self.__comp_hypoxic(signal, desaturations)
 
-    def __CompHBMeasures(self, signal, desaturations_signal):
+    def __comp_hypoxic(self, signal, desaturations_signal):
         """
         Helper function, to calculate the Hypoxic Burden biomarkers from the desaturations
         :param
@@ -89,8 +89,8 @@ class HypoxicBurdenMeasures:
             desaturation_int_100_all[i] = np.nansum(100 - desaturation_spo2)
             desaturation_int_max_all[i] = np.nansum(desaturation_max - desaturation_spo2)
 
-        desaturation_features = HypoxicBurdenMeasuresResults(self.__CompCA(signal),
-                                                             self.__CompCT(signal),
+        desaturation_features = HypoxicBurdenMeasuresResults(self.__comp_ca(signal),
+                                                             self.__comp_ct(signal),
                                                              0.0, 0.0, 0.0)
         if np.sum(desaturation_valid) != 0:
             desaturation_features.POD = np.nansum(desaturation_length_all[desaturation_valid]) / len(signal)
@@ -99,7 +99,7 @@ class HypoxicBurdenMeasures:
 
         return desaturation_features
 
-    def __CompCA(self, signal):
+    def __comp_ca(self, signal):
         """
         Compute the cumulative area biomarker
         :param
@@ -114,7 +114,7 @@ class HypoxicBurdenMeasures:
         # return integrate.cumtrapz(signal_under_baseline) / len(signal)
         return sum(signal_under_baseline) / len(signal)
 
-    def __CompCT(self, signal):
+    def __comp_ct(self, signal):
         """
         Compute the cumulative time biomarker
         :param

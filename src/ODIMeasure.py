@@ -29,9 +29,9 @@ class ODIMeasure:
         if len(signal) == 0:
             ODIMeasureResult(0, [], [])
 
-        return self.__DesaturationDetector(signal)
+        return self.__desaturation_detector(signal)
 
-    def __DesaturationDetector(self, signal):
+    def __desaturation_detector(self, signal):
         """
         run desaturation detector, implemented by Dr. Joachim Behar
         :param signal: The SpO2 signal, of shape (N,)
@@ -44,12 +44,12 @@ class ODIMeasure:
         _, table_desat_aa, _, table_desat_cc = self.__sc_desaturations(signal)
         table_desat_cc = np.array(table_desat_cc).astype(int)
         table_desat_aa = np.array(table_desat_aa).astype(int)
-        table_desat_dd = self.__FindD_Points(signal, table_desat_aa, table_desat_cc)
+        table_desat_dd = self.__find_d_points(signal, table_desat_aa, table_desat_cc)
         table_desat_dd = np.array(table_desat_dd).astype(int)
         ODI = len(table_desat_aa) / len(signal) * 3600  # Convert to event/h
         return ODIMeasureResult(ODI, table_desat_aa, table_desat_dd)
 
-    def __FindD_Points(self, signal, table_desat_aa, table_desat_cc):
+    def __find_d_points(self, signal, table_desat_aa, table_desat_cc):
         """
         Helper function, to findfiducials points D of each desaturation
         :param signal: The SpO2 signal, of shape (N,)

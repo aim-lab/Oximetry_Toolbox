@@ -40,12 +40,12 @@ class ComplexityMeasures:
         """
         _check_shape_(signal)
 
-        return ComplexityMeasuresResults(self.__CompApEn(signal), self.__CompLZ(signal),
-                                         self.__CompCTM(signal),
-                                         self.__CompSampEn(signal),
-                                         self.__CompDFA(signal))
+        return ComplexityMeasuresResults(self.__comp_apen(signal), self.__comp_lz(signal),
+                                         self.__comp_ctm(signal),
+                                         self.__comp_sampen(signal),
+                                         self.__comp_dfa(signal))
 
-    def __CompApEn(self, signal):
+    def __comp_apen(self, signal):
         """
         Compute the approximate entropy, according to the paper
         Utility of Approximate Entropy From Overnight Pulse Oximetry Data in the Diagnosis
@@ -56,14 +56,14 @@ class ComplexityMeasures:
         signal = np.array(signal)
         signal = signal[np.logical_not(np.isnan(signal))]
 
-        phi_m = self.__ApEN(2, signal)
-        phi_m1 = self.__ApEN(3, signal)
+        phi_m = self.__apen(2, signal)
+        phi_m1 = self.__apen(3, signal)
         with np.errstate(invalid='ignore'):
             res = phi_m - phi_m1
 
         return res
 
-    def __ApEN(self, m, signal):
+    def __apen(self, m, signal):
         """
         Help function of CompApEn
         """
@@ -89,7 +89,7 @@ class ComplexityMeasures:
         with np.errstate(invalid='ignore'):
             return np.nanmax(abs(window1 - window2), axis=1) < r
 
-    def __CompLZ(self, signal):
+    def __comp_lz(self, signal):
         """
         Compute lempel-ziv, according to the paper
         Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
@@ -102,7 +102,7 @@ class ComplexityMeasures:
         byte = [str(int(b is True)) for b in res]
         return lempel_ziv_complexity(''.join(byte))
 
-    def __CompCTM(self, signal):
+    def __comp_ctm(self, signal):
         """
         Compute CTM, according to the paper
         Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
@@ -112,10 +112,10 @@ class ComplexityMeasures:
         """
         res = 0
         for i in range(len(signal) - 2):
-            res += self.__dCTM(i, self.CTM_Threshold, signal)
+            res += self.__d_ctm(i, self.CTM_Threshold, signal)
         return res / (len(signal) - 2)
 
-    def __dCTM(self, i, p, signal):
+    def __d_ctm(self, i, p, signal):
         """
         Help function of CompCTM
         """
@@ -123,7 +123,7 @@ class ComplexityMeasures:
             return 1
         return 0
 
-    def __CompSampEn(self, signal):
+    def __comp_sampen(self, signal):
         """
         Compute the Sample Entropy
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
@@ -151,7 +151,7 @@ class ComplexityMeasures:
         # Return SampEn
         return -np.log(A / B)
 
-    def __CompDFA(self, signal):
+    def __comp_dfa(self, signal):
         """
         Compute DFA
         :param signal: 1-d array, of shape (N,) where N is the length of the signal

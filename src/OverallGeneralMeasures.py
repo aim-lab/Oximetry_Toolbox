@@ -45,13 +45,13 @@ class OverallGeneralMeasures:
 
         return OverallGeneralMeasuresResult(np.nanmean(signal), np.nanmedian(signal), np.nanmin(signal),
                                             np.nanstd(signal),
-                                            self._ComputeRange_(signal),
-                                            self._ApplyPercentile_(signal),
-                                            self._BelowMedian_(signal),
-                                            self._NumZC_(signal),
-                                            self._DeltaIndex_(signal))
+                                            self.__compute_range(signal),
+                                            self.__apply_percentile(signal),
+                                            self.__below_median(signal),
+                                            self.__num_zc(signal),
+                                            self.__delta_index(signal))
 
-    def _ApplyPercentile_(self, signal):
+    def __apply_percentile(self, signal):
         """
         Apply percentile to the spo2 signal
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
@@ -59,7 +59,7 @@ class OverallGeneralMeasures:
         """
         return np.nanpercentile(signal, self.percentile)
 
-    def _BelowMedian_(self, signal):
+    def __below_median(self, signal):
         """
         Compute the below median biomarker from the spo2 signal
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
@@ -69,7 +69,7 @@ class OverallGeneralMeasures:
         with np.errstate(invalid='ignore'):
             return 100 * (np.nansum(signal < baseline) / len(signal))
 
-    def _ComputeRange_(self, signal):
+    def __compute_range(self, signal):
         """
         Compute the range biomarker from the spo2 signal
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
@@ -77,7 +77,7 @@ class OverallGeneralMeasures:
         """
         return np.nanmax(signal) - np.nanmin(signal)
 
-    def _NumZC_(self, signal):
+    def __num_zc(self, signal):
         """
         Compute the numZC biomarker from the spo2 signal
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
@@ -97,7 +97,7 @@ class OverallGeneralMeasures:
                 numZC_count += 1
         return numZC_count
 
-    def _DeltaIndex_(self, signal):
+    def __delta_index(self, signal):
         """
         Compute the delta index biomarker from the spo2 signal
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
