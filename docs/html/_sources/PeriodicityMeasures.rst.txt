@@ -1,0 +1,7 @@
+PeriodicityMeasures module
+==========================
+
+.. automodule:: PeriodicityMeasures
+    :members:
+    :undoc-members:
+    :show-inheritance:

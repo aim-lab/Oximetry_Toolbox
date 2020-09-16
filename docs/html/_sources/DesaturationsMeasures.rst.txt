@@ -1,0 +1,7 @@
+DesaturationsMeasures module
+============================
+
+.. automodule:: DesaturationsMeasures
+    :members:
+    :undoc-members:
+    :show-inheritance:
