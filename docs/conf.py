@@ -35,7 +35,7 @@ except ImportError:
     from sphinx import apidoc
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../src/spo2")
+module_dir = os.path.join(__location__, "../src/OBM")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -81,8 +81,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'spo2'
-copyright = u'2020, spo2 Team'
+project = u'OBM'
+copyright = u'2020, OBM Team'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -151,7 +151,7 @@ html_theme_options = {
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 try:
-    from spo2 import __version__ as version
+    from OBM import __version__ as version
 except ImportError:
     pass
 else:
@@ -216,7 +216,7 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'spo2-doc'
+htmlhelp_basename = 'OBM-doc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -235,8 +235,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'user_guide.tex', u'spo2 Documentation',
-   u'spo2 Team', 'manual'),
+  ('index', 'user_guide.tex', u'OBM Documentation',
+   u'OBM Team', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

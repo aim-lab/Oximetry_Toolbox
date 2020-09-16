@@ -1,8 +1,8 @@
 ====
-spo2
+OBM
 ====
 
-This is the documentation of **spo2**.
+This is the documentation of **OBM**.
 
 .. note::
 

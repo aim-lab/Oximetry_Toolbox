@@ -2,8 +2,8 @@
 
 import pytest
 
-import spo2
-from spo2.main import parse_args
+import OBM
+from OBM.main import parse_args
 
 
 class TestParseArgs():
@@ -15,4 +15,4 @@ class TestParseArgs():
         with pytest.raises(SystemExit):
             parse_args(str.split("--version"))
         captured = capsys.readouterr()
-        assert captured.out.strip() == f"spo2 {spo2.__version__}"
+        assert captured.out.strip() == f"OBM {OBM.__version__}"

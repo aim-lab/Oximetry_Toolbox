@@ -76,7 +76,7 @@
             "index": "pypi",
             "version": "==1.5.2"
         },
-        "spo2": {
+        "OBM": {
             "editable": true,
             "path": "."
         }
