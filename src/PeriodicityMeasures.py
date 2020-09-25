@@ -1,8 +1,8 @@
 import numpy as np
 from scipy.signal import hamming, welch
 
-from src._ErrorHandler import _check_shape_, _check_fragment_PRSA_
-from src._ResultsClasses import PRSAResults, PSDResults
+from OBM._ErrorHandler import _check_shape_, _check_fragment_PRSA_
+from OBM._ResultsClasses import PRSAResults, PSDResults
 
 
 class PRSAMeasures:
