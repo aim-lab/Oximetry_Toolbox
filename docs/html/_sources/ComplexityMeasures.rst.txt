@@ -1,0 +1,7 @@
+ComplexityMeasures module
+=========================
+
+.. automodule:: ComplexityMeasures
+    :members:
+    :undoc-members:
+    :show-inheritance:
