@@ -1,0 +1,255 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>OBM.ODIMeasure &#8212; OBM  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for OBM.ODIMeasure</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">OBM._ResultsClasses</span> <span class="k">import</span> <span class="n">ODIMeasureResult</span>
+
+
+<div class="viewcode-block" id="ODIMeasure"><a class="viewcode-back" href="../../OBM.html#OBM.ODIMeasure.ODIMeasure">[docs]</a><span class="k">class</span> <span class="nc">ODIMeasure</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class that calculates the ODI from spo2 time series.</span>
+<span class="sd">    Suppose that the data has been preprocessed.</span>
+
+<span class="sd">    :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ODI_Threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ODI_Threshold</span> <span class="o">=</span> <span class="n">ODI_Threshold</span>
+
+<div class="viewcode-block" id="ODIMeasure.compute"><a class="viewcode-back" href="../../OBM.html#OBM.ODIMeasure.ODIMeasure.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ODIMeasureResult</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param signal: The SpO2 signal, of shape (N,)</span>
+<span class="sd">        :return:</span>
+<span class="sd">            ODIMeasureResult class containing the following features:</span>
+<span class="sd">                -	ODI: the average number of desaturation events per hour.</span>
+<span class="sd">                -	begin: List of indices of beginning of each desaturation event.</span>
+<span class="sd">                -	end: List of indices of end of each desaturation event.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ODIMeasureResult</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[])</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__desaturation_detector</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__desaturation_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        run desaturation detector, implemented by Dr. Joachim Behar</span>
+
+<span class="sd">        :param signal: The SpO2 signal, of shape (N,)</span>
+<span class="sd">        :return:</span>
+<span class="sd">            ODIMeasureResult class containing the following features:</span>
+<span class="sd">                -	ODI: the average number of desaturation events per hour.</span>
+<span class="sd">                -	begin: List of indices of beginning of each desaturation event.</span>
+<span class="sd">                -	end: List of indices of end of each desaturation event.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sc_desaturations</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+        <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table_desat_cc</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">table_desat_aa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">table_desat_dd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__find_d_points</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_cc</span><span class="p">)</span>
+        <span class="n">table_desat_dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table_desat_dd</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">ODI</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3600</span>  <span class="c1"># Convert to event/h</span>
+        <span class="k">return</span> <span class="n">ODIMeasureResult</span><span class="p">(</span><span class="n">ODI</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_dd</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__find_d_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_cc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function, to findfiducials points D of each desaturation</span>
+
+<span class="sd">        :param signal: The SpO2 signal, of shape (N,)</span>
+<span class="sd">        :param table_desat_aa: List of fiducials points A, of shape (M,)</span>
+<span class="sd">        :param table_desat_cc: List of fiducials points C, of shape (M,) table_desat_aa and table_desat_cc must have the same dimension</span>
+<span class="sd">        :return: List of fiducials points D, of shape (M,)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">table_desat_dd</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_cc</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&gt;=</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">table_desat_dd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_cc</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">90</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">table_desat_dd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">found</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">table_desat_dd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">90</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">table_desat_dd</span>
+
+    <span class="k">def</span> <span class="nf">__sc_desaturations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function implements the algorithm of:</span>
+
+<span class="sd">        Hwang, Su Hwan, et al. &quot;Real-time automatic apneic event detection using nocturnal pulse oximetry.&quot;</span>
+<span class="sd">        IEEE Transactions on Biomedical Engineering 65.3 (2018): 706-712.</span>
+
+<span class="sd">        NOTE: The original function search desaturations that are minimum 10 seconds long and maximum 90 seconds long.</span>
+<span class="sd">        In addition the original algorithm actually looked to me more like an estimate of the ODI4 than ODI3. This</span>
+<span class="sd">        implementation is updated to allow the estimation of ODI3 and allows desaturations that are up to 120 seconds</span>
+<span class="sd">        based on some of our observations. In addition, some conditions were added to avoid becoming blocked in</span>
+<span class="sd">        infinite while loops.</span>
+
+<span class="sd">        Important: The algorithm assumes a sampling rate of 1Hz and a quantization of 1% to the input data.</span>
+
+<span class="sd">        :param data: The SpO2 signal, of shape (N,)</span>
+<span class="sd">        :return:</span>
+<span class="sd">            desat: number of desaturations</span>
+<span class="sd">            table_desat_aa: location of the aa feature points</span>
+<span class="sd">            table_desat_bb: location of the bb feature points</span>
+<span class="sd">            table_desat_cc: location of the cc feature points</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">aa</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">desat</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">max_desat_lg</span> <span class="o">=</span> <span class="mi">120</span>  <span class="c1"># was 90 sec in the original paper. Changed to 120 because I have seen longer desaturations.</span>
+        <span class="n">lg_dat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">thres</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ODI_Threshold</span>
+        <span class="n">table_desat_aa</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">table_desat_bb</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="n">aa</span> <span class="o">&lt;</span> <span class="n">lg_dat</span><span class="p">:</span>
+            <span class="c1"># added condition to test that between aa and the end of the recording there is at least 10 seconds</span>
+            <span class="k">if</span> <span class="n">aa</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">&gt;</span> <span class="n">lg_dat</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span>
+
+            <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">aa</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">25</span> <span class="ow">and</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">aa</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="n">aa</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">thres</span><span class="p">:</span>
+                <span class="n">bb</span> <span class="o">=</span> <span class="n">aa</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">out_b</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="k">while</span> <span class="n">bb</span> <span class="o">&lt;</span> <span class="n">lg_dat</span> <span class="ow">and</span> <span class="n">out_b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">bb</span> <span class="o">==</span> <span class="n">lg_dat</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># added this condition in case cc is never reached at the end of the recording</span>
+                        <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span>
+
+                    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">bb</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">bb</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">aa</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="n">bb</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">thres</span><span class="p">:</span>
+                            <span class="n">cc</span> <span class="o">=</span> <span class="n">bb</span> <span class="o">+</span> <span class="mi">1</span>
+
+                            <span class="k">if</span> <span class="n">cc</span> <span class="o">&gt;=</span> <span class="n">lg_dat</span><span class="p">:</span>
+                                <span class="c1"># this is added to stop the loop when c has reached the end of the record</span>
+                                <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">out_c</span> <span class="o">=</span> <span class="mi">0</span>
+
+                            <span class="k">while</span> <span class="n">cc</span> <span class="o">&lt;</span> <span class="n">lg_dat</span> <span class="ow">and</span> <span class="n">out_c</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="n">aa</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="n">cc</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">cc</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="n">bb</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">thres</span><span class="p">)</span> <span class="ow">and</span> <span class="n">cc</span> <span class="o">-</span> <span class="n">aa</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+                                    <span class="k">if</span> <span class="n">cc</span> <span class="o">-</span> <span class="n">aa</span> <span class="o">&lt;=</span> <span class="n">max_desat_lg</span><span class="p">:</span>
+                                        <span class="n">desat</span> <span class="o">=</span> <span class="n">desat</span> <span class="o">+</span> <span class="mi">1</span>
+                                        <span class="n">table_desat_aa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">,</span> <span class="p">[</span><span class="n">aa</span><span class="p">])</span>
+                                        <span class="n">table_desat_bb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_bb</span><span class="p">,</span> <span class="p">[</span><span class="n">bb</span><span class="p">])</span>
+                                        <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_cc</span><span class="p">,</span> <span class="p">[</span><span class="n">cc</span><span class="p">])</span>
+                                        <span class="n">aa</span> <span class="o">=</span> <span class="n">cc</span> <span class="o">+</span> <span class="mi">1</span>
+                                        <span class="n">out_b</span> <span class="o">=</span> <span class="mi">1</span>
+                                        <span class="n">out_c</span> <span class="o">=</span> <span class="mi">1</span>
+                                    <span class="k">else</span><span class="p">:</span>
+                                        <span class="n">aa</span> <span class="o">=</span> <span class="n">cc</span> <span class="o">+</span> <span class="mi">1</span>
+                                        <span class="n">out_b</span> <span class="o">=</span> <span class="mi">1</span>
+                                        <span class="n">out_c</span> <span class="o">=</span> <span class="mi">1</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="n">cc</span> <span class="o">=</span> <span class="n">cc</span> <span class="o">+</span> <span class="mi">1</span>
+                                    <span class="k">if</span> <span class="n">cc</span> <span class="o">&gt;</span> <span class="n">lg_dat</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                                        <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span>
+
+                                    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">bb</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">cc</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                                        <span class="n">bb</span> <span class="o">=</span> <span class="n">cc</span> <span class="o">-</span> <span class="mi">1</span>
+                                        <span class="n">out_c</span> <span class="o">=</span> <span class="mi">0</span>
+                                    <span class="k">else</span><span class="p">:</span>
+                                        <span class="n">out_c</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">bb</span> <span class="o">=</span> <span class="n">bb</span> <span class="o">+</span> <span class="mi">1</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">aa</span> <span class="o">=</span> <span class="n">aa</span> <span class="o">+</span> <span class="mi">1</span>
+                        <span class="n">out_b</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">aa</span> <span class="o">=</span> <span class="n">aa</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">OBM</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../OBM.html">OBM package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, AIMLab.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,28 @@
+\indexentry{OBM (module)@\spxentry{OBM}\spxextra{module}|hyperpage}{1}
+\indexentry{OBM.ComplexityMeasures (module)@\spxentry{OBM.ComplexityMeasures}\spxextra{module}|hyperpage}{1}
+\indexentry{ComplexityMeasures (class in OBM.ComplexityMeasures)@\spxentry{ComplexityMeasures}\spxextra{class in OBM.ComplexityMeasures}|hyperpage}{1}
+\indexentry{compute() (OBM.ComplexityMeasures.ComplexityMeasures method)@\spxentry{compute()}\spxextra{OBM.ComplexityMeasures.ComplexityMeasures method}|hyperpage}{1}
+\indexentry{OBM.DesaturationsMeasures (module)@\spxentry{OBM.DesaturationsMeasures}\spxextra{module}|hyperpage}{1}
+\indexentry{DesaturationsMeasures (class in OBM.DesaturationsMeasures)@\spxentry{DesaturationsMeasures}\spxextra{class in OBM.DesaturationsMeasures}|hyperpage}{1}
+\indexentry{compute() (OBM.DesaturationsMeasures.DesaturationsMeasures method)@\spxentry{compute()}\spxextra{OBM.DesaturationsMeasures.DesaturationsMeasures method}|hyperpage}{2}
+\indexentry{desat\_embedding() (OBM.DesaturationsMeasures.DesaturationsMeasures method)@\spxentry{desat\_embedding()}\spxextra{OBM.DesaturationsMeasures.DesaturationsMeasures method}|hyperpage}{2}
+\indexentry{OBM.HypoxicBurdenMeasures (module)@\spxentry{OBM.HypoxicBurdenMeasures}\spxextra{module}|hyperpage}{2}
+\indexentry{HypoxicBurdenMeasures (class in OBM.HypoxicBurdenMeasures)@\spxentry{HypoxicBurdenMeasures}\spxextra{class in OBM.HypoxicBurdenMeasures}|hyperpage}{2}
+\indexentry{compute() (OBM.HypoxicBurdenMeasures.HypoxicBurdenMeasures method)@\spxentry{compute()}\spxextra{OBM.HypoxicBurdenMeasures.HypoxicBurdenMeasures method}|hyperpage}{3}
+\indexentry{OBM.ODIMeasure (module)@\spxentry{OBM.ODIMeasure}\spxextra{module}|hyperpage}{3}
+\indexentry{ODIMeasure (class in OBM.ODIMeasure)@\spxentry{ODIMeasure}\spxextra{class in OBM.ODIMeasure}|hyperpage}{3}
+\indexentry{compute() (OBM.ODIMeasure.ODIMeasure method)@\spxentry{compute()}\spxextra{OBM.ODIMeasure.ODIMeasure method}|hyperpage}{3}
+\indexentry{OBM.OverallGeneralMeasures (module)@\spxentry{OBM.OverallGeneralMeasures}\spxextra{module}|hyperpage}{3}
+\indexentry{OverallGeneralMeasures (class in OBM.OverallGeneralMeasures)@\spxentry{OverallGeneralMeasures}\spxextra{class in OBM.OverallGeneralMeasures}|hyperpage}{3}
+\indexentry{compute() (OBM.OverallGeneralMeasures.OverallGeneralMeasures method)@\spxentry{compute()}\spxextra{OBM.OverallGeneralMeasures.OverallGeneralMeasures method}|hyperpage}{4}
+\indexentry{OBM.PeriodicityMeasures (module)@\spxentry{OBM.PeriodicityMeasures}\spxextra{module}|hyperpage}{4}
+\indexentry{PRSAMeasures (class in OBM.PeriodicityMeasures)@\spxentry{PRSAMeasures}\spxextra{class in OBM.PeriodicityMeasures}|hyperpage}{4}
+\indexentry{compute() (OBM.PeriodicityMeasures.PRSAMeasures method)@\spxentry{compute()}\spxextra{OBM.PeriodicityMeasures.PRSAMeasures method}|hyperpage}{4}
+\indexentry{PSDMeasures (class in OBM.PeriodicityMeasures)@\spxentry{PSDMeasures}\spxextra{class in OBM.PeriodicityMeasures}|hyperpage}{4}
+\indexentry{compute() (OBM.PeriodicityMeasures.PSDMeasures method)@\spxentry{compute()}\spxextra{OBM.PeriodicityMeasures.PSDMeasures method}|hyperpage}{4}
+\indexentry{OBM.Preprocessing (module)@\spxentry{OBM.Preprocessing}\spxextra{module}|hyperpage}{5}
+\indexentry{block\_data() (in module OBM.Preprocessing)@\spxentry{block\_data()}\spxextra{in module OBM.Preprocessing}|hyperpage}{5}
+\indexentry{dlta\_filter() (in module OBM.Preprocessing)@\spxentry{dlta\_filter()}\spxextra{in module OBM.Preprocessing}|hyperpage}{5}
+\indexentry{median\_spo2() (in module OBM.Preprocessing)@\spxentry{median\_spo2()}\spxextra{in module OBM.Preprocessing}|hyperpage}{5}
+\indexentry{resamp\_spo2() (in module OBM.Preprocessing)@\spxentry{resamp\_spo2()}\spxextra{in module OBM.Preprocessing}|hyperpage}{5}
+\indexentry{set\_range() (in module OBM.Preprocessing)@\spxentry{set\_range()}\spxextra{in module OBM.Preprocessing}|hyperpage}{5}
