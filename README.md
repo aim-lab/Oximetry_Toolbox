@@ -1,4 +1,4 @@
-# spo2
+# OBM
 
 Python package for extracting biomarkers from oximetry signal, the SpO2.
 
