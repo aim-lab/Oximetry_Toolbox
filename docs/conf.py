@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'OBM'
+project = 'obm_toolbox'
 copyright = '2020, AIMLab'
 author = 'AIMLab'
 
@@ -104,7 +104,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'OBMdoc'
+htmlhelp_basename = 'obm_toolbox_doc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -131,7 +131,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'OBM.tex', 'OBM Documentation',
+    (master_doc, 'obm_toolbox.tex', 'obm_toolbox Documentation',
      'AIMLab', 'manual'),
 ]
 
@@ -141,7 +141,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'obm', 'OBM Documentation',
+    (master_doc, 'obm_toolbox', 'obm_toolbox Documentation',
      [author], 1)
 ]
 
@@ -152,8 +152,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'OBM', 'OBM Documentation',
-     author, 'OBM', 'One line description of project.',
+    (master_doc, 'obm_toolbox', 'obm_toolbox Documentation',
+     author, 'obm_toolbox', 'One line description of project.',
      'Miscellaneous'),
 ]
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-from OBM._ResultsClasses import ODIMeasureResult
+from obm_toolbox._ResultsClasses import ODIMeasureResult
 
 
 class ODIMeasure:

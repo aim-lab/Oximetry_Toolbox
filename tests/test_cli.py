@@ -2,8 +2,8 @@
 
 import pytest
 
-import OBM
-from OBM.main import parse_args
+import obm_toolbox
+from obm_toolbox.main import parse_args
 
 
 class TestParseArgs():
@@ -15,4 +15,4 @@ class TestParseArgs():
         with pytest.raises(SystemExit):
             parse_args(str.split("--version"))
         captured = capsys.readouterr()
-        assert captured.out.strip() == f"OBM {OBM.__version__}"
+        assert captured.out.strip() == f"obm_toolbox {obm_toolbox.__version__}"

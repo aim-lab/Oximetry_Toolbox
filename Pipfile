@@ -16,7 +16,7 @@ black = "*"
 pylint = "*"
 
 [packages]
-OBM = {editable = true, path = "."}
+obm_toolbox = {editable = true, path = "."}
 # Don't forget to also declare deps in setup.cfg
 # if you plan to distribute as a library.
 numpy = "~=1.19.0"

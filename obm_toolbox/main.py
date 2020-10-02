@@ -5,9 +5,9 @@ console script. To run this script uncomment the following lines in the
 [options.entry_points] section in setup.cfg:
 
     console_scripts =
-         spo2 = spo2.main:run
+         obm_toolbox = obm_toolbox.main:run
 
-Then run `python setup.py install` which will install the command `spo2`
+Then run `python setup.py install` which will install the command `obm_toolbox`
 inside your current environment.
 Besides console scripts, the header (i.e. until _logger...) of this file can
 also be used as template for Python modules.
@@ -17,7 +17,7 @@ import argparse
 import sys
 import logging
 
-from spo2 import __version__
+from obm_toolbox import __version__
 
 _logger = logging.getLogger(__name__)
 
@@ -79,7 +79,7 @@ def main(args):
     args = parse_args(args)
     setup_logging(args.loglevel)
 
-    _logger.info("Starting spo2...")
+    _logger.info("Starting obm_toolbox...")
     _logger.debug(f"args={args}")
 
     # TODO: Call logic here

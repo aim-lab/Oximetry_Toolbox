@@ -2,12 +2,12 @@ import pyedflib
 import numpy as np
 import os
 
-from OBM.ComplexityMeasures import ComplexityMeasures
-from OBM.DesaturationsMeasures import DesaturationsMeasures
-from OBM.HypoxicBurdenMeasures import HypoxicBurdenMeasures
-from OBM.ODIMeasure import ODIMeasure
-from OBM.OverallGeneralMeasures import OverallGeneralMeasures
-from OBM.PeriodicityMeasures import PRSAMeasures, PSDMeasures
+from obm_toolbox.ComplexityMeasures import ComplexityMeasures
+from obm_toolbox.DesaturationsMeasures import DesaturationsMeasures
+from obm_toolbox.HypoxicBurdenMeasures import HypoxicBurdenMeasures
+from obm_toolbox.ODIMeasure import ODIMeasure
+from obm_toolbox.OverallGeneralMeasures import OverallGeneralMeasures
+from obm_toolbox.PeriodicityMeasures import PRSAMeasures, PSDMeasures
 
 
 class OBMTests:
