@@ -3,8 +3,8 @@ from lempel_ziv_complexity import lempel_ziv_complexity
 from scipy import integrate, stats
 import warnings
 
-from OBM._ErrorHandler import _check_shape_, _check_len_ApEn_
-from OBM._ResultsClasses import ComplexityMeasuresResults
+from obm_toolbox._ErrorHandler import _check_shape_, _check_len_ApEn_
+from obm_toolbox._ResultsClasses import ComplexityMeasuresResults
 
 
 class ComplexityMeasures:

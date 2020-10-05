@@ -1,8 +1,8 @@
 import numpy as np
 
-from OBM.DesaturationsMeasures import DesaturationsMeasures
-from OBM._ErrorHandler import _check_shape_
-from OBM._ResultsClasses import HypoxicBurdenMeasuresResults
+from obm_toolbox.DesaturationsMeasures import DesaturationsMeasures
+from obm_toolbox._ErrorHandler import _check_shape_
+from obm_toolbox._ResultsClasses import HypoxicBurdenMeasuresResults
 
 
 class HypoxicBurdenMeasures:

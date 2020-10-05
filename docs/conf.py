@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'OBM'
+project = 'OBM Toolbox'
 copyright = '2020, AIMLab'
 author = 'AIMLab'
 
