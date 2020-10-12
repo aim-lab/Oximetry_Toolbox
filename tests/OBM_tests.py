@@ -2,12 +2,11 @@ import pyedflib
 import numpy as np
 import os
 
-from obm_toolbox.ComplexityMeasures import ComplexityMeasures
-from obm_toolbox.DesaturationsMeasures import DesaturationsMeasures
-from obm_toolbox.HypoxicBurdenMeasures import HypoxicBurdenMeasures
-from obm_toolbox.ODIMeasure import ODIMeasure
-from obm_toolbox.OverallGeneralMeasures import OverallGeneralMeasures
-from obm_toolbox.PeriodicityMeasures import PRSAMeasures, PSDMeasures
+from obm_toolbox.obm.complex import ComplexityMeasures
+from obm_toolbox.obm.desat import DesaturationsMeasures
+from obm_toolbox.obm.burden import HypoxicBurdenMeasures
+from obm_toolbox.obm.general import OverallGeneralMeasures
+from obm_toolbox.obm.periodicity import PRSAMeasures, PSDMeasures
 
 
 class OBMTests:
@@ -34,17 +33,13 @@ class OBMTests:
     def DesaturationsMeasuresTest(self):
         signal = self.read_spo2("spo2_example.edf")
 
-        odi_class = ODIMeasure()
-        results_ODI = odi_class.compute(signal)
-
-        desat_class = DesaturationsMeasures(results_ODI.begin, results_ODI.end)
+        desat_class = DesaturationsMeasures()
         results_desat = desat_class.compute(signal)
 
-        hypoxic_class = HypoxicBurdenMeasures(results_ODI.begin, results_ODI.end)
+        hypoxic_class = HypoxicBurdenMeasures(results_desat.begin, results_desat.end)
         results_hypoxic = hypoxic_class.compute(signal)
 
-        assert results_ODI.ODI == 1.8819188191881917
-
+        assert results_desat.ODI == 1.8819188191881917
         assert results_desat.DL_u == 29.647058823529413
         assert results_desat.DL_sd == 34.42800019216675
         assert results_desat.DA100_u == 1098.6565777604246

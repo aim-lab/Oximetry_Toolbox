@@ -39,7 +39,7 @@ def resamp_spo2(signal, OriginalFreq):
     return data_out
 
 
-def dlta_filter(signal, Diff=4):
+def dfilter(signal, Diff=4):
     """
     Apply Delta Filter to the signal.
 
