@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-<<<<<<< HEAD
     Setup file for OBM Toolbox.
-=======
-    Setup file for pobm.
->>>>>>> 53b10e9a08f5c639269b279ed6adc2da848e57a0
     Use setup.cfg to configure your project.
 
     This file was generated with PyScaffold 3.2.3.
