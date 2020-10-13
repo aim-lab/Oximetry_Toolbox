@@ -1,8 +1,8 @@
 import numpy as np
 import warnings
 
-from obm_toolbox._ErrorHandler import _check_shape_, _check_window_delta_
-from obm_toolbox._ResultsClasses import OverallGeneralMeasuresResult
+from pobm._ErrorHandler import _check_shape_, _check_window_delta_
+from pobm._ResultsClasses import OverallGeneralMeasuresResult
 
 
 class OverallGeneralMeasures:

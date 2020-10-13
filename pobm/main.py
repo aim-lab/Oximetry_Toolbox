@@ -5,9 +5,9 @@ console script. To run this script uncomment the following lines in the
 [options.entry_points] section in setup.cfg:
 
     console_scripts =
-         obm_toolbox = obm_toolbox.main:run
+         pobm = pobm.main:run
 
-Then run `python setup.py install` which will install the command `obm_toolbox`
+Then run `python setup.py install` which will install the command `pobm`
 inside your current environment.
 Besides console scripts, the header (i.e. until _logger...) of this file can
 also be used as template for Python modules.
@@ -17,7 +17,7 @@ import argparse
 import sys
 import logging
 
-from obm_toolbox import __version__
+from pobm import __version__
 
 _logger = logging.getLogger(__name__)
 
@@ -79,7 +79,7 @@ def main(args):
     args = parse_args(args)
     setup_logging(args.loglevel)
 
-    _logger.info("Starting obm_toolbox...")
+    _logger.info("Starting pobm...")
     _logger.debug(f"args={args}")
 
     # TODO: Call logic here

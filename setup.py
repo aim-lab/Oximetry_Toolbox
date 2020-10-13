@@ -3,7 +3,7 @@
 <<<<<<< HEAD
     Setup file for OBM Toolbox.
 =======
-    Setup file for obm_toolbox.
+    Setup file for pobm.
 >>>>>>> 53b10e9a08f5c639269b279ed6adc2da848e57a0
     Use setup.cfg to configure your project.
 

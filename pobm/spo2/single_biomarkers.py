@@ -3,8 +3,8 @@ from scipy import integrate, stats
 import warnings
 from lempel_ziv_complexity import lempel_ziv_complexity
 
-from obm_toolbox._ErrorHandler import _check_len_ApEn_
-from obm_toolbox.obm.desat import DesaturationsMeasures
+from pobm._ErrorHandler import _check_len_ApEn_
+from pobm.obm.desat import DesaturationsMeasures
 
 
 def odi(signal, ODI_Threshold=3):

@@ -1,8 +1,8 @@
-from obm_toolbox._ErrorHandler import _check_shape_
+from pobm._ErrorHandler import _check_shape_
 import numpy as np
 import warnings
 
-from obm_toolbox._ResultsClasses import DesaturationsMeasuresResults
+from pobm._ResultsClasses import DesaturationsMeasuresResults
 
 
 class DesaturationsMeasures:

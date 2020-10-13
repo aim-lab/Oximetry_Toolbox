@@ -2,11 +2,11 @@ import pyedflib
 import numpy as np
 import os
 
-from obm_toolbox.obm.complex import ComplexityMeasures
-from obm_toolbox.obm.desat import DesaturationsMeasures
-from obm_toolbox.obm.burden import HypoxicBurdenMeasures
-from obm_toolbox.obm.general import OverallGeneralMeasures
-from obm_toolbox.obm.periodicity import PRSAMeasures, PSDMeasures
+from pobm.obm.complex import ComplexityMeasures
+from pobm.obm.desat import DesaturationsMeasures
+from pobm.obm.burden import HypoxicBurdenMeasures
+from pobm.obm.general import OverallGeneralMeasures
+from pobm.obm.periodicity import PRSAMeasures, PSDMeasures
 
 
 class OBMTests:
