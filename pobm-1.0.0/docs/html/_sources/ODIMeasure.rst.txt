@@ -1,0 +1,7 @@
+ODIMeasure module
+=================
+
+.. automodule:: ODIMeasure
+    :members:
+    :undoc-members:
+    :show-inheritance:

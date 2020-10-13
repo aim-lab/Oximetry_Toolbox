@@ -1,0 +1,15 @@
+git add .
+git commit -m "version upload"
+git tag "1.X.X"
+
+sudo python3 setup.py sdist bdist_wheel
+python3 -m twine upload --repository testpypi dist/*
+
+-- if version already exists use "--skip-exising" flag for twine --
+python3 -m twine upload --skip-existing --repository testpypi dist/*
+
+__token__
+pypi-AgENdGVzdC5weXBpLm9yZwIkZDNlOTQwZDEtMzI2Yy00NzBjLTljYzctYjlmYTg3ZWM0ZjY5AAIleyJwZXJtaXNzaW9ucyI6ICJ1c2VyIiwgInZlcnNpb24iOiAxfQAABiD5sqm_ifoyV825Sc11oVpmHbAXN-i0NxlITcJRjIfe4g
+
+Install the test package:
+python3 -m pip install --extra-index-url https://test.pypi.org/simple/ pobm
