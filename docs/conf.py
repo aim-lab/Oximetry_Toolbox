@@ -12,6 +12,8 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import sphinx_rtd_theme
+
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
@@ -76,6 +78,10 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
+# extensions = [
+#     'sphinx_rtd_theme'
+# ]
+
 html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
@@ -176,6 +182,7 @@ epub_exclude_files = ['search.html']
 
 
 # -- Extension configuration -------------------------------------------------
+
 
 # -- Options for todo extension ----------------------------------------------
 
