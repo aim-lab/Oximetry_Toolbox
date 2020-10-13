@@ -1,7 +1,0 @@
-HypoxicBurdenMeasures module
-============================
-
-.. automodule:: HypoxicBurdenMeasures
-    :members:
-    :undoc-members:
-    :show-inheritance:

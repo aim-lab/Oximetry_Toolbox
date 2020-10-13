@@ -16,16 +16,11 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
-
 # -- Project information -----------------------------------------------------
 
-<<<<<<< HEAD
-project = 'OBM Toolbox'
-=======
 project = 'pobm'
->>>>>>> 53b10e9a08f5c639269b279ed6adc2da848e57a0
-copyright = '2020, AIMLab'
-author = 'AIMLab'
+copyright = '2020, Author'
+author = 'Author'
 
 # The short X.Y version
 version = ''
@@ -108,7 +103,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'pobm_doc'
+htmlhelp_basename = 'pobmdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -136,7 +131,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'pobm.tex', 'pobm Documentation',
-     'AIMLab', 'manual'),
+     'Author', 'manual'),
 ]
 
 
