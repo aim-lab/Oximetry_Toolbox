@@ -1,6 +1,6 @@
 import numpy as np
 
-from pobm.obm.desat import DesaturationsMeasures
+from pobm.obm.desat import desat_embedding
 from pobm._ErrorHandler import _check_shape_
 from pobm._ResultsClasses import HypoxicBurdenMeasuresResults
 
@@ -64,11 +64,10 @@ class HypoxicBurdenMeasures:
                 -   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized
                     by the total recording time
         """
-        desat_class = DesaturationsMeasures(desaturations_signal['begin'], desaturations_signal['end'])
 
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
         desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
-        desaturation_slope_all = desat_class.desat_embedding()
+        desaturation_slope_all = desat_embedding(desaturations_signal['begin'], desaturations_signal['end'])
 
         time_spo2_array = np.array(range(len(signal)))
         for (i, desaturation) in enumerate(desaturations):

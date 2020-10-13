@@ -31,6 +31,7 @@ class ODIMeasureResult:
 
 @dataclass
 class DesaturationsMeasuresResults:
+    ODI: float
     DL_u: float
     DL_sd: float
     DA100_u: float
@@ -45,9 +46,13 @@ class DesaturationsMeasuresResults:
     DS_sd: float
     TD_u: float
     TD_sd: float
+    begin: np.array
+    end: np.array
 
     def __str__(self):
-        return str(dict(dataclasses.asdict(self)))
+        return str(dict(dataclasses.asdict(self))) + \
+               str({"begin": self.begin.flatten().tolist(), "end": self.end.flatten().tolist()})
+
 
 
 @dataclass

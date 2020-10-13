@@ -45,7 +45,7 @@ class DesaturationsMeasures:
         ODI = self.desaturation_detector(signal)
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
         desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
-        desaturation_slope_all = self.desat_embedding()
+        desaturation_slope_all = desat_embedding(self.begin, self.end)
 
         time_spo2_array = np.array(range(len(signal)))
 
@@ -115,38 +115,6 @@ class DesaturationsMeasures:
             desaturation_features.DS_sd = 0
 
         return desaturation_features
-
-    def desat_embedding(self):
-        """
-        Help function for the class
-        
-        :return: helper arrays containing the information about desaturation lengths and areas.
-        """
-        table_desat_aa = self.begin
-        table_desat_cc = self.end
-
-        if isinstance(table_desat_aa, int):
-            table_desat_aa = [table_desat_aa]
-        if isinstance(table_desat_cc, int):
-            table_desat_cc = [table_desat_cc]
-
-        desaturations = []  # empty this structure to fill it with the new desaturations
-        for kk in range(0, len(table_desat_aa)):
-            desaturations.append({
-                'Start': int(table_desat_aa[kk]),
-                'Duration': table_desat_cc[kk] - table_desat_aa[kk],
-                'End': int(table_desat_cc[kk])
-            })
-
-        desaturation_valid = np.full(len(desaturations), False)
-        desaturation_length_all = np.full(len(desaturations), np.nan)
-        desaturation_int_100_all = np.full(len(desaturations), np.nan)
-        desaturation_int_max_all = np.full(len(desaturations), np.nan)
-        desaturation_depth_100_all = np.full(len(desaturations), np.nan)
-        desaturation_depth_max_all = np.full(len(desaturations), np.nan)
-        desaturation_slope_all = np.full(len(desaturations), np.nan)
-        return desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
-               desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, desaturation_slope_all
 
     def desaturation_detector(self, signal):
         """
@@ -283,3 +251,36 @@ class DesaturationsMeasures:
                 aa = aa + 1
 
         return desat, table_desat_aa, table_desat_bb, table_desat_cc
+
+
+def desat_embedding(begin, end):
+    """
+    Help function for the class
+
+    :return: helper arrays containing the information about desaturation lengths and areas.
+    """
+    table_desat_aa = begin
+    table_desat_cc = end
+
+    if isinstance(table_desat_aa, int):
+        table_desat_aa = [table_desat_aa]
+    if isinstance(table_desat_cc, int):
+        table_desat_cc = [table_desat_cc]
+
+    desaturations = []  # empty this structure to fill it with the new desaturations
+    for kk in range(0, len(table_desat_aa)):
+        desaturations.append({
+            'Start': int(table_desat_aa[kk]),
+            'Duration': table_desat_cc[kk] - table_desat_aa[kk],
+            'End': int(table_desat_cc[kk])
+        })
+
+    desaturation_valid = np.full(len(desaturations), False)
+    desaturation_length_all = np.full(len(desaturations), np.nan)
+    desaturation_int_100_all = np.full(len(desaturations), np.nan)
+    desaturation_int_max_all = np.full(len(desaturations), np.nan)
+    desaturation_depth_100_all = np.full(len(desaturations), np.nan)
+    desaturation_depth_max_all = np.full(len(desaturations), np.nan)
+    desaturation_slope_all = np.full(len(desaturations), np.nan)
+    return desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
+           desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, desaturation_slope_all
