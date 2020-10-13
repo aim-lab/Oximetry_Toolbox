@@ -42,7 +42,7 @@ class DesaturationsMeasures:
 
         warnings.simplefilter('ignore', np.RankWarning)
 
-        ODI = self.__desaturation_detector(signal)
+        ODI = self.desaturation_detector(signal)
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
         desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
         desaturation_slope_all = self.desat_embedding()
