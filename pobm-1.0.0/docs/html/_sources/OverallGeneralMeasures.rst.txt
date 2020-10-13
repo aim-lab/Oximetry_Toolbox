@@ -1,7 +1,0 @@
-OverallGeneralMeasures module
-=============================
-
-.. automodule:: OverallGeneralMeasures
-    :members:
-    :undoc-members:
-    :show-inheritance:
