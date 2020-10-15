@@ -1,3 +1,4 @@
+How to publish:
 git add .
 git commit -m "version upload"
 git tag "1.X.X"
