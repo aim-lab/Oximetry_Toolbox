@@ -108,13 +108,13 @@ class DesaturationsMeasures:
                                                                  DD100_u, DD100_sd, DDmax_u, DDmax_sd, DS_u, DS_sd,
                                                                  TD_u, TD_sd, self.begin, self.end)
         else:
-            desaturation_features = DesaturationsMeasuresResults(ODI, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+            desaturation_features = DesaturationsMeasuresResults(ODI, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                 self.begin, self.end)
 
         if desaturation_features.DS_u is None:
             desaturation_features.DS_u = 0
         if desaturation_features.DS_sd is None:
             desaturation_features.DS_sd = 0
-
         return desaturation_features
 
     def desaturation_detector(self, signal):
