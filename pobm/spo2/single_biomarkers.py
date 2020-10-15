@@ -16,7 +16,7 @@ def odi(signal, ODI_Threshold=3):
     :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.
     :return: ODI
     """
-
+    warnings.filterwarnings("ignore", category=RuntimeWarning)
     desat_class = DesaturationsMeasures(ODI_Threshold)
     return desat_class.desaturation_detector(signal)
 
@@ -29,6 +29,7 @@ def sampen(signal, M_Sampen=3, R_Sampen=0.2):
     :param R_Sampen: Tolerance to compute SampEn.
     :return: SampEn
     """
+    warnings.filterwarnings("ignore", category=RuntimeWarning)
     N = len(signal)
     m = M_Sampen
     r = R_Sampen
@@ -60,6 +61,7 @@ def lempel_ziv(signal):
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
     :return: LZ
     """
+    warnings.filterwarnings("ignore", category=RuntimeWarning)
     median = np.median(signal)
     res = [signal[i] > median for i in range(0, len(signal))]
     byte = [str(int(b is True)) for b in res]
@@ -74,6 +76,7 @@ def apen(signal):
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
     :return: ApEn
     """
+    warnings.filterwarnings("ignore", category=RuntimeWarning)
     signal = np.array(signal)
     signal = signal[np.logical_not(np.isnan(signal))]
 
@@ -120,6 +123,7 @@ def dfa(signal, DFA_Window=20):
     :param DFA_Window: Length of window to calculate DFA biomarker.
     :return: DFA
     """
+    warnings.filterwarnings("ignore", category=RuntimeWarning)
 
     n = DFA_Window
     y = integrate.cumtrapz(signal - np.nanmean(signal))

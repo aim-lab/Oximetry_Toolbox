@@ -1,4 +1,5 @@
 import numpy as np
+import warnings
 
 from pobm.obm.desat import desat_embedding
 from pobm._ErrorHandler import _check_shape_
@@ -38,7 +39,7 @@ class HypoxicBurdenMeasures:
         """
 
         _check_shape_(signal)
-
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
         desaturations = {'begin': self.begin, 'end': self.end}
 
         if self.CA_Baseline is None:

@@ -38,6 +38,7 @@ class OverallGeneralMeasures:
         """
         _check_shape_(signal)
 
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
         if self.ZC_Baseline is None:
             self.ZC_Baseline = np.nanmean(signal)
 

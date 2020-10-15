@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.signal import hamming, welch
+import warnings
 
 from pobm._ErrorHandler import _check_shape_, _check_fragment_PRSA_
 from pobm._ResultsClasses import PRSAResults, PSDResults
@@ -33,6 +34,7 @@ class PRSAMeasures:
         """
         _check_shape_(signal)
 
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
         d = self.PRSA_Window
         _check_fragment_PRSA_(d)
         anchor_points = []

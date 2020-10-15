@@ -41,6 +41,7 @@ class DesaturationsMeasures:
         _check_shape_(signal)
 
         warnings.simplefilter('ignore', np.RankWarning)
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
 
         ODI = self.desaturation_detector(signal)
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \

@@ -39,7 +39,7 @@ class ComplexityMeasures:
                 -	DFA: Detrended Fluctuation Analysis.
         """
         _check_shape_(signal)
-
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
         return ComplexityMeasuresResults(self.__comp_apen(signal), self.__comp_lz(signal),
                                          self.__comp_ctm(signal),
                                          self.__comp_sampen(signal),
