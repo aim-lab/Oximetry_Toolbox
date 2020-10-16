@@ -1,16 +1,25 @@
-How to publish:
+How to publish: [https://packaging.python.org/tutorials/packaging-projects/]
 git add .
 git commit -m "version upload"
 git tag "1.X.X"
 
+If the tag already exists add the forcing flag: -f:
+git tag -f "1.0.2"
+
+Install setuptools and wheel: 
+python3 -m pip install --user --upgrade setuptools wheel
+
 sudo python3 setup.py sdist bdist_wheel
 python3 -m twine upload --repository testpypi dist/*
+
+Install twine: 
+python3 -m pip install --user --upgrade twine
 
 -- if version already exists use "--skip-exising" flag for twine --
 python3 -m twine upload --skip-existing --repository testpypi dist/*
 
-__token__
-pypi-AgENdGVzdC5weXBpLm9yZwIkZDNlOTQwZDEtMzI2Yy00NzBjLTljYzctYjlmYTg3ZWM0ZjY5AAIleyJwZXJtaXNzaW9ucyI6ICJ1c2VyIiwgInZlcnNpb24iOiAxfQAABiD5sqm_ifoyV825Sc11oVpmHbAXN-i0NxlITcJRjIfe4g
+username: __token__
+password: pypi-AgENdGVzdC5weXBpLm9yZwIkZDNlOTQwZDEtMzI2Yy00NzBjLTljYzctYjlmYTg3ZWM0ZjY5AAIleyJwZXJtaXNzaW9ucyI6ICJ1c2VyIiwgInZlcnNpb24iOiAxfQAABiD5sqm_ifoyV825Sc11oVpmHbAXN-i0NxlITcJRjIfe4g
 
 Install the test package:
 python3 -m pip install --extra-index-url https://test.pypi.org/simple/ pobm
