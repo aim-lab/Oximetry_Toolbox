@@ -59,7 +59,7 @@ class ComplexityMeasures:
         phi_m = self.__apen(2, signal)
         phi_m1 = self.__apen(3, signal)
         with np.errstate(invalid='ignore'):
-            res = phi_m - phi_m1
+            res = phi_m1 - phi_m
 
         return res
 
