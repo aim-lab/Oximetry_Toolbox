@@ -5,9 +5,10 @@ Subpackages
 -----------
 
 .. toctree::
+   :maxdepth: 4
 
-    pobm.obm
-    pobm.spo2
+   pobm.obm
+   pobm.spo2
 
 Submodules
 ----------
@@ -16,23 +17,22 @@ pobm.main module
 ----------------
 
 .. automodule:: pobm.main
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 pobm.prep module
 ----------------
 
 .. automodule:: pobm.prep
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------
 
 .. automodule:: pobm
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
