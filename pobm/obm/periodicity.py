@@ -127,7 +127,7 @@ class PSDMeasures:
         # signal_fft = np.fft.fft(signal * w) / N
         # freq = np.fft.fftfreq(signal.shape[-1])
 
-        freq, signal_fft = welch(signal, window="hamming", scaling='spectrum')
+        freq, signal_fft = welch(signal, window="hamming")
         signal_fft = signal_fft / len(signal)
 
         return freq, signal_fft

@@ -24,7 +24,7 @@ class OBMTests:
         complexity_class = ComplexityMeasures()
         results = complexity_class.compute(signal[100:1000])
 
-        assert results.ApEn == 0.22837941628374647
+        assert results.ApEn == 0.4034945854530416
         assert results.LZ == 41
         assert results.CTM == 0.7906458797327395
         assert results.SampEn == 0.1775722812097163
