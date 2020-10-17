@@ -24,6 +24,7 @@ def odi(signal, ODI_Threshold=3):
 def sampen(signal, M_Sampen=3, R_Sampen=0.2):
     """
     Compute the Sample Entropy
+
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
     :param M_Sampen: Embedding dimension to compute SampEn.
     :param R_Sampen: Tolerance to compute SampEn.
@@ -58,6 +59,7 @@ def lempel_ziv(signal):
     Compute lempel-ziv, according to the paper
     Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
     for obstructive sleep apnoea detection
+
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
     :return: LZ
     """
@@ -73,6 +75,7 @@ def apen(signal, M_ApEn=2, R_ApEn=0.25):
     Compute the approximate entropy, according to the paper
     Utility of Approximate Entropy From Overnight Pulse Oximetry Data in the Diagnosis
     of the Obstructive Sleep Apnea Syndrome
+
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
     :return: ApEn
     """
@@ -119,6 +122,7 @@ def __dist(window1, window2, r):
 def dfa(signal, DFA_Window=20):
     """
     Compute DFA
+    
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
     :param DFA_Window: Length of window to calculate DFA biomarker.
     :return: DFA
