@@ -18,14 +18,18 @@ class ComplexityMeasures:
         DFA_Window: Length of window to calculate DFA biomarker.
         M_Sampen: Embedding dimension to compute SampEn.
         R_Sampen: Tolerance to compute SampEn.
+        M_ApEn: Embedding dimension to compute ApEn.
+        R_ApEn: Tolerance to compute ApEn.
 
     """
 
-    def __init__(self, CTM_Threshold=0.25, DFA_Window=20, M_Sampen=3, R_Sampen=0.2):
+    def __init__(self, CTM_Threshold=0.25, DFA_Window=20, M_Sampen=3, R_Sampen=0.2, M_ApEn=2, R_ApEn=0.25):
         self.CTM_Threshold = CTM_Threshold
         self.DFA_Window = DFA_Window
         self.M_Sampen = M_Sampen
         self.R_Sampen = R_Sampen
+        self.M_ApEn = M_ApEn
+        self.R_ApEn = R_ApEn
 
     def compute(self, signal) -> ComplexityMeasuresResults:
         """
@@ -56,8 +60,8 @@ class ComplexityMeasures:
         signal = np.array(signal)
         signal = signal[np.logical_not(np.isnan(signal))]
 
-        phi_m = self.__apen(2, signal)
-        phi_m1 = self.__apen(3, signal)
+        phi_m = self.__apen(self.M_ApEn, signal)
+        phi_m1 = self.__apen(self.M_ApEn + 1, signal)
         with np.errstate(invalid='ignore'):
             res = phi_m1 - phi_m
 
@@ -68,7 +72,7 @@ class ComplexityMeasures:
         Help function of CompApEn
         """
         N = len(signal)
-        r = 0.25 * np.nanstd(signal)
+        r = self.R_ApEn
         _check_len_ApEn_(N, m)
         C = np.zeros(shape=(N - m + 1))
 
