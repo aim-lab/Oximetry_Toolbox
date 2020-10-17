@@ -68,7 +68,7 @@ def lempel_ziv(signal):
     return lempel_ziv_complexity(''.join(byte))
 
 
-def apen(signal):
+def apen(signal, M_ApEn=2, R_ApEn=0.25):
     """
     Compute the approximate entropy, according to the paper
     Utility of Approximate Entropy From Overnight Pulse Oximetry Data in the Diagnosis
@@ -80,20 +80,20 @@ def apen(signal):
     signal = np.array(signal)
     signal = signal[np.logical_not(np.isnan(signal))]
 
-    phi_m = __apen(2, signal)
-    phi_m1 = __apen(3, signal)
+    phi_m = __apen(M_ApEn, R_ApEn, signal)
+    phi_m1 = __apen(M_ApEn + 1, R_ApEn, signal)
     with np.errstate(invalid='ignore'):
         res = phi_m - phi_m1
 
     return res
 
 
-def __apen(m, signal):
+def __apen(m, R_ApEn, signal):
     """
     Help function of CompApEn
     """
     N = len(signal)
-    r = 0.25 * np.nanstd(signal)
+    r = R_ApEn
     _check_len_ApEn_(N, m)
     C = np.zeros(shape=(N - m + 1))
 
