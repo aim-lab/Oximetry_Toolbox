@@ -35,6 +35,16 @@ class OverallGeneralMeasures:
                 -	M: Percentage of the signal x% below median oxygen saturation.
                 -	ZC: Number of zero-crossing points.
                 -	DI: Delta Index.
+
+        '''
+        from pobm.obm.general import OverallGeneralMeasures
+
+        # Initialize the class with the desired parameters
+        statistics_class = OverallGeneralMeasures(ZC_Baseline=90, percentile=1, M_Threshold=2, DI_Window=12)
+        # Compute the biomarkers
+        results_statistics = statistics_class.compute(spo2_signal)
+        '''
+
         """
         _check_shape_(signal)
 

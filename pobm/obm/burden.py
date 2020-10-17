@@ -36,6 +36,16 @@ class HypoxicBurdenMeasures:
                     and normalized by the total recording time
                 -   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized
                     by the total recording time
+
+        '''
+        from pobm.obm.burden import HypoxicBurdenMeasures
+
+        # Initialize the class with the desired parameters
+        hypoxic_class = HypoxicBurdenMeasures(results_desat.begin, results_desat.end, CT_Threshold=90, CA_Baseline=90)
+        # Compute the biomarkers
+        results_hypoxic = hypoxic_class.compute(spo2_signal)
+        '''
+
         """
 
         _check_shape_(signal)

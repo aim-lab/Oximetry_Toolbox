@@ -31,6 +31,16 @@ class PRSAMeasures:
                 -	PRSAsb: PRSA slope before the anchor point.
                 -	PRSAsa: PRSA slope after the anchor point.
                 -	AC: Autocorrelation.
+
+        '''
+        from pobm.obm.periodicity import PRSAMeasures
+
+        # Initialize the class with the desired parameters
+        prsa_class = PRSAMeasures(PRSA_Window=10, K_AC=2)
+        # Compute the biomarkers
+        results_PRSA = prsa_class.compute(spo2_signal)
+        '''
+
         """
         _check_shape_(signal)
 
@@ -77,6 +87,16 @@ class PSDMeasures:
                 -   PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.
                 -   PSD_ratio: The ratio between PSD_total and PSD_band.
                 -   PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.
+
+        '''
+        from pobm.obm.periodicity import PSDMeasures
+
+        # Initialize the class with the desired parameters
+        psd_class = PSDMeasures()
+        # Compute the biomarkers
+        results_PSD = psd_class.compute(spo2_signal)
+        '''
+
         """
         _check_shape_(signal)
 

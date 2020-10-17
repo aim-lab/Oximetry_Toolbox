@@ -37,6 +37,16 @@ class DesaturationsMeasures:
                 -	DS_sd: Standard deviation of the desaturation slope.
                 -   TD_u: Mean of time between two consecutive desaturation events.
                 -   TD_sd: Standard deviation of time between 2 consecutive desaturation events.
+
+        '''
+        from pobm.obm.desat import DesaturationsMeasures
+
+        # Initialize the class with the desired parameters
+        desat_class = DesaturationsMeasures(ODI_Threshold=3)
+        # Compute the biomarkers
+        results_desat = desat_class.compute(spo2_signal)
+        '''
+
         """
         _check_shape_(signal)
 
