@@ -13,7 +13,7 @@ Subpackages
 Submodules
 ----------
 
-pobm.main module
+pobm.main
 ----------------
 
 .. automodule:: pobm.main
@@ -21,7 +21,7 @@ pobm.main module
    :undoc-members:
    :show-inheritance:
 
-pobm.prep module
+pobm.prep
 ----------------
 
 .. automodule:: pobm.prep

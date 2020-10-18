@@ -4,7 +4,7 @@ pobm.obm package
 Submodules
 ----------
 
-pobm.obm.burden module
+pobm.obm.burden
 ----------------------
 
 .. automodule:: pobm.obm.burden
@@ -12,7 +12,7 @@ pobm.obm.burden module
    :undoc-members:
    :show-inheritance:
 
-pobm.obm.complex module
+pobm.obm.complex
 -----------------------
 
 .. automodule:: pobm.obm.complex
@@ -20,7 +20,7 @@ pobm.obm.complex module
    :undoc-members:
    :show-inheritance:
 
-pobm.obm.desat module
+pobm.obm.desat
 ---------------------
 
 .. automodule:: pobm.obm.desat
@@ -28,7 +28,7 @@ pobm.obm.desat module
    :undoc-members:
    :show-inheritance:
 
-pobm.obm.general module
+pobm.obm.general
 -----------------------
 
 .. automodule:: pobm.obm.general
@@ -36,7 +36,7 @@ pobm.obm.general module
    :undoc-members:
    :show-inheritance:
 
-pobm.obm.periodicity module
+pobm.obm.periodicity
 ---------------------------
 
 .. automodule:: pobm.obm.periodicity

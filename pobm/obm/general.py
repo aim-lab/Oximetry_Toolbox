@@ -36,14 +36,17 @@ class OverallGeneralMeasures:
                 -	ZC: Number of zero-crossing points.
                 -	DI: Delta Index.
 
-        '''
-        from pobm.obm.general import OverallGeneralMeasures
+        Example:
+        
+        .. code-block::
 
-        # Initialize the class with the desired parameters
-        statistics_class = OverallGeneralMeasures(ZC_Baseline=90, percentile=1, M_Threshold=2, DI_Window=12)
-        # Compute the biomarkers
-        results_statistics = statistics_class.compute(spo2_signal)
-        '''
+            from pobm.obm.general import OverallGeneralMeasures
+
+            # Initialize the class with the desired parameters
+            statistics_class = OverallGeneralMeasures(ZC_Baseline=90, percentile=1, M_Threshold=2, DI_Window=12)
+        
+            # Compute the biomarkers
+            results_statistics = statistics_class.compute(spo2_signal)
 
         """
         _check_shape_(signal)

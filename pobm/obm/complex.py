@@ -42,14 +42,18 @@ class ComplexityMeasures:
                 -   SampEn: Sample Entropy.
                 -	DFA: Detrended Fluctuation Analysis.
 
-        '''
-        from pobm.obm.complex import ComplexityMeasures
 
-        # Initialize the class with the desired parameters
-        complexity_class = ComplexityMeasures(CTM_Threshold=0.25, DFA_Window=20, M_Sampen=3, R_Sampen=0.2, M_ApEn=2, R_ApEn=0.25)
-        # Compute the biomarkers
-        results_complexity = complexity_class.compute(spo2_signal)
-        '''
+        Example:
+        
+        .. code-block::
+
+            from pobm.obm.complex import ComplexityMeasures
+
+            # Initialize the class with the desired parameters
+            complexity_class = ComplexityMeasures(CTM_Threshold=0.25, DFA_Window=20, M_Sampen=3, R_Sampen=0.2, M_ApEn=2, R_ApEn=0.25)
+            
+            # Compute the biomarkers
+            results_complexity = complexity_class.compute(spo2_signal)
 
         """
         _check_shape_(signal)

@@ -4,7 +4,7 @@ pobm.spo2 package
 Submodules
 ----------
 
-pobm.spo2.single\_biomarkers module
+pobm.spo2.single\_biomarkers
 -----------------------------------
 
 .. automodule:: pobm.spo2.single_biomarkers
