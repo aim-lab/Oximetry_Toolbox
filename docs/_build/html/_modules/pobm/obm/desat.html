@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pobm.obm.desat &mdash; pobm  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> pobm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../pobm.html">pobm package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pobm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pobm.obm.desat</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pobm.obm.desat</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pobm._ErrorHandler</span> <span class="kn">import</span> <span class="n">_check_shape_</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">pobm._ResultsClasses</span> <span class="kn">import</span> <span class="n">DesaturationsMeasuresResults</span>
+
+
+<div class="viewcode-block" id="DesaturationsMeasures"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.DesaturationsMeasures">[docs]</a><span class="k">class</span> <span class="nc">DesaturationsMeasures</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class that calculates the Desaturation Features from spo2 time series.</span>
+<span class="sd">    Suppose that the data has been preprocessed.</span>
+
+<span class="sd">    :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ODI_Threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ODI_Threshold</span> <span class="o">=</span> <span class="n">ODI_Threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">begin</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="DesaturationsMeasures.compute"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.DesaturationsMeasures.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DesaturationsMeasuresResults</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
+<span class="sd">        :return:</span>
+<span class="sd">            DesaturationsMeasuresResults class containing the following features:</span>
+<span class="sd">                -	DL_u: Mean of desaturation length</span>
+<span class="sd">                -	DL_sd: Standard deviation of desaturation length</span>
+<span class="sd">                -	DA100_u: Mean of desaturation area using 100% as baseline.</span>
+<span class="sd">                -	DA100_sd: Standard deviation of desaturation area using 100% as baseline</span>
+<span class="sd">                -	DAmax_u: Mean of desaturation area using max value as baseline.</span>
+<span class="sd">                -	DAmax_sd: Standard deviation of desaturation area using max value as baseline</span>
+<span class="sd">                -	DD100_u: Mean of depth desaturation from 100%.</span>
+<span class="sd">                -	DD100_sd: Standard deviation of depth desaturation from 100%.</span>
+<span class="sd">                -	DDmax_u: Mean of depth desaturation from max value.</span>
+<span class="sd">                -	DDmax_sd: Standard deviation of depth desaturation from max value.</span>
+<span class="sd">                -	DS_u: Mean of the desaturation slope.</span>
+<span class="sd">                -	DS_sd: Standard deviation of the desaturation slope.</span>
+<span class="sd">                -   TD_u: Mean of time between two consecutive desaturation events.</span>
+<span class="sd">                -   TD_sd: Standard deviation of time between 2 consecutive desaturation events.</span>
+<span class="sd">        </span>
+<span class="sd">        Example:</span>
+<span class="sd">        </span>
+<span class="sd">        .. code-block::</span>
+
+<span class="sd">            from pobm.obm.desat import DesaturationsMeasures</span>
+
+<span class="sd">            # Initialize the class with the desired parameters</span>
+<span class="sd">            desat_class = DesaturationsMeasures(ODI_Threshold=3)</span>
+<span class="sd">        </span>
+<span class="sd">            # Compute the biomarkers</span>
+<span class="sd">            results_desat = desat_class.compute(spo2_signal)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_check_shape_</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+
+        <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">RankWarning</span><span class="p">)</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
+
+        <span class="n">ODI</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">desaturation_detector</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+        <span class="n">desaturations</span><span class="p">,</span> <span class="n">desaturation_valid</span><span class="p">,</span> <span class="n">desaturation_length_all</span><span class="p">,</span> <span class="n">desaturation_int_100_all</span><span class="p">,</span> \
+        <span class="n">desaturation_int_max_all</span><span class="p">,</span> <span class="n">desaturation_depth_100_all</span><span class="p">,</span> <span class="n">desaturation_depth_max_all</span><span class="p">,</span> \
+        <span class="n">desaturation_slope_all</span> <span class="o">=</span> <span class="n">desat_embedding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+
+        <span class="n">time_spo2_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)))</span>
+
+        <span class="n">starts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">desaturation</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">desaturations</span><span class="p">):</span>
+            <span class="n">starts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desaturation</span><span class="p">[</span><span class="s1">&#39;Start&#39;</span><span class="p">])</span>
+            <span class="n">desaturation_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">time_spo2_array</span> <span class="o">&gt;=</span> <span class="n">desaturation</span><span class="p">[</span><span class="s1">&#39;Start&#39;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">time_spo2_array</span> <span class="o">&lt;=</span> <span class="n">desaturation</span><span class="p">[</span><span class="s1">&#39;End&#39;</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">desaturation_idx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+
+            <span class="n">desaturation_time</span> <span class="o">=</span> <span class="n">time_spo2_array</span><span class="p">[</span><span class="n">desaturation_idx</span><span class="p">]</span>
+            <span class="n">desaturation_spo2</span> <span class="o">=</span> <span class="n">signal</span><span class="p">[</span><span class="n">desaturation_idx</span><span class="p">]</span>
+            <span class="n">desaturation_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">desaturation_spo2</span><span class="p">)</span>
+            <span class="n">desaturation_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">desaturation_spo2</span><span class="p">)</span>
+
+            <span class="n">desaturation_valid</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">desaturation_length_all</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">desaturation</span><span class="p">[</span><span class="s1">&#39;Duration&#39;</span><span class="p">]</span>
+            <span class="n">desaturation_int_100_all</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="n">desaturation_spo2</span><span class="p">)</span>
+            <span class="n">desaturation_int_max_all</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">desaturation_max</span> <span class="o">-</span> <span class="n">desaturation_spo2</span><span class="p">)</span>
+            <span class="n">desaturation_depth_100_all</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">-</span> <span class="n">desaturation_min</span>
+            <span class="n">desaturation_depth_max_all</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">desaturation_max</span> <span class="o">-</span> <span class="n">desaturation_min</span>
+
+            <span class="c1"># Only consider points from the first maximum value to the last lowest value of SpO2</span>
+            <span class="n">desaturation_idx_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">desaturation_spo2</span> <span class="o">==</span> <span class="n">desaturation_max</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># first index of max value</span>
+            <span class="n">desaturation_idx_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">desaturation_spo2</span> <span class="o">==</span> <span class="n">desaturation_min</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># last index of min value</span>
+            <span class="n">desaturation_idx_max_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">desaturation_idx_max</span><span class="p">,</span> <span class="n">desaturation_idx_min</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># Due to mislabeling, the max value may be after the min value, in which case ignore the desaturation.</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">desaturation_idx_max_min</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="n">desaturation_time</span><span class="p">[</span><span class="n">desaturation_idx_max_min</span><span class="p">]),</span>
+                               <span class="n">desaturation_spo2</span><span class="p">[</span><span class="n">desaturation_idx_max_min</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+
+                <span class="n">desaturation_slope_all</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">diff_desats</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">starts</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">starts</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">diff_desats</span> <span class="o">=</span> <span class="n">diff_desats</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">desaturation_valid</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">DL_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">desaturation_length_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+            <span class="n">DL_sd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">desaturation_length_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+            <span class="n">DA100_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">desaturation_int_100_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+            <span class="n">DA100_sd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">desaturation_int_100_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+            <span class="n">DAmax_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">desaturation_int_max_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+            <span class="n">DAmax_sd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">desaturation_int_max_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+            <span class="n">DD100_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">desaturation_depth_100_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+            <span class="n">DD100_sd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">desaturation_depth_100_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+            <span class="n">DDmax_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">desaturation_depth_max_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+            <span class="n">DDmax_sd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">desaturation_depth_max_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+
+            <span class="n">DS_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">desaturation_slope_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+            <span class="n">DS_sd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">desaturation_slope_all</span><span class="p">[</span><span class="n">desaturation_valid</span><span class="p">])</span>
+
+            <span class="n">TD_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">diff_desats</span><span class="p">)</span>
+            <span class="n">TD_sd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">diff_desats</span><span class="p">)</span>
+
+            <span class="n">desaturation_features</span> <span class="o">=</span> <span class="n">DesaturationsMeasuresResults</span><span class="p">(</span><span class="n">ODI</span><span class="p">,</span> <span class="n">DL_u</span><span class="p">,</span> <span class="n">DL_sd</span><span class="p">,</span> <span class="n">DA100_u</span><span class="p">,</span> <span class="n">DA100_sd</span><span class="p">,</span> <span class="n">DAmax_u</span><span class="p">,</span> <span class="n">DAmax_sd</span><span class="p">,</span>
+                                                                 <span class="n">DD100_u</span><span class="p">,</span> <span class="n">DD100_sd</span><span class="p">,</span> <span class="n">DDmax_u</span><span class="p">,</span> <span class="n">DDmax_sd</span><span class="p">,</span> <span class="n">DS_u</span><span class="p">,</span> <span class="n">DS_sd</span><span class="p">,</span>
+                                                                 <span class="n">TD_u</span><span class="p">,</span> <span class="n">TD_sd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">desaturation_features</span> <span class="o">=</span> <span class="n">DesaturationsMeasuresResults</span><span class="p">(</span><span class="n">ODI</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">desaturation_features</span><span class="o">.</span><span class="n">DS_u</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">desaturation_features</span><span class="o">.</span><span class="n">DS_u</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">desaturation_features</span><span class="o">.</span><span class="n">DS_sd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">desaturation_features</span><span class="o">.</span><span class="n">DS_sd</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">desaturation_features</span></div>
+
+<div class="viewcode-block" id="DesaturationsMeasures.desaturation_detector"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.DesaturationsMeasures.desaturation_detector">[docs]</a>    <span class="k">def</span> <span class="nf">desaturation_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        run desaturation detector, implemented by Dr. Joachim Behar</span>
+
+<span class="sd">        :param signal: The SpO2 signal, of shape (N,)</span>
+<span class="sd">        :return:</span>
+<span class="sd">            ODIMeasureResult class containing the following features:</span>
+<span class="sd">                -	ODI: the average number of desaturation events per hour.</span>
+<span class="sd">                -	begin: List of indices of beginning of each desaturation event.</span>
+<span class="sd">                -	end: List of indices of end of each desaturation event.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sc_desaturations</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+        <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table_desat_cc</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">table_desat_aa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">table_desat_dd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__find_d_points</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_cc</span><span class="p">)</span>
+        <span class="n">table_desat_dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table_desat_dd</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">ODI</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3600</span>  <span class="c1"># Convert to event/h</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">begin</span> <span class="o">=</span> <span class="n">table_desat_aa</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">table_desat_dd</span>
+        <span class="k">return</span> <span class="n">ODI</span></div>
+
+    <span class="k">def</span> <span class="nf">__find_d_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_cc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function, to findfiducials points D of each desaturation</span>
+
+<span class="sd">        :param signal: The SpO2 signal, of shape (N,)</span>
+<span class="sd">        :param table_desat_aa: List of fiducials points A, of shape (M,)</span>
+<span class="sd">        :param table_desat_cc: List of fiducials points C, of shape (M,) table_desat_aa and table_desat_cc must have the same dimension</span>
+<span class="sd">        :return: List of fiducials points D, of shape (M,)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">table_desat_dd</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_cc</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&gt;=</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">table_desat_dd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_cc</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">90</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">table_desat_dd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">found</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">table_desat_dd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">90</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">table_desat_dd</span>
+
+    <span class="k">def</span> <span class="nf">__sc_desaturations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function implements the algorithm of:</span>
+
+<span class="sd">        Hwang, Su Hwan, et al. &quot;Real-time automatic apneic event detection using nocturnal pulse oximetry.&quot;</span>
+<span class="sd">        IEEE Transactions on Biomedical Engineering 65.3 (2018): 706-712.</span>
+
+<span class="sd">        NOTE: The original function search desaturations that are minimum 10 seconds long and maximum 90 seconds long.</span>
+<span class="sd">        In addition the original algorithm actually looked to me more like an estimate of the ODI4 than ODI3. This</span>
+<span class="sd">        implementation is updated to allow the estimation of ODI3 and allows desaturations that are up to 120 seconds</span>
+<span class="sd">        based on some of our observations. In addition, some conditions were added to avoid becoming blocked in</span>
+<span class="sd">        infinite while loops.</span>
+
+<span class="sd">        Important: The algorithm assumes a sampling rate of 1Hz and a quantization of 1% to the input data.</span>
+
+<span class="sd">        :param data: The SpO2 signal, of shape (N,)</span>
+<span class="sd">        :return:</span>
+<span class="sd">            desat: number of desaturations</span>
+<span class="sd">            table_desat_aa: location of the aa feature points</span>
+<span class="sd">            table_desat_bb: location of the bb feature points</span>
+<span class="sd">            table_desat_cc: location of the cc feature points</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">aa</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">desat</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">max_desat_lg</span> <span class="o">=</span> <span class="mi">120</span>  <span class="c1"># was 90 sec in the original paper. Changed to 120 because I have seen longer desaturations.</span>
+        <span class="n">lg_dat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">thres</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ODI_Threshold</span>
+        <span class="n">table_desat_aa</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">table_desat_bb</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="n">aa</span> <span class="o">&lt;</span> <span class="n">lg_dat</span><span class="p">:</span>
+            <span class="c1"># added condition to test that between aa and the end of the recording there is at least 10 seconds</span>
+            <span class="k">if</span> <span class="n">aa</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">&gt;</span> <span class="n">lg_dat</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span>
+
+            <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">aa</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">25</span> <span class="ow">and</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">aa</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="n">aa</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">thres</span><span class="p">:</span>
+                <span class="n">bb</span> <span class="o">=</span> <span class="n">aa</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">out_b</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="k">while</span> <span class="n">bb</span> <span class="o">&lt;</span> <span class="n">lg_dat</span> <span class="ow">and</span> <span class="n">out_b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">bb</span> <span class="o">==</span> <span class="n">lg_dat</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># added this condition in case cc is never reached at the end of the recording</span>
+                        <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span>
+
+                    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">bb</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">bb</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">aa</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="n">bb</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">thres</span><span class="p">:</span>
+                            <span class="n">cc</span> <span class="o">=</span> <span class="n">bb</span> <span class="o">+</span> <span class="mi">1</span>
+
+                            <span class="k">if</span> <span class="n">cc</span> <span class="o">&gt;=</span> <span class="n">lg_dat</span><span class="p">:</span>
+                                <span class="c1"># this is added to stop the loop when c has reached the end of the record</span>
+                                <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">out_c</span> <span class="o">=</span> <span class="mi">0</span>
+
+                            <span class="k">while</span> <span class="n">cc</span> <span class="o">&lt;</span> <span class="n">lg_dat</span> <span class="ow">and</span> <span class="n">out_c</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="n">aa</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="n">cc</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">cc</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="n">bb</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">thres</span><span class="p">)</span> <span class="ow">and</span> <span class="n">cc</span> <span class="o">-</span> <span class="n">aa</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+                                    <span class="k">if</span> <span class="n">cc</span> <span class="o">-</span> <span class="n">aa</span> <span class="o">&lt;=</span> <span class="n">max_desat_lg</span><span class="p">:</span>
+                                        <span class="n">desat</span> <span class="o">=</span> <span class="n">desat</span> <span class="o">+</span> <span class="mi">1</span>
+                                        <span class="n">table_desat_aa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">,</span> <span class="p">[</span><span class="n">aa</span><span class="p">])</span>
+                                        <span class="n">table_desat_bb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_bb</span><span class="p">,</span> <span class="p">[</span><span class="n">bb</span><span class="p">])</span>
+                                        <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_cc</span><span class="p">,</span> <span class="p">[</span><span class="n">cc</span><span class="p">])</span>
+                                        <span class="n">aa</span> <span class="o">=</span> <span class="n">cc</span> <span class="o">+</span> <span class="mi">1</span>
+                                        <span class="n">out_b</span> <span class="o">=</span> <span class="mi">1</span>
+                                        <span class="n">out_c</span> <span class="o">=</span> <span class="mi">1</span>
+                                    <span class="k">else</span><span class="p">:</span>
+                                        <span class="n">aa</span> <span class="o">=</span> <span class="n">cc</span> <span class="o">+</span> <span class="mi">1</span>
+                                        <span class="n">out_b</span> <span class="o">=</span> <span class="mi">1</span>
+                                        <span class="n">out_c</span> <span class="o">=</span> <span class="mi">1</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="n">cc</span> <span class="o">=</span> <span class="n">cc</span> <span class="o">+</span> <span class="mi">1</span>
+                                    <span class="k">if</span> <span class="n">cc</span> <span class="o">&gt;</span> <span class="n">lg_dat</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                                        <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span>
+
+                                    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">bb</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">cc</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                                        <span class="n">bb</span> <span class="o">=</span> <span class="n">cc</span> <span class="o">-</span> <span class="mi">1</span>
+                                        <span class="n">out_c</span> <span class="o">=</span> <span class="mi">0</span>
+                                    <span class="k">else</span><span class="p">:</span>
+                                        <span class="n">out_c</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">bb</span> <span class="o">=</span> <span class="n">bb</span> <span class="o">+</span> <span class="mi">1</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">aa</span> <span class="o">=</span> <span class="n">aa</span> <span class="o">+</span> <span class="mi">1</span>
+                        <span class="n">out_b</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">aa</span> <span class="o">=</span> <span class="n">aa</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span></div>
+
+
+<div class="viewcode-block" id="desat_embedding"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.desat_embedding">[docs]</a><span class="k">def</span> <span class="nf">desat_embedding</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Help function for the class</span>
+
+<span class="sd">    :return: helper arrays containing the information about desaturation lengths and areas.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">table_desat_aa</span> <span class="o">=</span> <span class="n">begin</span>
+    <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="n">end</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">table_desat_aa</span> <span class="o">=</span> <span class="p">[</span><span class="n">table_desat_aa</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">table_desat_cc</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="p">[</span><span class="n">table_desat_cc</span><span class="p">]</span>
+
+    <span class="n">desaturations</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># empty this structure to fill it with the new desaturations</span>
+    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">)):</span>
+        <span class="n">desaturations</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">kk</span><span class="p">]),</span>
+            <span class="s1">&#39;Duration&#39;</span><span class="p">:</span> <span class="n">table_desat_cc</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">-</span> <span class="n">table_desat_aa</span><span class="p">[</span><span class="n">kk</span><span class="p">],</span>
+            <span class="s1">&#39;End&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">table_desat_cc</span><span class="p">[</span><span class="n">kk</span><span class="p">])</span>
+        <span class="p">})</span>
+
+    <span class="n">desaturation_valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">desaturations</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">desaturation_length_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">desaturations</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    <span class="n">desaturation_int_100_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">desaturations</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    <span class="n">desaturation_int_max_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">desaturations</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    <span class="n">desaturation_depth_100_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">desaturations</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    <span class="n">desaturation_depth_max_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">desaturations</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    <span class="n">desaturation_slope_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">desaturations</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">desaturations</span><span class="p">,</span> <span class="n">desaturation_valid</span><span class="p">,</span> <span class="n">desaturation_length_all</span><span class="p">,</span> <span class="n">desaturation_int_100_all</span><span class="p">,</span> \
+           <span class="n">desaturation_int_max_all</span><span class="p">,</span> <span class="n">desaturation_depth_100_all</span><span class="p">,</span> <span class="n">desaturation_depth_max_all</span><span class="p">,</span> <span class="n">desaturation_slope_all</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Author
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

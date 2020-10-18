@@ -1,0 +1,96 @@
+\begin{sphinxtheindex}
+\let\bigletter\sphinxstyleindexlettergroup
+\let\spxpagem \sphinxstyleindexpagemain
+\let\spxentry \sphinxstyleindexentry
+\let\spxextra \sphinxstyleindexextra
+
+  \bigletter A
+  \item \spxentry{apen()}\spxextra{in module pobm.spo2.single\_biomarkers}, \hyperpage{6}
+
+  \indexspace
+  \bigletter B
+  \item \spxentry{block\_data()}\spxextra{in module pobm.prep}, \hyperpage{7}
+
+  \indexspace
+  \bigletter C
+  \item \spxentry{ComplexityMeasures}\spxextra{class in pobm.obm.complex}, \hyperpage{2}
+  \item \spxentry{compute()}\spxextra{pobm.obm.burden.HypoxicBurdenMeasures method}, \hyperpage{1}
+  \item \spxentry{compute()}\spxextra{pobm.obm.complex.ComplexityMeasures method}, \hyperpage{2}
+  \item \spxentry{compute()}\spxextra{pobm.obm.desat.DesaturationsMeasures method}, \hyperpage{3}
+  \item \spxentry{compute()}\spxextra{pobm.obm.general.OverallGeneralMeasures method}, 
+		\hyperpage{4}
+  \item \spxentry{compute()}\spxextra{pobm.obm.periodicity.PRSAMeasures method}, \hyperpage{5}
+  \item \spxentry{compute()}\spxextra{pobm.obm.periodicity.PSDMeasures method}, \hyperpage{5}
+
+  \indexspace
+  \bigletter D
+  \item \spxentry{desat\_embedding()}\spxextra{in module pobm.obm.desat}, \hyperpage{4}
+  \item \spxentry{desaturation\_detector()}\spxextra{pobm.obm.desat.DesaturationsMeasures method}, 
+		\hyperpage{3}
+  \item \spxentry{DesaturationsMeasures}\spxextra{class in pobm.obm.desat}, \hyperpage{3}
+  \item \spxentry{dfa()}\spxextra{in module pobm.spo2.single\_biomarkers}, \hyperpage{6}
+  \item \spxentry{dfilter()}\spxextra{in module pobm.prep}, \hyperpage{7}
+
+  \indexspace
+  \bigletter H
+  \item \spxentry{HypoxicBurdenMeasures}\spxextra{class in pobm.obm.burden}, \hyperpage{1}
+
+  \indexspace
+  \bigletter L
+  \item \spxentry{lempel\_ziv()}\spxextra{in module pobm.spo2.single\_biomarkers}, \hyperpage{6}
+
+  \indexspace
+  \bigletter M
+  \item \spxentry{median\_spo2()}\spxextra{in module pobm.prep}, \hyperpage{7}
+  \item \spxentry{module}
+    \subitem \spxentry{pobm}, \hyperpage{8}
+    \subitem \spxentry{pobm.obm}, \hyperpage{6}
+    \subitem \spxentry{pobm.obm.burden}, \hyperpage{1}
+    \subitem \spxentry{pobm.obm.complex}, \hyperpage{2}
+    \subitem \spxentry{pobm.obm.desat}, \hyperpage{3}
+    \subitem \spxentry{pobm.obm.general}, \hyperpage{4}
+    \subitem \spxentry{pobm.obm.periodicity}, \hyperpage{5}
+    \subitem \spxentry{pobm.prep}, \hyperpage{7}
+    \subitem \spxentry{pobm.spo2}, \hyperpage{7}
+    \subitem \spxentry{pobm.spo2.single\_biomarkers}, \hyperpage{6}
+
+  \indexspace
+  \bigletter O
+  \item \spxentry{odi()}\spxextra{in module pobm.spo2.single\_biomarkers}, \hyperpage{6}
+  \item \spxentry{OverallGeneralMeasures}\spxextra{class in pobm.obm.general}, \hyperpage{4}
+
+  \indexspace
+  \bigletter P
+  \item \spxentry{pobm}
+    \subitem \spxentry{module}, \hyperpage{8}
+  \item \spxentry{pobm.obm}
+    \subitem \spxentry{module}, \hyperpage{6}
+  \item \spxentry{pobm.obm.burden}
+    \subitem \spxentry{module}, \hyperpage{1}
+  \item \spxentry{pobm.obm.complex}
+    \subitem \spxentry{module}, \hyperpage{2}
+  \item \spxentry{pobm.obm.desat}
+    \subitem \spxentry{module}, \hyperpage{3}
+  \item \spxentry{pobm.obm.general}
+    \subitem \spxentry{module}, \hyperpage{4}
+  \item \spxentry{pobm.obm.periodicity}
+    \subitem \spxentry{module}, \hyperpage{5}
+  \item \spxentry{pobm.prep}
+    \subitem \spxentry{module}, \hyperpage{7}
+  \item \spxentry{pobm.spo2}
+    \subitem \spxentry{module}, \hyperpage{7}
+  \item \spxentry{pobm.spo2.single\_biomarkers}
+    \subitem \spxentry{module}, \hyperpage{6}
+  \item \spxentry{PRSAMeasures}\spxextra{class in pobm.obm.periodicity}, \hyperpage{5}
+  \item \spxentry{PSDMeasures}\spxextra{class in pobm.obm.periodicity}, \hyperpage{5}
+
+  \indexspace
+  \bigletter R
+  \item \spxentry{resamp\_spo2()}\spxextra{in module pobm.prep}, \hyperpage{7}
+
+  \indexspace
+  \bigletter S
+  \item \spxentry{sampen()}\spxextra{in module pobm.spo2.single\_biomarkers}, \hyperpage{6}
+  \item \spxentry{set\_range()}\spxextra{in module pobm.prep}, \hyperpage{7}
+
+\end{sphinxtheindex}
