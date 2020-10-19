@@ -284,12 +284,13 @@ Public License for more details.</p>
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.ComplexityMeasuresResults<a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.compute" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
+<dd><blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param signal</dt>
+<dd class="field-odd"><p>1-d array, of shape (N,) where N is the length of the signal</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
+<dt class="field-even">return</dt>
+<dd class="field-even"><dl class="simple">
 <dt>ComplexityMeasuresResults class containing the following features:</dt><dd><ul class="simple">
 <li><p>ApEn: Approximate Entropy.</p></li>
 <li><p>LZ: Lempel-Ziv complexity.</p></li>
@@ -299,11 +300,10 @@ Public License for more details.</p>
 </ul>
 </dd>
 </dl>
-</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.complex</span> <span class="kn">import</span> <span class="n">ComplexityMeasures</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.complex</span> <span class="kn">import</span> <span class="n">ComplexityMeasures</span>
 
 <span class="c1"># Initialize the class with the desired parameters</span>
 <span class="n">complexity_class</span> <span class="o">=</span> <span class="n">ComplexityMeasures</span><span class="p">(</span><span class="n">CTM_Threshold</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">DFA_Window</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">M_Sampen</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">R_Sampen</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">M_ApEn</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">R_ApEn</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
@@ -312,6 +312,7 @@ Public License for more details.</p>
 <span class="n">results_complexity</span> <span class="o">=</span> <span class="n">complexity_class</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">spo2_signal</span><span class="p">)</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p>PhysioZoo OBM toolbox 2020, version 1.0
 Released under the GNU General Public License</p>
 <p>Authors: Jeremy Levy and Joachim A. Behar
@@ -387,7 +388,7 @@ Public License for more details.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.desat</span> <span class="kn">import</span> <span class="n">DesaturationsMeasures</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.desat</span> <span class="kn">import</span> <span class="n">DesaturationsMeasures</span>
 
 <span class="c1"># Initialize the class with the desired parameters</span>
 <span class="n">desat_class</span> <span class="o">=</span> <span class="n">DesaturationsMeasures</span><span class="p">(</span><span class="n">ODI_Threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -529,7 +530,7 @@ Public License for more details.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.general</span> <span class="kn">import</span> <span class="n">OverallGeneralMeasures</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.general</span> <span class="kn">import</span> <span class="n">OverallGeneralMeasures</span>
 
 <span class="c1"># Initialize the class with the desired parameters</span>
 <span class="n">statistics_class</span> <span class="o">=</span> <span class="n">OverallGeneralMeasures</span><span class="p">(</span><span class="n">ZC_Baseline</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">M_Threshold</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">DI_Window</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
@@ -605,7 +606,7 @@ Public License for more details.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.periodicity</span> <span class="kn">import</span> <span class="n">PRSAMeasures</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.periodicity</span> <span class="kn">import</span> <span class="n">PRSAMeasures</span>
 
 <span class="c1"># Initialize the class with the desired parameters</span>
 <span class="n">prsa_class</span> <span class="o">=</span> <span class="n">PRSAMeasures</span><span class="p">(</span><span class="n">PRSA_Window</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">K_AC</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -672,7 +673,7 @@ Public License for more details.</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.periodicity</span> <span class="kn">import</span> <span class="n">PSDMeasures</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.periodicity</span> <span class="kn">import</span> <span class="n">PSDMeasures</span>
 
 <span class="c1"># Initialize the class with the desired parameters</span>
 <span class="n">psd_class</span> <span class="o">=</span> <span class="n">PSDMeasures</span><span class="p">()</span>
