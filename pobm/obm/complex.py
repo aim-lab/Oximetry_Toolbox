@@ -61,7 +61,7 @@ class ComplexityMeasures:
 
         Example:
         
-        .. code:: python
+        .. code-block:: python
 
             from pobm.obm.complex import ComplexityMeasures
 

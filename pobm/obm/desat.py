@@ -56,7 +56,7 @@ class DesaturationsMeasures:
         
         Example:
         
-        .. code:: python
+        .. code-block:: python
 
             from pobm.obm.desat import DesaturationsMeasures
 

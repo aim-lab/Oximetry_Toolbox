@@ -50,7 +50,7 @@ class PRSAMeasures:
 
         Example:
         
-        .. code:: python
+        .. code-block:: python
         
             from pobm.obm.periodicity import PRSAMeasures
 
@@ -141,7 +141,7 @@ class PSDMeasures:
 
         Example:
         
-        .. code:: python
+        .. code-block:: python
 
             from pobm.obm.periodicity import PSDMeasures
 

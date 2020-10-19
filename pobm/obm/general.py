@@ -54,7 +54,7 @@ class OverallGeneralMeasures:
 
         Example:
         
-        .. code:: python
+        .. code-block:: python
 
             from pobm.obm.general import OverallGeneralMeasures
 

@@ -55,7 +55,7 @@ class HypoxicBurdenMeasures:
 
         Example:
         
-        .. code:: python
+        .. code-block:: python
 
             from pobm.obm.burden import HypoxicBurdenMeasures
 
