@@ -1,8 +1,6 @@
 pobm package
 ============
 
-Subpackages
------------
 
 .. toctree::
    :maxdepth: 4

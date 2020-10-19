@@ -1,8 +1,6 @@
 pobm.spo2 package
 =================
 
-Submodules
-----------
 
 pobm.spo2.single\_biomarkers
 -----------------------------------

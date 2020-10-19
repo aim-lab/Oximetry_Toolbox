@@ -165,6 +165,22 @@
 <span class="sd">    :param CT_Threshold: Percentage of the time spent below the “CT_Threshold” % oxygen saturation level.</span>
 <span class="sd">    :param CA_Baseline: Baseline to compute the CA feature. Default value is mean of the signal.</span>
 
+
+<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
+<span class="sd">    Released under the GNU General Public License</span>
+
+<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
+<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
+<span class="sd">    https://aim-lab.github.io/</span>
+
+<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
+<span class="sd">    under the terms of the GNU General Public License as published by the</span>
+<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
+<span class="sd">    option) any later version.</span>
+<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
+<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
+<span class="sd">    Public License for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">CT_Threshold</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">CA_Baseline</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -198,6 +214,22 @@
 <span class="sd">            # Compute the biomarkers</span>
 <span class="sd">            results_hypoxic = hypoxic_class.compute(spo2_signal)</span>
 
+
+<span class="sd">        PhysioZoo OBM toolbox 2020, version 1.0</span>
+<span class="sd">        Released under the GNU General Public License</span>
+
+<span class="sd">        Authors: Jeremy Levy and Joachim A. Behar</span>
+<span class="sd">        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
+<span class="sd">        https://aim-lab.github.io/</span>
+
+<span class="sd">        This program is free software; you can redistribute it and/or modify it</span>
+<span class="sd">        under the terms of the GNU General Public License as published by the</span>
+<span class="sd">        Free Software Foundation; either version 2 of the License, or (at your</span>
+<span class="sd">        option) any later version.</span>
+<span class="sd">        This program is distributed in the hope that it will be useful, but</span>
+<span class="sd">        WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
+<span class="sd">        Public License for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">_check_shape_</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
@@ -226,6 +258,23 @@
 <span class="sd">                    and normalized by the total recording time</span>
 <span class="sd">                -   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized</span>
 <span class="sd">                    by the total recording time</span>
+
+
+<span class="sd">        PhysioZoo OBM toolbox 2020, version 1.0</span>
+<span class="sd">        Released under the GNU General Public License</span>
+
+<span class="sd">        Authors: Jeremy Levy and Joachim A. Behar</span>
+<span class="sd">        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
+<span class="sd">        https://aim-lab.github.io/</span>
+
+<span class="sd">        This program is free software; you can redistribute it and/or modify it</span>
+<span class="sd">        under the terms of the GNU General Public License as published by the</span>
+<span class="sd">        Free Software Foundation; either version 2 of the License, or (at your</span>
+<span class="sd">        option) any later version.</span>
+<span class="sd">        This program is distributed in the hope that it will be useful, but</span>
+<span class="sd">        WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
+<span class="sd">        Public License for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">desaturations</span><span class="p">,</span> <span class="n">desaturation_valid</span><span class="p">,</span> <span class="n">desaturation_length_all</span><span class="p">,</span> <span class="n">desaturation_int_100_all</span><span class="p">,</span> \
@@ -265,6 +314,23 @@
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: CA, the cumulative area (float)</span>
+
+<span class="sd">        </span>
+<span class="sd">        PhysioZoo OBM toolbox 2020, version 1.0</span>
+<span class="sd">        Released under the GNU General Public License</span>
+
+<span class="sd">        Authors: Jeremy Levy and Joachim A. Behar</span>
+<span class="sd">        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
+<span class="sd">        https://aim-lab.github.io/</span>
+
+<span class="sd">        This program is free software; you can redistribute it and/or modify it</span>
+<span class="sd">        under the terms of the GNU General Public License as published by the</span>
+<span class="sd">        Free Software Foundation; either version 2 of the License, or (at your</span>
+<span class="sd">        option) any later version.</span>
+<span class="sd">        This program is distributed in the hope that it will be useful, but</span>
+<span class="sd">        WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
+<span class="sd">        Public License for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
             <span class="n">signal_under_baseline</span> <span class="o">=</span> <span class="n">signal</span><span class="p">[</span><span class="n">signal</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CA_Baseline</span><span class="p">]</span>
@@ -279,6 +345,23 @@
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: CT, the cumulative time (float)</span>
+
+<span class="sd">        </span>
+<span class="sd">        PhysioZoo OBM toolbox 2020, version 1.0</span>
+<span class="sd">        Released under the GNU General Public License</span>
+
+<span class="sd">        Authors: Jeremy Levy and Joachim A. Behar</span>
+<span class="sd">        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
+<span class="sd">        https://aim-lab.github.io/</span>
+
+<span class="sd">        This program is free software; you can redistribute it and/or modify it</span>
+<span class="sd">        under the terms of the GNU General Public License as published by the</span>
+<span class="sd">        Free Software Foundation; either version 2 of the License, or (at your</span>
+<span class="sd">        option) any later version.</span>
+<span class="sd">        This program is distributed in the hope that it will be useful, but</span>
+<span class="sd">        WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
+<span class="sd">        Public License for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">[</span><span class="n">signal</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CT_Threshold</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span></div>
@@ -295,7 +378,19 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Author
+        &copy; Copyright PhysioZoo OBM toolbox 2020, version 1.0
+Released under the GNU General Public License
+Authors: Jeremy Levy and Joachim A. Behar
+The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+https://aim-lab.github.io/
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2 of the License, or (at your
+option) any later version.
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details. 
 
     </p>
   </div>

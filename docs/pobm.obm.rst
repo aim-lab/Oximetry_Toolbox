@@ -1,8 +1,6 @@
 pobm.obm package
 ================
 
-Submodules
-----------
 
 pobm.obm.burden
 ----------------------
