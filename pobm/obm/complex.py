@@ -61,7 +61,7 @@ class ComplexityMeasures:
 
         Example:
         
-        .. code-block::
+        .. code:: python
 
             from pobm.obm.complex import ComplexityMeasures
 
@@ -72,21 +72,21 @@ class ComplexityMeasures:
             results_complexity = complexity_class.compute(spo2_signal)
 
 
-        PhysioZoo OBM toolbox 2020, version 1.0
-        Released under the GNU General Public License
+    PhysioZoo OBM toolbox 2020, version 1.0
+    Released under the GNU General Public License
 
-        Authors: Jeremy Levy and Joachim A. Behar
-        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-        https://aim-lab.github.io/
+    Authors: Jeremy Levy and Joachim A. Behar
+    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+    https://aim-lab.github.io/
 
-        This program is free software; you can redistribute it and/or modify it
-        under the terms of the GNU General Public License as published by the
-        Free Software Foundation; either version 2 of the License, or (at your
-        option) any later version.
-        This program is distributed in the hope that it will be useful, but
-        WITHOUT ANY WARRANTY; without even the implied warranty of
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-        Public License for more details.
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License, or (at your
+    option) any later version.
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
         """
         _check_shape_(signal)
         warnings.filterwarnings("ignore", category=RuntimeWarning)
@@ -102,23 +102,6 @@ class ComplexityMeasures:
         of the Obstructive Sleep Apnea Syndrome
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: ApEn
-
-        
-        PhysioZoo OBM toolbox 2020, version 1.0
-        Released under the GNU General Public License
-
-        Authors: Jeremy Levy and Joachim A. Behar
-        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-        https://aim-lab.github.io/
-
-        This program is free software; you can redistribute it and/or modify it
-        under the terms of the GNU General Public License as published by the
-        Free Software Foundation; either version 2 of the License, or (at your
-        option) any later version.
-        This program is distributed in the hope that it will be useful, but
-        WITHOUT ANY WARRANTY; without even the implied warranty of
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-        Public License for more details.
         """
         signal = np.array(signal)
         signal = signal[np.logical_not(np.isnan(signal))]
