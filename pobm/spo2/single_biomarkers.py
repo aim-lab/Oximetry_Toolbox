@@ -15,6 +15,22 @@ def odi(signal, ODI_Threshold=3):
     :param signal: The SpO2 signal, of shape (N,)
     :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.
     :return: ODI
+
+    PhysioZoo OBM toolbox 2020, version 1.0
+    Released under the GNU General Public License
+
+    Authors: Jeremy Levy and Joachim A. Behar
+    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+    https://aim-lab.github.io/
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License, or (at your
+    option) any later version.
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
     """
     warnings.filterwarnings("ignore", category=RuntimeWarning)
     desat_class = DesaturationsMeasures(ODI_Threshold)
@@ -29,6 +45,22 @@ def sampen(signal, M_Sampen=3, R_Sampen=0.2):
     :param M_Sampen: Embedding dimension to compute SampEn.
     :param R_Sampen: Tolerance to compute SampEn.
     :return: SampEn
+
+    PhysioZoo OBM toolbox 2020, version 1.0
+    Released under the GNU General Public License
+
+    Authors: Jeremy Levy and Joachim A. Behar
+    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+    https://aim-lab.github.io/
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License, or (at your
+    option) any later version.
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
     """
     warnings.filterwarnings("ignore", category=RuntimeWarning)
     N = len(signal)
@@ -62,6 +94,22 @@ def lempel_ziv(signal):
 
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
     :return: LZ
+    
+    PhysioZoo OBM toolbox 2020, version 1.0
+    Released under the GNU General Public License
+
+    Authors: Jeremy Levy and Joachim A. Behar
+    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+    https://aim-lab.github.io/
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License, or (at your
+    option) any later version.
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
     """
     warnings.filterwarnings("ignore", category=RuntimeWarning)
     median = np.median(signal)
@@ -78,6 +126,22 @@ def apen(signal, M_ApEn=2, R_ApEn=0.25):
 
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
     :return: ApEn
+    
+    PhysioZoo OBM toolbox 2020, version 1.0
+    Released under the GNU General Public License
+
+    Authors: Jeremy Levy and Joachim A. Behar
+    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+    https://aim-lab.github.io/
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License, or (at your
+    option) any later version.
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
     """
     warnings.filterwarnings("ignore", category=RuntimeWarning)
     signal = np.array(signal)
@@ -126,6 +190,22 @@ def dfa(signal, DFA_Window=20):
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
     :param DFA_Window: Length of window to calculate DFA biomarker.
     :return: DFA
+    
+    PhysioZoo OBM toolbox 2020, version 1.0
+    Released under the GNU General Public License
+
+    Authors: Jeremy Levy and Joachim A. Behar
+    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+    https://aim-lab.github.io/
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License, or (at your
+    option) any later version.
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
     """
     warnings.filterwarnings("ignore", category=RuntimeWarning)
 

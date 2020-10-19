@@ -16,6 +16,22 @@ class HypoxicBurdenMeasures:
     :param CT_Threshold: Percentage of the time spent below the “CT_Threshold” % oxygen saturation level.
     :param CA_Baseline: Baseline to compute the CA feature. Default value is mean of the signal.
 
+
+    PhysioZoo OBM toolbox 2020, version 1.0
+    Released under the GNU General Public License
+
+    Authors: Jeremy Levy and Joachim A. Behar
+    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+    https://aim-lab.github.io/
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License, or (at your
+    option) any later version.
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
     """
 
     def __init__(self, begin, end, CT_Threshold=90, CA_Baseline=None):
@@ -49,6 +65,22 @@ class HypoxicBurdenMeasures:
             # Compute the biomarkers
             results_hypoxic = hypoxic_class.compute(spo2_signal)
 
+
+        PhysioZoo OBM toolbox 2020, version 1.0
+        Released under the GNU General Public License
+
+        Authors: Jeremy Levy and Joachim A. Behar
+        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+        https://aim-lab.github.io/
+
+        This program is free software; you can redistribute it and/or modify it
+        under the terms of the GNU General Public License as published by the
+        Free Software Foundation; either version 2 of the License, or (at your
+        option) any later version.
+        This program is distributed in the hope that it will be useful, but
+        WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+        Public License for more details.
         """
 
         _check_shape_(signal)
@@ -77,6 +109,23 @@ class HypoxicBurdenMeasures:
                     and normalized by the total recording time
                 -   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized
                     by the total recording time
+
+
+        PhysioZoo OBM toolbox 2020, version 1.0
+        Released under the GNU General Public License
+
+        Authors: Jeremy Levy and Joachim A. Behar
+        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+        https://aim-lab.github.io/
+
+        This program is free software; you can redistribute it and/or modify it
+        under the terms of the GNU General Public License as published by the
+        Free Software Foundation; either version 2 of the License, or (at your
+        option) any later version.
+        This program is distributed in the hope that it will be useful, but
+        WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+        Public License for more details.
         """
 
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
@@ -116,6 +165,23 @@ class HypoxicBurdenMeasures:
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: CA, the cumulative area (float)
+
+        
+        PhysioZoo OBM toolbox 2020, version 1.0
+        Released under the GNU General Public License
+
+        Authors: Jeremy Levy and Joachim A. Behar
+        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+        https://aim-lab.github.io/
+
+        This program is free software; you can redistribute it and/or modify it
+        under the terms of the GNU General Public License as published by the
+        Free Software Foundation; either version 2 of the License, or (at your
+        option) any later version.
+        This program is distributed in the hope that it will be useful, but
+        WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+        Public License for more details.
         """
         with np.errstate(invalid='ignore'):
             signal_under_baseline = signal[signal < self.CA_Baseline]
@@ -130,6 +196,23 @@ class HypoxicBurdenMeasures:
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: CT, the cumulative time (float)
+
+        
+        PhysioZoo OBM toolbox 2020, version 1.0
+        Released under the GNU General Public License
+
+        Authors: Jeremy Levy and Joachim A. Behar
+        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+        https://aim-lab.github.io/
+
+        This program is free software; you can redistribute it and/or modify it
+        under the terms of the GNU General Public License as published by the
+        Free Software Foundation; either version 2 of the License, or (at your
+        option) any later version.
+        This program is distributed in the hope that it will be useful, but
+        WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+        Public License for more details.
         """
         with np.errstate(invalid='ignore'):
             return 100 * len(signal[signal <= self.CT_Threshold]) / len(signal)

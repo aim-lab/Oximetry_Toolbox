@@ -8,11 +8,6 @@ pobm package
    pobm.obm
    pobm.spo2
 
-Submodules
-----------
-
-pobm.main
-----------------
 
 .. automodule:: pobm.main
    :members:

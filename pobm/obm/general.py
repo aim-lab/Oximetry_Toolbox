@@ -13,6 +13,22 @@ class OverallGeneralMeasures:
     :param ZC_Baseline: Baseline for calculating number of zero-crossing points.
     :param percentile: Percentile to perform. For example, for percentile 1, the argument should be 1
     :param M_Threshold: Percentage of the signal M_Threshold % below median oxygen saturation. Typically use 1,2 or 5
+
+    PhysioZoo OBM toolbox 2020, version 1.0
+    Released under the GNU General Public License
+
+    Authors: Jeremy Levy and Joachim A. Behar
+    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+    https://aim-lab.github.io/
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License, or (at your
+    option) any later version.
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
     """
 
     def __init__(self, ZC_Baseline=None, percentile=1, M_Threshold=2, DI_Window=12):
@@ -48,6 +64,21 @@ class OverallGeneralMeasures:
             # Compute the biomarkers
             results_statistics = statistics_class.compute(spo2_signal)
 
+        PhysioZoo OBM toolbox 2020, version 1.0
+        Released under the GNU General Public License
+
+        Authors: Jeremy Levy and Joachim A. Behar
+        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
+        https://aim-lab.github.io/
+
+        This program is free software; you can redistribute it and/or modify it
+        under the terms of the GNU General Public License as published by the
+        Free Software Foundation; either version 2 of the License, or (at your
+        option) any later version.
+        This program is distributed in the hope that it will be useful, but
+        WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+        Public License for more details.
         """
         _check_shape_(signal)
 
