@@ -170,11 +170,7 @@ class DesaturationsMeasures:
         run desaturation detector, implemented by Dr. Joachim Behar
 
         :param signal: The SpO2 signal, of shape (N,)
-        :return: ODIMeasureResult class containing the following features:
-                -	ODI: the average number of desaturation events per hour.
-                -	begin: List of indices of beginning of each desaturation event.
-                -	end: List of indices of end of each desaturation event.
-
+        :return: ODI: the average number of desaturation events per hour.
     
         PhysioZoo OBM toolbox 2020, version 1.0
         Released under the GNU General Public License
@@ -201,6 +197,7 @@ class DesaturationsMeasures:
 
         self.begin = table_desat_aa
         self.end = table_desat_dd
+
         return ODI
 
     def __find_d_points(self, signal, table_desat_aa, table_desat_cc):
@@ -218,7 +215,8 @@ class DesaturationsMeasures:
                 table_desat_dd.append(table_desat_cc[i])
             else:
                 found = False
-                for j in range(90):
+                min_duration = table_desat_cc[i] - table_desat_aa[i]
+                for j in range(min_duration, 90):
                     if signal[table_desat_aa[i] + j] >= signal[table_desat_aa[i]] - 1:
                         found = True
                         table_desat_dd.append(table_desat_aa[i] + j)
