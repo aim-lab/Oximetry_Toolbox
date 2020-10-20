@@ -37,4 +37,4 @@ All the requirements are installed when the toolbox is installed, no need for ad
 
 ## Documentation
 
-TODO: add link of documentation
+Available at https://oximetry-toolbox.readthedocs.io/en/latest/
