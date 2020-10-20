@@ -217,10 +217,11 @@ class DesaturationsMeasures:
                 found = False
                 min_duration = table_desat_cc[i] - table_desat_aa[i]
                 for j in range(min_duration, 90):
-                    if signal[table_desat_aa[i] + j] >= signal[table_desat_aa[i]] - 1:
-                        found = True
-                        table_desat_dd.append(table_desat_aa[i] + j)
-                        break
+                    if table_desat_aa[i] + j < len(signal):
+                        if signal[table_desat_aa[i] + j] >= signal[table_desat_aa[i]] - 1:
+                            found = True
+                            table_desat_dd.append(table_desat_aa[i] + j)
+                            break
                 if found is False:
                     table_desat_dd.append(table_desat_aa[i] + 90)
         return table_desat_dd
