@@ -12,14 +12,18 @@ class ComplexityMeasures:
     Class that calculates Complexity Features from spo2 time series.
     Suppose that the data has been preprocessed.
 
-    :param
-        signal: 1-d array, of shape (N,) where N is the length of the signal
-        CTM_Threshold: Radius of Central Tendency Measure.
-        DFA_Window: Length of window to calculate DFA biomarker.
-        M_Sampen: Embedding dimension to compute SampEn.
-        R_Sampen: Tolerance to compute SampEn.
-        M_ApEn: Embedding dimension to compute ApEn.
-        R_ApEn: Tolerance to compute ApEn.
+    :param CTM_Threshold: Radius of Central Tendency Measure.
+    :type CTM_Threshold: optional
+    :param DFA_Window: Length of window to calculate DFA biomarker.
+    :type DFA_Window: optional
+    :param M_Sampen: Embedding dimension to compute SampEn.
+    :type M_Sampen: optional
+    :param R_Sampen: Tolerance to compute SampEn.
+    :type R_Sampen: optional
+    :param M_ApEn: Embedding dimension to compute ApEn.
+    :type M_ApEn: optional
+    :param R_ApEn: Tolerance to compute ApEn.
+    :type R_ApEn: optional
 
 
     PhysioZoo OBM toolbox 2020, version 1.0
@@ -49,9 +53,9 @@ class ComplexityMeasures:
 
     def compute(self, signal) -> ComplexityMeasuresResults:
         """
+
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
-        :return:
-            ComplexityMeasuresResults class containing the following features:
+        :return: ComplexityMeasuresResults class containing the following features:
                 -	ApEn: Approximate Entropy.
                 -   LZ: Lempel-Ziv complexity.
                 -	CTM: Central Tendency Measure.

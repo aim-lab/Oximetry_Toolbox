@@ -11,8 +11,12 @@ class OverallGeneralMeasures:
     Suppose that the data has been preprocessed.
 
     :param ZC_Baseline: Baseline for calculating number of zero-crossing points.
+    :type ZC_Baseline: optional
     :param percentile: Percentile to perform. For example, for percentile 1, the argument should be 1
+    :type percentile: optional
     :param M_Threshold: Percentage of the signal M_Threshold % below median oxygen saturation. Typically use 1,2 or 5
+    :type M_Threshold: optional
+
 
     PhysioZoo OBM toolbox 2020, version 1.0
     Released under the GNU General Public License
@@ -40,8 +44,7 @@ class OverallGeneralMeasures:
     def compute(self, signal) -> OverallGeneralMeasuresResult:
         """
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
-        :return:
-            OveralGeneralMeasuresResult class containing the following features:
+        :return: OveralGeneralMeasuresResult class containing the following features:
                 -	AV: Average of the signal.
                 -	MED: Median of the signal.
                 -	Min: Minimum value of the signal.

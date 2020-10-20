@@ -14,7 +14,9 @@ class HypoxicBurdenMeasures:
     :param begin: List of indices of beginning of each desaturation event.
     :param end: List of indices of end of each desaturation event.
     :param CT_Threshold: Percentage of the time spent below the “CT_Threshold” % oxygen saturation level.
+    :type CT_Threshold: optional
     :param CA_Baseline: Baseline to compute the CA feature. Default value is mean of the signal.
+    :type CA_Baseline: optional
 
 
     PhysioZoo OBM toolbox 2020, version 1.0
@@ -43,8 +45,7 @@ class HypoxicBurdenMeasures:
     def compute(self, signal):
         """
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
-        :return:
-            HypoxicBurdenMeasuresResults class containing the following features:
+        :return: HypoxicBurdenMeasuresResults class containing the following features:
                 -	CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time
                 -   CT: Percentage of the time spent below the xx% oxygen saturation level
                 -   POD: Percentage of oxygen desaturation events

@@ -11,6 +11,7 @@ class DesaturationsMeasures:
     Suppose that the data has been preprocessed.
 
     :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.
+    :type ODI_Threshold: optional
 
     PhysioZoo OBM toolbox 2020, version 1.0
     Released under the GNU General Public License
@@ -37,8 +38,8 @@ class DesaturationsMeasures:
     def compute(self, signal) -> DesaturationsMeasuresResults:
         """
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
-        :return:
-            DesaturationsMeasuresResults class containing the following features:
+        :return: DesaturationsMeasuresResults class containing the following features:
+                -   ODI: Oxygen Desaturation Index
                 -	DL_u: Mean of desaturation length
                 -	DL_sd: Standard deviation of desaturation length
                 -	DA100_u: Mean of desaturation area using 100% as baseline.
@@ -53,7 +54,9 @@ class DesaturationsMeasures:
                 -	DS_sd: Standard deviation of the desaturation slope.
                 -   TD_u: Mean of time between two consecutive desaturation events.
                 -   TD_sd: Standard deviation of time between 2 consecutive desaturation events.
-        
+                -   begin: List of indices of beginning of each desaturation event
+                -   end: List of indices of end of each desaturation event
+
         Example:
         
         .. code-block:: python
@@ -167,8 +170,7 @@ class DesaturationsMeasures:
         run desaturation detector, implemented by Dr. Joachim Behar
 
         :param signal: The SpO2 signal, of shape (N,)
-        :return:
-            ODIMeasureResult class containing the following features:
+        :return: ODIMeasureResult class containing the following features:
                 -	ODI: the average number of desaturation events per hour.
                 -	begin: List of indices of beginning of each desaturation event.
                 -	end: List of indices of end of each desaturation event.

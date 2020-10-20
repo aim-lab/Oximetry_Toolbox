@@ -11,9 +11,10 @@ class PRSAMeasures:
     Function that calculates PRSA Features from spo2 time series.
     Suppose that the data has been preprocessed.
 
-    :param
-        PRSA_Window: Fragment duration of PRSA.
-        K_AC: Number of values to shift when computing autocorrelation
+    :param PRSA_Window: Fragment duration of PRSA.
+    :type PRSA_Window: optional
+    :param K_AC: Number of values to shift when computing autocorrelation
+    :type K_AC: optional
 
     PhysioZoo OBM toolbox 2020, version 1.0
     Released under the GNU General Public License
@@ -39,8 +40,7 @@ class PRSAMeasures:
     def compute(self, signal) -> PRSAResults:
         """
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
-        :return:
-            PRSAResults class containing the following features:
+        :return: PRSAResults class containing the following features:
                 -	PRSAc: PRSA capacity.
                 -	PRSAad: PRSA amplitude difference.
                 -	PRSAos: PRSA overall slope.
@@ -128,11 +128,9 @@ class PSDMeasures:
 
     def compute(self, signal) -> PSDResults:
         """
-        :param
-            signal: The SpO2 signal, of shape (N,)
+        :param signal: The SpO2 signal, of shape (N,)
 
-        :return:
-            PSDResults class containing the following features:
+        :return: PSDResults class containing the following features:
                 -   PSD_total: The amplitude of the spectral signal.
                 -   PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.
                 -   PSD_ratio: The ratio between PSD_total and PSD_band.
