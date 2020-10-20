@@ -50,8 +50,10 @@ class DesaturationsMeasuresResults:
     end: np.array
 
     def __str__(self):
-        return str(dict(dataclasses.asdict(self))) + \
-               str({"begin": self.begin.flatten().tolist(), "end": self.end.flatten().tolist()})
+        desat_measures = dict(dataclasses.asdict(self))
+        desat_measures['begin'] = self.begin.flatten().tolist()
+        desat_measures['end'] = self.end.flatten().tolist()
+        return str(desat_measures)
 
 
 
