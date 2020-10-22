@@ -184,12 +184,12 @@ class HypoxicBurdenMeasures:
         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
         Public License for more details.
         """
-        with np.errstate(invalid='ignore'):
-            signal_under_baseline = signal[signal < self.CA_Baseline]
-        if len(signal_under_baseline) == 0:
-            return 0.0
-        # return integrate.cumtrapz(signal_under_baseline) / len(signal)
-        return sum(signal_under_baseline) / len(signal)
+        res = 0
+        for value in signal:
+            if value < self.CA_Baseline:
+                res += self.CA_Baseline - value
+
+        return res / len(signal)
 
     def __comp_ct(self, signal):
         """
