@@ -1,7 +1,7 @@
 import numpy as np
 import warnings
 
-from pobm._ErrorHandler import _check_shape_, _check_window_delta_
+from pobm._ErrorHandler import _check_shape_, _check_window_delta_, WrongParameter
 from pobm._ResultsClasses import OverallGeneralMeasuresResult
 
 
@@ -21,6 +21,10 @@ class OverallGeneralMeasures:
         :param M_Threshold: Percentage of the signal M_Threshold % below median oxygen saturation. Typically use 1,2 or 5
         :type M_Threshold: int, optional
         """
+
+        if DI_Window <= 0:
+            raise WrongParameter("DI_Window should be strictly positive")
+
         self.ZC_Baseline = ZC_Baseline
         self.percentile = percentile
         self.M_Threshold = M_Threshold

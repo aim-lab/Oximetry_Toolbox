@@ -3,7 +3,7 @@ from lempel_ziv_complexity import lempel_ziv_complexity
 from scipy import integrate, stats
 import warnings
 
-from pobm._ErrorHandler import _check_shape_, _check_len_ApEn_
+from pobm._ErrorHandler import _check_shape_, _check_len_ApEn_, WrongParameter
 from pobm._ResultsClasses import ComplexityMeasuresResults
 
 
@@ -31,6 +31,18 @@ class ComplexityMeasures:
         :type R_ApEn: float, optional
 
         """
+
+        if DFA_Window <= 0:
+            raise WrongParameter("DFA_Window should be strictly positive")
+        if M_Sampen <= 0:
+            raise WrongParameter("M_Sampen should be strictly positive")
+        if R_Sampen <= 0:
+            raise WrongParameter("R_Sampen should be strictly positive")
+        if M_ApEn <= 0:
+            raise WrongParameter("DFA_Window should be strictly positive")
+        if R_ApEn <= 0:
+            raise WrongParameter("R_ApEn should be strictly positive")
+
         self.CTM_Threshold = CTM_Threshold
         self.DFA_Window = DFA_Window
         self.M_Sampen = M_Sampen

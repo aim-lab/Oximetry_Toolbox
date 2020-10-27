@@ -1,4 +1,4 @@
-from pobm._ErrorHandler import _check_shape_
+from pobm._ErrorHandler import _check_shape_, WrongParameter
 import numpy as np
 import warnings
 
@@ -17,6 +17,10 @@ class DesaturationsMeasures:
         :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.
         :type ODI_Threshold: int, optional
         """
+
+        if ODI_Threshold <= 0:
+            raise WrongParameter("ODI_Threshold should be strictly positive")
+
         self.ODI_Threshold = ODI_Threshold
         self.begin = []
         self.end = []

@@ -2,7 +2,7 @@ import numpy as np
 import warnings
 
 from pobm.obm.desat import desat_embedding
-from pobm._ErrorHandler import _check_shape_
+from pobm._ErrorHandler import _check_shape_, WrongParameter
 from pobm._ResultsClasses import HypoxicBurdenMeasuresResults
 
 
@@ -25,6 +25,8 @@ class HypoxicBurdenMeasures:
         :param CA_Baseline: Baseline to compute the CA feature. Default value is mean of the signal.
         :type CA_Baseline: float, optional
         """
+        if len(begin) != len(end):
+            raise WrongParameter("The parameters begin and end should have the same length")
 
         self.begin = begin
         self.end = end

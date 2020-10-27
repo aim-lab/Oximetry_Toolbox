@@ -2,7 +2,7 @@ import numpy as np
 from scipy.signal import hamming, welch
 import warnings
 
-from pobm._ErrorHandler import _check_shape_, _check_fragment_PRSA_
+from pobm._ErrorHandler import _check_shape_, _check_fragment_PRSA_, WrongParameter
 from pobm._ResultsClasses import PRSAResults, PSDResults
 
 
@@ -21,6 +21,10 @@ class PRSAMeasures:
         :param K_AC: Number of values to shift when computing autocorrelation
         :type K_AC: int, optional
         """
+
+        if PRSA_Window <= 0:
+            raise WrongParameter("DI_Window should be strictly positive")
+
         self.PRSA_Window = PRSA_Window
         self.K_AC = K_AC
 

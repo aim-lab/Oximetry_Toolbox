@@ -17,3 +17,7 @@ def _check_window_delta_(len_signal, window_size):
 
 def _check_fragment_PRSA_(d):
     assert d > 0, "The parameter d should be strictly positive"
+
+
+class WrongParameter(Exception):
+    pass
