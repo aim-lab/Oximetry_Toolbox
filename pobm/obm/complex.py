@@ -13,7 +13,8 @@ class ComplexityMeasures:
 
     """
 
-    def __init__(self, CTM_Threshold=0.25, DFA_Window=20, M_Sampen=3, R_Sampen=0.2, M_ApEn=2, R_ApEn=0.25):
+    def __init__(self, CTM_Threshold: float = 0.25, DFA_Window: int = 20, M_Sampen: int = 3, R_Sampen: float = 0.2,
+                 M_ApEn: int = 2, R_ApEn: float = 0.25):
         """
 
         :param CTM_Threshold: Radius of Central Tendency Measure.
@@ -84,7 +85,6 @@ class ComplexityMeasures:
         phi_m1 = self.__apen(self.M_ApEn + 1, signal)
         with np.errstate(invalid='ignore'):
             res = phi_m - phi_m1
-
         return res
 
     def __apen(self, m, signal):
@@ -121,6 +121,7 @@ class ComplexityMeasures:
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: LZ (float)
         """
+
         median = np.median(signal)
         res = [signal[i] > median for i in range(0, len(signal))]
         byte = [str(int(b is True)) for b in res]

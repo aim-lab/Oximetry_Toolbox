@@ -11,7 +11,7 @@ class DesaturationsMeasures:
 
     """
 
-    def __init__(self, ODI_Threshold=3):
+    def __init__(self, ODI_Threshold: int = 3):
         """
 
         :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.

@@ -11,15 +11,15 @@ class OverallGeneralMeasures:
 
     """
 
-    def __init__(self, ZC_Baseline=None, percentile=1, M_Threshold=2, DI_Window=12):
+    def __init__(self, ZC_Baseline: float = None, percentile: int = 1, M_Threshold: int = 2, DI_Window: int = 12):
         """
 
         :param ZC_Baseline: Baseline for calculating number of zero-crossing points.
-        :type ZC_Baseline: optional
+        :type ZC_Baseline: int, optional
         :param percentile: Percentile to perform. For example, for percentile 1, the argument should be 1
-        :type percentile: optional
+        :type percentile: int, optional
         :param M_Threshold: Percentage of the signal M_Threshold % below median oxygen saturation. Typically use 1,2 or 5
-        :type M_Threshold: optional
+        :type M_Threshold: int, optional
         """
         self.ZC_Baseline = ZC_Baseline
         self.percentile = percentile

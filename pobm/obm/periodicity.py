@@ -13,7 +13,7 @@ class PRSAMeasures:
 
     """
 
-    def __init__(self, PRSA_Window=10, K_AC=2):
+    def __init__(self, PRSA_Window: int = 10, K_AC: int = 2):
         """
 
         :param PRSA_Window: Fragment duration of PRSA.

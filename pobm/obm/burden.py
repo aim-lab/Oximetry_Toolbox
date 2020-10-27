@@ -13,7 +13,7 @@ class HypoxicBurdenMeasures:
 
     """
 
-    def __init__(self, begin, end, CT_Threshold=90, CA_Baseline=None):
+    def __init__(self, begin, end, CT_Threshold: float = 90, CA_Baseline: float = None):
         """
 
         :param begin: List of indices of beginning of each desaturation event.
@@ -21,10 +21,11 @@ class HypoxicBurdenMeasures:
         :param end: List of indices of end of each desaturation event. begin and end should have the same length.
         :type end: list
         :param CT_Threshold: Percentage of the time spent below the “CT_Threshold” % oxygen saturation level.
-        :type CT_Threshold: int, optional
+        :type CT_Threshold: float, optional
         :param CA_Baseline: Baseline to compute the CA feature. Default value is mean of the signal.
-        :type CA_Baseline: int, optional
+        :type CA_Baseline: float, optional
         """
+
         self.begin = begin
         self.end = end
         self.CT_Threshold = CT_Threshold
