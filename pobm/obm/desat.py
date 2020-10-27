@@ -8,7 +8,7 @@ from pobm._ResultsClasses import DesaturationsMeasuresResults
 class DesaturationsMeasures:
     """
     Class that calculates the Desaturation Features from spo2 time series.
-
+    The method compute runs all the biomarker of this category.
     """
 
     def __init__(self, ODI_Threshold: int = 3):

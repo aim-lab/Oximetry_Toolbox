@@ -9,8 +9,7 @@ from pobm._ResultsClasses import HypoxicBurdenMeasuresResults
 class HypoxicBurdenMeasures:
     """
     Class that calculates Hypoxic Burden Features from spo2 time series.
-    Suppose that the data has been preprocessed.
-
+    The method compute runs all the biomarker of this category.
     """
 
     def __init__(self, begin, end, CT_Threshold: float = 90, CA_Baseline: float = None):

@@ -10,7 +10,7 @@ from pobm._ResultsClasses import ComplexityMeasuresResults
 class ComplexityMeasures:
     """
     Class that calculates Complexity Features from spo2 time series.
-
+    The method compute runs all the biomarker of this category.
     """
 
     def __init__(self, CTM_Threshold: float = 0.25, DFA_Window: int = 20, M_Sampen: int = 3, R_Sampen: float = 0.2,

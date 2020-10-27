@@ -8,7 +8,7 @@ from pobm._ResultsClasses import OverallGeneralMeasuresResult
 class OverallGeneralMeasures:
     """
     Class that calculates Overall General Features from spo2 time series.
-
+    The method compute runs all the biomarker of this category.
     """
 
     def __init__(self, ZC_Baseline: float = None, percentile: int = 1, M_Threshold: int = 2, DI_Window: int = 12):
