@@ -11,29 +11,16 @@ class PRSAMeasures:
     Function that calculates PRSA Features from spo2 time series.
     Suppose that the data has been preprocessed.
 
-    :param PRSA_Window: Fragment duration of PRSA.
-    :type PRSA_Window: optional
-    :param K_AC: Number of values to shift when computing autocorrelation
-    :type K_AC: optional
-
-    PhysioZoo OBM toolbox 2020, version 1.0
-    Released under the GNU General Public License
-
-    Authors: Jeremy Levy and Joachim A. Behar
-    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-    https://aim-lab.github.io/
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-    Public License for more details.
     """
 
     def __init__(self, PRSA_Window=10, K_AC=2):
+        """
+
+        :param PRSA_Window: Fragment duration of PRSA.
+        :type PRSA_Window: int, optional
+        :param K_AC: Number of values to shift when computing autocorrelation
+        :type K_AC: int, optional
+        """
         self.PRSA_Window = PRSA_Window
         self.K_AC = K_AC
 
@@ -60,21 +47,6 @@ class PRSAMeasures:
             # Compute the biomarkers
             results_PRSA = prsa_class.compute(spo2_signal)
 
-        PhysioZoo OBM toolbox 2020, version 1.0
-        Released under the GNU General Public License
-
-        Authors: Jeremy Levy and Joachim A. Behar
-        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-        https://aim-lab.github.io/
-
-        This program is free software; you can redistribute it and/or modify it
-        under the terms of the GNU General Public License as published by the
-        Free Software Foundation; either version 2 of the License, or (at your
-        option) any later version.
-        This program is distributed in the hope that it will be useful, but
-        WITHOUT ANY WARRANTY; without even the implied warranty of
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-        Public License for more details.
         """
         _check_shape_(signal)
 
@@ -107,23 +79,7 @@ class PRSAMeasures:
 class PSDMeasures:
     """
     Function that calculates PSD Features from spo2 time series.
-    Suppose that the data has been preprocessed.
 
-    PhysioZoo OBM toolbox 2020, version 1.0
-    Released under the GNU General Public License
-
-    Authors: Jeremy Levy and Joachim A. Behar
-    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-    https://aim-lab.github.io/
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-    Public License for more details.
     """
 
     def compute(self, signal) -> PSDResults:
@@ -149,21 +105,6 @@ class PSDMeasures:
             # Compute the biomarkers
             results_PSD = psd_class.compute(spo2_signal)
 
-        PhysioZoo OBM toolbox 2020, version 1.0
-        Released under the GNU General Public License
-
-        Authors: Jeremy Levy and Joachim A. Behar
-        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-        https://aim-lab.github.io/
-
-        This program is free software; you can redistribute it and/or modify it
-        under the terms of the GNU General Public License as published by the
-        Free Software Foundation; either version 2 of the License, or (at your
-        option) any later version.
-        This program is distributed in the hope that it will be useful, but
-        WITHOUT ANY WARRANTY; without even the implied warranty of
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-        Public License for more details.
         """
         _check_shape_(signal)
 

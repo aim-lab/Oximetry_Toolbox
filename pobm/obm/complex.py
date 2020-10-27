@@ -10,40 +10,26 @@ from pobm._ResultsClasses import ComplexityMeasuresResults
 class ComplexityMeasures:
     """
     Class that calculates Complexity Features from spo2 time series.
-    Suppose that the data has been preprocessed.
 
-    :param CTM_Threshold: Radius of Central Tendency Measure.
-    :type CTM_Threshold: optional
-    :param DFA_Window: Length of window to calculate DFA biomarker.
-    :type DFA_Window: optional
-    :param M_Sampen: Embedding dimension to compute SampEn.
-    :type M_Sampen: optional
-    :param R_Sampen: Tolerance to compute SampEn.
-    :type R_Sampen: optional
-    :param M_ApEn: Embedding dimension to compute ApEn.
-    :type M_ApEn: optional
-    :param R_ApEn: Tolerance to compute ApEn.
-    :type R_ApEn: optional
-
-
-    PhysioZoo OBM toolbox 2020, version 1.0
-    Released under the GNU General Public License
-
-    Authors: Jeremy Levy and Joachim A. Behar
-    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-    https://aim-lab.github.io/
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-    Public License for more details.
     """
 
     def __init__(self, CTM_Threshold=0.25, DFA_Window=20, M_Sampen=3, R_Sampen=0.2, M_ApEn=2, R_ApEn=0.25):
+        """
+
+        :param CTM_Threshold: Radius of Central Tendency Measure.
+        :type CTM_Threshold: float, optional
+        :param DFA_Window: Length of window to calculate DFA biomarker.
+        :type DFA_Window: int, optional
+        :param M_Sampen: Embedding dimension to compute SampEn.
+        :type M_Sampen: int, optional
+        :param R_Sampen: Tolerance to compute SampEn.
+        :type R_Sampen: float, optional
+        :param M_ApEn: Embedding dimension to compute ApEn.
+        :type M_ApEn: int, optional
+        :param R_ApEn: Tolerance to compute ApEn.
+        :type R_ApEn: float, optional
+
+        """
         self.CTM_Threshold = CTM_Threshold
         self.DFA_Window = DFA_Window
         self.M_Sampen = M_Sampen
@@ -75,37 +61,21 @@ class ComplexityMeasures:
             # Compute the biomarkers
             results_complexity = complexity_class.compute(spo2_signal)
 
-
-    PhysioZoo OBM toolbox 2020, version 1.0
-    Released under the GNU General Public License
-
-    Authors: Jeremy Levy and Joachim A. Behar
-    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-    https://aim-lab.github.io/
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-    Public License for more details.
         """
         _check_shape_(signal)
         warnings.filterwarnings("ignore", category=RuntimeWarning)
-        return ComplexityMeasuresResults(self.__comp_apen(signal), self.__comp_lz(signal),
-                                         self.__comp_ctm(signal),
-                                         self.__comp_sampen(signal),
-                                         self.__comp_dfa(signal))
+        return ComplexityMeasuresResults(self.comp_apen(signal), self.comp_lz(signal),
+                                         self.comp_ctm(signal),
+                                         self.comp_sampen(signal),
+                                         self.comp_dfa(signal))
 
-    def __comp_apen(self, signal):
+    def comp_apen(self, signal):
         """
         Compute the approximate entropy, according to the paper
         Utility of Approximate Entropy From Overnight Pulse Oximetry Data in the Diagnosis
         of the Obstructive Sleep Apnea Syndrome
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
-        :return: ApEn
+        :return: ApEn (float)
         """
         signal = np.array(signal)
         signal = signal[np.logical_not(np.isnan(signal))]
@@ -143,26 +113,26 @@ class ComplexityMeasures:
         with np.errstate(invalid='ignore'):
             return np.nanmax(abs(window1 - window2), axis=1) < r
 
-    def __comp_lz(self, signal):
+    def comp_lz(self, signal):
         """
         Compute lempel-ziv, according to the paper
         Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
         for obstructive sleep apnoea detection
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
-        :return: LZ
+        :return: LZ (float)
         """
         median = np.median(signal)
         res = [signal[i] > median for i in range(0, len(signal))]
         byte = [str(int(b is True)) for b in res]
         return lempel_ziv_complexity(''.join(byte))
 
-    def __comp_ctm(self, signal):
+    def comp_ctm(self, signal):
         """
         Compute CTM, according to the paper
         Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
         for obstructive sleep apnoea detection
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
-        :return: CTM
+        :return: CTM (float)
         """
         res = 0
         for i in range(len(signal) - 2):
@@ -177,11 +147,11 @@ class ComplexityMeasures:
             return 1
         return 0
 
-    def __comp_sampen(self, signal):
+    def comp_sampen(self, signal):
         """
         Compute the Sample Entropy
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
-        :return: SampEn
+        :return: SampEn (float)
         """
         N = len(signal)
         m = self.M_Sampen
@@ -205,11 +175,11 @@ class ComplexityMeasures:
         # Return SampEn
         return -np.log(A / B)
 
-    def __comp_dfa(self, signal):
+    def comp_dfa(self, signal):
         """
-        Compute DFA
+        Compute DFA, Detrended Fluctuation Analysis
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
-        :return: DFA
+        :return: DFA (float)
         """
         n = self.DFA_Window
         y = integrate.cumtrapz(signal - np.nanmean(signal))
