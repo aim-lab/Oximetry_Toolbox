@@ -182,7 +182,7 @@ class DesaturationsMeasures:
                             table_desat_dd.append(table_desat_aa[i] + j)
                             break
                 if found is False:
-                    table_desat_dd.append(table_desat_aa[i] + 90)
+                    table_desat_dd.append(min(table_desat_aa[i] + 90, len(signal) - 1))
         return table_desat_dd
 
     def __sc_desaturations(self, data):
