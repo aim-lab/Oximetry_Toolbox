@@ -57,24 +57,32 @@ class PRSAMeasures:
         d = self.PRSA_Window
         _check_fragment_PRSA_(d)
         anchor_points = []
+        anchor_found = False
+
         for i in range(len(signal)):
             if i < d:
                 continue
             if len(signal) - i < d:
                 continue
             if signal[i - 1] > signal[i]:
+                anchor_found = True
                 anchor_points.append(signal[i - d:i + d])
-        anchor_points = np.array(anchor_points)
-        windows = np.zeros(2 * d)
 
-        for i in range(2 * d):
-            windows[i] = np.nansum(anchor_points[:, i]) / len(anchor_points)
+        if anchor_found is False:
+            PRSA_features = PRSAResults(0, 0, 0, 0, 0, np.correlate(signal, signal, "same")[self.K_AC])
+        else:
+            anchor_points = np.array(anchor_points)
+            windows = np.zeros(2 * d)
 
-        PRSA_features = PRSAResults((windows[d] + windows[d + 1] - windows[d - 1] - windows[d - 2]) / 4,
-                                    np.nanmax(windows) - np.nanmin(windows),
-                                    np.polyfit(range(2 * d), windows, 1)[0], np.polyfit(range(d), windows[0:d], 1)[0],
-                                    np.polyfit(range(d), windows[d:], 1)[0],
-                                    np.correlate(windows, windows, "same")[self.K_AC])
+            for i in range(2 * d):
+                windows[i] = np.nansum(anchor_points[:, i]) / len(anchor_points)
+
+            PRSA_features = PRSAResults((windows[d] + windows[d + 1] - windows[d - 1] - windows[d - 2]) / 4,
+                                        np.nanmax(windows) - np.nanmin(windows),
+                                        np.polyfit(range(2 * d), windows, 1)[0],
+                                        np.polyfit(range(d), windows[0:d], 1)[0],
+                                        np.polyfit(range(d), windows[d:], 1)[0],
+                                        np.correlate(windows, windows, "same")[self.K_AC])
 
         return PRSA_features
 
