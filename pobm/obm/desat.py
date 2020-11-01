@@ -73,9 +73,10 @@ class DesaturationsMeasures:
         warnings.simplefilter('ignore', np.RankWarning)
         warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-        ODI = self.desaturation_detector(signal)
-        if self.relative is False:
-            self.__hard_threshold_detector(signal, self.hard_threshold)
+        if self.relative is True:
+            ODI = self.desaturation_detector(signal)
+        else:
+            ODI = self.__hard_threshold_detector(signal)
 
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
         desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
@@ -286,15 +287,14 @@ class DesaturationsMeasures:
 
         return desat, table_desat_aa, table_desat_bb, table_desat_cc
 
-    def __hard_threshold_detector(self, signal, hard_threshold):
+    def __hard_threshold_detector(self, signal):
         """
         Finds desaturation with hard threshold
 
         :param signal: The SpO2 signal, of shape (N,)
-        :param threshold: Threshold to detect desaturations
-        :type threshold: int, optional
-        :return:
+        :return: ODI
         """
+        hard_threshold = self.hard_threshold
         begin_desat, end_desat = [], []
         turn_begin = True
 
@@ -313,8 +313,14 @@ class DesaturationsMeasures:
         if turn_begin is False:
             begin_desat = begin_desat[0:-1]
 
+        begin_desat = np.array(begin_desat).astype(int)
+        end_desat = np.array(end_desat).astype(int)
+
         self.begin = begin_desat
         self.end = end_desat
+
+        ODI = len(begin_desat) / len(signal) * 3600  # Convert to event/h
+        return ODI
 
 
 def desat_embedding(begin, end):
