@@ -34,6 +34,7 @@ ECHO Converting README.md to README.rst...
 cd ..
 m2r2 README.md README.rst --overwrite
 copy README.rst "docs\README.rst" /A
+del README.rst
 cd docs
 make html
 goto end

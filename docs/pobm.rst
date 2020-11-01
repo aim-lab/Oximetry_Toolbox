@@ -6,13 +6,6 @@ pobm package
    :maxdepth: 4
 
    pobm.obm
-   pobm.spo2
-
-
-.. automodule:: pobm.main
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 pobm.prep
 ----------------
