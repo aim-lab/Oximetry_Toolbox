@@ -172,33 +172,38 @@
 <span id="pobm-obm-burden"></span><h2>pobm.obm.burden<a class="headerlink" href="#module-pobm.obm.burden" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="pobm.obm.burden.HypoxicBurdenMeasures">
-<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.burden.</code><code class="sig-name descname">HypoxicBurdenMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">begin</span></em>, <em class="sig-param"><span class="n">end</span></em>, <em class="sig-param"><span class="n">CT_Threshold</span><span class="o">=</span><span class="default_value">90</span></em>, <em class="sig-param"><span class="n">CA_Baseline</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/burden.html#HypoxicBurdenMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.burden.HypoxicBurdenMeasures" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.burden.</code><code class="sig-name descname">HypoxicBurdenMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">begin</span></em>, <em class="sig-param"><span class="n">end</span></em>, <em class="sig-param"><span class="n">CT_Threshold</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">90</span></em>, <em class="sig-param"><span class="n">CA_Baseline</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/burden.html#HypoxicBurdenMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.burden.HypoxicBurdenMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class that calculates Hypoxic Burden Features from spo2 time series.
-Suppose that the data has been preprocessed.</p>
+The method compute runs all the biomarker of this category.</p>
+<dl class="py method">
+<dt id="pobm.obm.burden.HypoxicBurdenMeasures.comp_ca">
+<code class="sig-name descname">comp_ca</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/burden.html#HypoxicBurdenMeasures.comp_ca"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.burden.HypoxicBurdenMeasures.comp_ca" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the cumulative area biomarker</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>begin</strong> – List of indices of beginning of each desaturation event.</p></li>
-<li><p><strong>end</strong> – List of indices of end of each desaturation event.</p></li>
-<li><p><strong>CT_Threshold</strong> – Percentage of the time spent below the “CT_Threshold” % oxygen saturation level.</p></li>
-<li><p><strong>CA_Baseline</strong> – Baseline to compute the CA feature. Default value is mean of the signal.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>CA, the cumulative area (float)</p>
 </dd>
 </dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pobm.obm.burden.HypoxicBurdenMeasures.comp_ct">
+<code class="sig-name descname">comp_ct</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/burden.html#HypoxicBurdenMeasures.comp_ct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.burden.HypoxicBurdenMeasures.comp_ct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the cumulative time biomarker</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>CT, the cumulative time (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt id="pobm.obm.burden.HypoxicBurdenMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/burden.html#HypoxicBurdenMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.burden.HypoxicBurdenMeasures.compute" title="Permalink to this definition">¶</a></dt>
@@ -207,19 +212,12 @@ Public License for more details.</p>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>HypoxicBurdenMeasuresResults class containing the following features:</dt><dd><ul class="simple">
-<li><p>CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time</p></li>
-<li><p>CT: Percentage of the time spent below the xx% oxygen saturation level</p></li>
-<li><p>POD: Percentage of oxygen desaturation events</p></li>
-<li><p>AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline
-and normalized by the total recording time</p></li>
-<li><p>AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized
-by the total recording time</p></li>
-</ul>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>HypoxicBurdenMeasuresResults class containing the following features:
+-       CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time
+-   CT: Percentage of the time spent below the xx% oxygen saturation level
+-   POD: Percentage of oxygen desaturation events
+-   AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline and normalized by the total recording time
+-   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized by the total recording time</p>
 </dd>
 </dl>
 <p>Example:</p>
@@ -232,19 +230,6 @@ by the total recording time</p></li>
 <span class="n">results_hypoxic</span> <span class="o">=</span> <span class="n">hypoxic_class</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">spo2_signal</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
 </dd></dl>
 
 </dd></dl>
@@ -254,52 +239,70 @@ Public License for more details.</p>
 <span id="pobm-obm-complex"></span><h2>pobm.obm.complex<a class="headerlink" href="#module-pobm.obm.complex" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="pobm.obm.complex.ComplexityMeasures">
-<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.complex.</code><code class="sig-name descname">ComplexityMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">CTM_Threshold</span><span class="o">=</span><span class="default_value">0.25</span></em>, <em class="sig-param"><span class="n">DFA_Window</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">M_Sampen</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">R_Sampen</span><span class="o">=</span><span class="default_value">0.2</span></em>, <em class="sig-param"><span class="n">M_ApEn</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">R_ApEn</span><span class="o">=</span><span class="default_value">0.25</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.complex.</code><code class="sig-name descname">ComplexityMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">CTM_Threshold</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0.25</span></em>, <em class="sig-param"><span class="n">DFA_Window</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">20</span></em>, <em class="sig-param"><span class="n">M_Sampen</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">3</span></em>, <em class="sig-param"><span class="n">R_Sampen</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0.2</span></em>, <em class="sig-param"><span class="n">M_ApEn</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2</span></em>, <em class="sig-param"><span class="n">R_ApEn</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0.25</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class that calculates Complexity Features from spo2 time series.
-Suppose that the data has been preprocessed.</p>
-<dl class="simple">
-<dt>:param</dt><dd><p>signal: 1-d array, of shape (N,) where N is the length of the signal
-CTM_Threshold: Radius of Central Tendency Measure.
-DFA_Window: Length of window to calculate DFA biomarker.
-M_Sampen: Embedding dimension to compute SampEn.
-R_Sampen: Tolerance to compute SampEn.
-M_ApEn: Embedding dimension to compute ApEn.
-R_ApEn: Tolerance to compute ApEn.</p>
-</dd>
-</dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
+The method compute runs all the biomarker of this category.</p>
+<dl class="py method">
+<dt id="pobm.obm.complex.ComplexityMeasures.comp_apen">
+<code class="sig-name descname">comp_apen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_apen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_apen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the approximate entropy, according to the paper
+Utility of Approximate Entropy From Overnight Pulse Oximetry Data in the Diagnosis
+of the Obstructive Sleep Apnea Syndrome
+:param signal: 1-d array, of shape (N,) where N is the length of the signal
+:return: ApEn (float)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pobm.obm.complex.ComplexityMeasures.comp_ctm">
+<code class="sig-name descname">comp_ctm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_ctm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_ctm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute CTM, according to the paper
+Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
+for obstructive sleep apnoea detection
+:param signal: 1-d array, of shape (N,) where N is the length of the signal
+:return: CTM (float)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pobm.obm.complex.ComplexityMeasures.comp_dfa">
+<code class="sig-name descname">comp_dfa</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_dfa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_dfa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute DFA, Detrended Fluctuation Analysis
+:param signal: 1-d array, of shape (N,) where N is the length of the signal
+:return: DFA (float)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pobm.obm.complex.ComplexityMeasures.comp_lz">
+<code class="sig-name descname">comp_lz</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_lz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_lz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute lempel-ziv, according to the paper
+Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
+for obstructive sleep apnoea detection
+:param signal: 1-d array, of shape (N,) where N is the length of the signal
+:return: LZ (float)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pobm.obm.complex.ComplexityMeasures.comp_sampen">
+<code class="sig-name descname">comp_sampen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_sampen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_sampen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the Sample Entropy
+:param signal: 1-d array, of shape (N,) where N is the length of the signal
+:return: SampEn (float)</p>
+</dd></dl>
+
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.ComplexityMeasuresResults<a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.compute" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param signal</dt>
-<dd class="field-odd"><p>1-d array, of shape (N,) where N is the length of the signal</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
 </dd>
-<dt class="field-even">return</dt>
-<dd class="field-even"><dl class="simple">
-<dt>ComplexityMeasuresResults class containing the following features:</dt><dd><ul class="simple">
-<li><p>ApEn: Approximate Entropy.</p></li>
-<li><p>LZ: Lempel-Ziv complexity.</p></li>
-<li><p>CTM: Central Tendency Measure.</p></li>
-<li><p>SampEn: Sample Entropy.</p></li>
-<li><p>DFA: Detrended Fluctuation Analysis.</p></li>
-</ul>
-</dd>
-</dl>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ComplexityMeasuresResults class containing the following features:
+-       ApEn: Approximate Entropy.
+-   LZ: Lempel-Ziv complexity.
+-       CTM: Central Tendency Measure.
+-   SampEn: Sample Entropy.
+-       DFA: Detrended Fluctuation Analysis.</p>
 </dd>
 </dl>
 <p>Example:</p>
@@ -312,20 +315,6 @@ Public License for more details.</p>
 <span class="n">results_complexity</span> <span class="o">=</span> <span class="n">complexity_class</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">spo2_signal</span><span class="p">)</span>
 </pre></div>
 </div>
-</div></blockquote>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
 </dd></dl>
 
 </dd></dl>
@@ -335,28 +324,10 @@ Public License for more details.</p>
 <span id="pobm-obm-desat"></span><h2>pobm.obm.desat<a class="headerlink" href="#module-pobm.obm.desat" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="pobm.obm.desat.DesaturationsMeasures">
-<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.desat.</code><code class="sig-name descname">DesaturationsMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ODI_Threshold</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.desat.</code><code class="sig-name descname">DesaturationsMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ODI_Threshold</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">3</span></em>, <em class="sig-param"><span class="n">hard_threshold</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">90</span></em>, <em class="sig-param"><span class="n">relative</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class that calculates the Desaturation Features from spo2 time series.
-Suppose that the data has been preprocessed.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>ODI_Threshold</strong> – Threshold to compute Oxygen Desaturation Index.</p>
-</dd>
-</dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
+The method compute runs all the biomarker of this category.</p>
 <dl class="py method">
 <dt id="pobm.obm.desat.DesaturationsMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.DesaturationsMeasuresResults<a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures.compute" title="Permalink to this definition">¶</a></dt>
@@ -365,26 +336,24 @@ Public License for more details.</p>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>DesaturationsMeasuresResults class containing the following features:</dt><dd><ul class="simple">
-<li><p>DL_u: Mean of desaturation length</p></li>
-<li><p>DL_sd: Standard deviation of desaturation length</p></li>
-<li><p>DA100_u: Mean of desaturation area using 100% as baseline.</p></li>
-<li><p>DA100_sd: Standard deviation of desaturation area using 100% as baseline</p></li>
-<li><p>DAmax_u: Mean of desaturation area using max value as baseline.</p></li>
-<li><p>DAmax_sd: Standard deviation of desaturation area using max value as baseline</p></li>
-<li><p>DD100_u: Mean of depth desaturation from 100%.</p></li>
-<li><p>DD100_sd: Standard deviation of depth desaturation from 100%.</p></li>
-<li><p>DDmax_u: Mean of depth desaturation from max value.</p></li>
-<li><p>DDmax_sd: Standard deviation of depth desaturation from max value.</p></li>
-<li><p>DS_u: Mean of the desaturation slope.</p></li>
-<li><p>DS_sd: Standard deviation of the desaturation slope.</p></li>
-<li><p>TD_u: Mean of time between two consecutive desaturation events.</p></li>
-<li><p>TD_sd: Standard deviation of time between 2 consecutive desaturation events.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>DesaturationsMeasuresResults class containing the following features:
+-   ODI: Oxygen Desaturation Index
+-       DL_u: Mean of desaturation length
+-       DL_sd: Standard deviation of desaturation length
+-       DA100_u: Mean of desaturation area using 100% as baseline.
+-       DA100_sd: Standard deviation of desaturation area using 100% as baseline
+-       DAmax_u: Mean of desaturation area using max value as baseline.
+-       DAmax_sd: Standard deviation of desaturation area using max value as baseline
+-       DD100_u: Mean of depth desaturation from 100%.
+-       DD100_sd: Standard deviation of depth desaturation from 100%.
+-       DDmax_u: Mean of depth desaturation from max value.
+-       DDmax_sd: Standard deviation of depth desaturation from max value.
+-       DS_u: Mean of the desaturation slope.
+-       DS_sd: Standard deviation of the desaturation slope.
+-   TD_u: Mean of time between two consecutive desaturation events.
+-   TD_sd: Standard deviation of time between 2 consecutive desaturation events.
+-   begin: List of indices of beginning of each desaturation event
+-   end: List of indices of end of each desaturation event</p>
 </dd>
 </dl>
 <p>Example:</p>
@@ -397,54 +366,20 @@ Public License for more details.</p>
 <span class="n">results_desat</span> <span class="o">=</span> <span class="n">desat_class</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">spo2_signal</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pobm.obm.desat.DesaturationsMeasures.desaturation_detector">
 <code class="sig-name descname">desaturation_detector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures.desaturation_detector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures.desaturation_detector" title="Permalink to this definition">¶</a></dt>
-<dd><p>run desaturation detector, implemented by Dr. Joachim Behar</p>
+<dd><p>run desaturation detector</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – The SpO2 signal, of shape (N,)</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>ODIMeasureResult class containing the following features:</dt><dd><ul class="simple">
-<li><p>ODI: the average number of desaturation events per hour.</p></li>
-<li><p>begin: List of indices of beginning of each desaturation event.</p></li>
-<li><p>end: List of indices of end of each desaturation event.</p></li>
-</ul>
+<dd class="field-even"><p>ODI: the average number of desaturation events per hour (int).</p>
 </dd>
 </dl>
-</p>
-</dd>
-</dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
 </dd></dl>
 
 </dd></dl>
@@ -458,19 +393,6 @@ Public License for more details.</p>
 <dd class="field-odd"><p>helper arrays containing the information about desaturation lengths and areas.</p>
 </dd>
 </dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
 </dd></dl>
 
 </div>
@@ -478,32 +400,10 @@ Public License for more details.</p>
 <span id="pobm-obm-general"></span><h2>pobm.obm.general<a class="headerlink" href="#module-pobm.obm.general" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="pobm.obm.general.OverallGeneralMeasures">
-<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.general.</code><code class="sig-name descname">OverallGeneralMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ZC_Baseline</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">percentile</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">M_Threshold</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">DI_Window</span><span class="o">=</span><span class="default_value">12</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/general.html#OverallGeneralMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.general.OverallGeneralMeasures" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.general.</code><code class="sig-name descname">OverallGeneralMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ZC_Baseline</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">percentile</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">1</span></em>, <em class="sig-param"><span class="n">M_Threshold</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2</span></em>, <em class="sig-param"><span class="n">DI_Window</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">12</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/general.html#OverallGeneralMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.general.OverallGeneralMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class that calculates Overall General Features from spo2 time series.
-Suppose that the data has been preprocessed.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ZC_Baseline</strong> – Baseline for calculating number of zero-crossing points.</p></li>
-<li><p><strong>percentile</strong> – Percentile to perform. For example, for percentile 1, the argument should be 1</p></li>
-<li><p><strong>M_Threshold</strong> – Percentage of the signal M_Threshold % below median oxygen saturation. Typically use 1,2 or 5</p></li>
-</ul>
-</dd>
-</dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
+The method compute runs all the biomarker of this category.</p>
 <dl class="py method">
 <dt id="pobm.obm.general.OverallGeneralMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.OverallGeneralMeasuresResult<a class="reference internal" href="_modules/pobm/obm/general.html#OverallGeneralMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.general.OverallGeneralMeasures.compute" title="Permalink to this definition">¶</a></dt>
@@ -512,21 +412,16 @@ Public License for more details.</p>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>OveralGeneralMeasuresResult class containing the following features:</dt><dd><ul class="simple">
-<li><p>AV: Average of the signal.</p></li>
-<li><p>MED: Median of the signal.</p></li>
-<li><p>Min: Minimum value of the signal.</p></li>
-<li><p>SD: Std of the signal.</p></li>
-<li><p>RG: SpO2 range (difference between the max and min value).</p></li>
-<li><p>P: percentile.</p></li>
-<li><p>M: Percentage of the signal x% below median oxygen saturation.</p></li>
-<li><p>ZC: Number of zero-crossing points.</p></li>
-<li><p>DI: Delta Index.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>OveralGeneralMeasuresResult class containing the following features:
+-       AV: Average of the signal.
+-       MED: Median of the signal.
+-       Min: Minimum value of the signal.
+-       SD: Std of the signal.
+-       RG: SpO2 range (difference between the max and min value).
+-       P: percentile.
+-       M: Percentage of the signal x% below median oxygen saturation.
+-       ZC: Number of zero-crossing points.
+-       DI: Delta Index.</p>
 </dd>
 </dl>
 <p>Example:</p>
@@ -539,19 +434,6 @@ Public License for more details.</p>
 <span class="n">results_statistics</span> <span class="o">=</span> <span class="n">statistics_class</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">spo2_signal</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
 </dd></dl>
 
 </dd></dl>
@@ -561,28 +443,10 @@ Public License for more details.</p>
 <span id="pobm-obm-periodicity"></span><h2>pobm.obm.periodicity<a class="headerlink" href="#module-pobm.obm.periodicity" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="pobm.obm.periodicity.PRSAMeasures">
-<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.periodicity.</code><code class="sig-name descname">PRSAMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">PRSA_Window</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">K_AC</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/periodicity.html#PRSAMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.periodicity.PRSAMeasures" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.periodicity.</code><code class="sig-name descname">PRSAMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">PRSA_Window</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">10</span></em>, <em class="sig-param"><span class="n">K_AC</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/periodicity.html#PRSAMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.periodicity.PRSAMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Function that calculates PRSA Features from spo2 time series.
-Suppose that the data has been preprocessed.</p>
-<dl class="simple">
-<dt>:param</dt><dd><p>PRSA_Window: Fragment duration of PRSA.
-K_AC: Number of values to shift when computing autocorrelation</p>
-</dd>
-</dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
+The method compute runs all the biomarker of this category.</p>
 <dl class="py method">
 <dt id="pobm.obm.periodicity.PRSAMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.PRSAResults<a class="reference internal" href="_modules/pobm/obm/periodicity.html#PRSAMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.periodicity.PRSAMeasures.compute" title="Permalink to this definition">¶</a></dt>
@@ -591,18 +455,13 @@ Public License for more details.</p>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>PRSAResults class containing the following features:</dt><dd><ul class="simple">
-<li><p>PRSAc: PRSA capacity.</p></li>
-<li><p>PRSAad: PRSA amplitude difference.</p></li>
-<li><p>PRSAos: PRSA overall slope.</p></li>
-<li><p>PRSAsb: PRSA slope before the anchor point.</p></li>
-<li><p>PRSAsa: PRSA slope after the anchor point.</p></li>
-<li><p>AC: Autocorrelation.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>PRSAResults class containing the following features:
+-       PRSAc: PRSA capacity.
+-       PRSAad: PRSA amplitude difference.
+-       PRSAos: PRSA overall slope.
+-       PRSAsb: PRSA slope before the anchor point.
+-       PRSAsa: PRSA slope after the anchor point.
+-       AC: Autocorrelation.</p>
 </dd>
 </dl>
 <p>Example:</p>
@@ -615,19 +474,6 @@ Public License for more details.</p>
 <span class="n">results_PRSA</span> <span class="o">=</span> <span class="n">prsa_class</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">spo2_signal</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
 </dd></dl>
 
 </dd></dl>
@@ -637,39 +483,20 @@ Public License for more details.</p>
 <em class="property">class </em><code class="sig-prename descclassname">pobm.obm.periodicity.</code><code class="sig-name descname">PSDMeasures</code><a class="reference internal" href="_modules/pobm/obm/periodicity.html#PSDMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.periodicity.PSDMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Function that calculates PSD Features from spo2 time series.
-Suppose that the data has been preprocessed.</p>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
+The method compute runs all the biomarker of this category.</p>
 <dl class="py method">
 <dt id="pobm.obm.periodicity.PSDMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.PSDResults<a class="reference internal" href="_modules/pobm/obm/periodicity.html#PSDMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.periodicity.PSDMeasures.compute" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>:param</dt><dd><p>signal: The SpO2 signal, of shape (N,)</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>signal</strong> – The SpO2 signal, of shape (N,)</p>
 </dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>PSDResults class containing the following features:</dt><dd><ul class="simple">
-<li><p>PSD_total: The amplitude of the spectral signal.</p></li>
-<li><p>PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.</p></li>
-<li><p>PSD_ratio: The ratio between PSD_total and PSD_band.</p></li>
-<li><p>PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>PSDResults class containing the following features:
+-   PSD_total: The amplitude of the spectral signal.
+-   PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.
+-   PSD_ratio: The ratio between PSD_total and PSD_band.
+-   PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.</p>
 </dd>
 </dl>
 <p>Example:</p>
@@ -682,19 +509,6 @@ Public License for more details.</p>
 <span class="n">results_PSD</span> <span class="o">=</span> <span class="n">psd_class</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">spo2_signal</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
 </dd></dl>
 
 </dd></dl>
@@ -726,19 +540,7 @@ Public License for more details.</p>
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License
-Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-https://aim-lab.github.io/
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details. 
+        &copy; Copyright 
 
     </p>
   </div>

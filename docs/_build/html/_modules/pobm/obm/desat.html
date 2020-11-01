@@ -147,7 +147,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pobm.obm.desat</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pobm._ErrorHandler</span> <span class="kn">import</span> <span class="n">_check_shape_</span>
+<span></span><span class="kn">from</span> <span class="nn">pobm._ErrorHandler</span> <span class="kn">import</span> <span class="n">_check_shape_</span><span class="p">,</span> <span class="n">WrongParameter</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 
@@ -157,37 +157,36 @@
 <div class="viewcode-block" id="DesaturationsMeasures"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.DesaturationsMeasures">[docs]</a><span class="k">class</span> <span class="nc">DesaturationsMeasures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class that calculates the Desaturation Features from spo2 time series.</span>
-<span class="sd">    Suppose that the data has been preprocessed.</span>
-
-<span class="sd">    :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.</span>
-
-<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">    Released under the GNU General Public License</span>
-
-<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">    https://aim-lab.github.io/</span>
-
-<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">    under the terms of the GNU General Public License as published by the</span>
-<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">    option) any later version.</span>
-<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">    Public License for more details.</span>
+<span class="sd">    The method compute runs all the biomarker of this category.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ODI_Threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ODI_Threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">hard_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span> <span class="n">relative</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.</span>
+<span class="sd">        :type ODI_Threshold: int, optional</span>
+<span class="sd">        :param hard_threshold: Hard threshold to detect desaturations.</span>
+<span class="sd">        :type hard_threshold: int, optional</span>
+<span class="sd">        :param relative: Whether to use a relative or hard threshold to detect desaturations.</span>
+<span class="sd">        :type relative: bool, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">ODI_Threshold</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WrongParameter</span><span class="p">(</span><span class="s2">&quot;ODI_Threshold should be strictly positive&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">hard_threshold</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WrongParameter</span><span class="p">(</span><span class="s2">&quot;hard_threshold should be strictly positive&quot;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">ODI_Threshold</span> <span class="o">=</span> <span class="n">ODI_Threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hard_threshold</span> <span class="o">=</span> <span class="n">hard_threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relative</span> <span class="o">=</span> <span class="n">relative</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">begin</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="p">[]</span>
 
 <div class="viewcode-block" id="DesaturationsMeasures.compute"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.DesaturationsMeasures.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DesaturationsMeasuresResults</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
-<span class="sd">        :return:</span>
-<span class="sd">            DesaturationsMeasuresResults class containing the following features:</span>
+<span class="sd">        :return: DesaturationsMeasuresResults class containing the following features:</span>
+<span class="sd">                -   ODI: Oxygen Desaturation Index</span>
 <span class="sd">                -	DL_u: Mean of desaturation length</span>
 <span class="sd">                -	DL_sd: Standard deviation of desaturation length</span>
 <span class="sd">                -	DA100_u: Mean of desaturation area using 100% as baseline.</span>
@@ -202,7 +201,9 @@
 <span class="sd">                -	DS_sd: Standard deviation of the desaturation slope.</span>
 <span class="sd">                -   TD_u: Mean of time between two consecutive desaturation events.</span>
 <span class="sd">                -   TD_sd: Standard deviation of time between 2 consecutive desaturation events.</span>
-<span class="sd">        </span>
+<span class="sd">                -   begin: List of indices of beginning of each desaturation event</span>
+<span class="sd">                -   end: List of indices of end of each desaturation event</span>
+
 <span class="sd">        Example:</span>
 <span class="sd">        </span>
 <span class="sd">        .. code-block:: python</span>
@@ -215,22 +216,6 @@
 <span class="sd">            # Compute the biomarkers</span>
 <span class="sd">            results_desat = desat_class.compute(spo2_signal)</span>
 
-
-<span class="sd">        PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">        Released under the GNU General Public License</span>
-
-<span class="sd">        Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">        https://aim-lab.github.io/</span>
-
-<span class="sd">        This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">        under the terms of the GNU General Public License as published by the</span>
-<span class="sd">        Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">        option) any later version.</span>
-<span class="sd">        This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">        WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">        Public License for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_check_shape_</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
 
@@ -238,6 +223,9 @@
         <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
 
         <span class="n">ODI</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">desaturation_detector</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">relative</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__hard_threshold_detector</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hard_threshold</span><span class="p">)</span>
+
         <span class="n">desaturations</span><span class="p">,</span> <span class="n">desaturation_valid</span><span class="p">,</span> <span class="n">desaturation_length_all</span><span class="p">,</span> <span class="n">desaturation_int_100_all</span><span class="p">,</span> \
         <span class="n">desaturation_int_max_all</span><span class="p">,</span> <span class="n">desaturation_depth_100_all</span><span class="p">,</span> <span class="n">desaturation_depth_max_all</span><span class="p">,</span> \
         <span class="n">desaturation_slope_all</span> <span class="o">=</span> <span class="n">desat_embedding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
@@ -313,31 +301,11 @@
 
 <div class="viewcode-block" id="DesaturationsMeasures.desaturation_detector"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.DesaturationsMeasures.desaturation_detector">[docs]</a>    <span class="k">def</span> <span class="nf">desaturation_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        run desaturation detector, implemented by Dr. Joachim Behar</span>
+<span class="sd">        run desaturation detector</span>
 
 <span class="sd">        :param signal: The SpO2 signal, of shape (N,)</span>
-<span class="sd">        :return:</span>
-<span class="sd">            ODIMeasureResult class containing the following features:</span>
-<span class="sd">                -	ODI: the average number of desaturation events per hour.</span>
-<span class="sd">                -	begin: List of indices of beginning of each desaturation event.</span>
-<span class="sd">                -	end: List of indices of end of each desaturation event.</span>
+<span class="sd">        :return: ODI: the average number of desaturation events per hour (int).</span>
 
-<span class="sd">    </span>
-<span class="sd">        PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">        Released under the GNU General Public License</span>
-
-<span class="sd">        Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">        https://aim-lab.github.io/</span>
-
-<span class="sd">        This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">        under the terms of the GNU General Public License as published by the</span>
-<span class="sd">        Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">        option) any later version.</span>
-<span class="sd">        This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">        WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">        Public License for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sc_desaturations</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
         <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table_desat_cc</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
@@ -348,6 +316,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">begin</span> <span class="o">=</span> <span class="n">table_desat_aa</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">table_desat_dd</span>
+
         <span class="k">return</span> <span class="n">ODI</span></div>
 
     <span class="k">def</span> <span class="nf">__find_d_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_cc</span><span class="p">):</span>
@@ -365,13 +334,15 @@
                 <span class="n">table_desat_dd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_cc</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">90</span><span class="p">):</span>
-                    <span class="k">if</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-                        <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
-                        <span class="n">table_desat_dd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span>
-                        <span class="k">break</span>
+                <span class="n">min_duration</span> <span class="o">=</span> <span class="n">table_desat_cc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">min_duration</span><span class="p">,</span> <span class="mi">90</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">signal</span><span class="p">[</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">table_desat_dd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span>
+                            <span class="k">break</span>
                 <span class="k">if</span> <span class="n">found</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-                    <span class="n">table_desat_dd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">90</span><span class="p">)</span>
+                    <span class="n">table_desat_dd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">table_desat_aa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">90</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">table_desat_dd</span>
 
     <span class="k">def</span> <span class="nf">__sc_desaturations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
@@ -462,7 +433,37 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">aa</span> <span class="o">=</span> <span class="n">aa</span> <span class="o">+</span> <span class="mi">1</span>
 
-        <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span></div>
+        <span class="k">return</span> <span class="n">desat</span><span class="p">,</span> <span class="n">table_desat_aa</span><span class="p">,</span> <span class="n">table_desat_bb</span><span class="p">,</span> <span class="n">table_desat_cc</span>
+
+    <span class="k">def</span> <span class="nf">__hard_threshold_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">hard_threshold</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finds desaturation with hard threshold</span>
+
+<span class="sd">        :param signal: The SpO2 signal, of shape (N,)</span>
+<span class="sd">        :param threshold: Threshold to detect desaturations</span>
+<span class="sd">        :type threshold: int, optional</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">begin_desat</span><span class="p">,</span> <span class="n">end_desat</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">turn_begin</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">signal</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">hard_threshold</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">signal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">hard_threshold</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">turn_begin</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">begin_desat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="n">turn_begin</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">signal</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">hard_threshold</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">signal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">hard_threshold</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">turn_begin</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">end_desat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="n">turn_begin</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">turn_begin</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">begin_desat</span> <span class="o">=</span> <span class="n">begin_desat</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">begin</span> <span class="o">=</span> <span class="n">begin_desat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">end_desat</span></div>
 
 
 <div class="viewcode-block" id="desat_embedding"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.desat_embedding">[docs]</a><span class="k">def</span> <span class="nf">desat_embedding</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
@@ -471,21 +472,6 @@
 
 <span class="sd">    :return: helper arrays containing the information about desaturation lengths and areas.</span>
 
-<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">    Released under the GNU General Public License</span>
-
-<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">    https://aim-lab.github.io/</span>
-
-<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">    under the terms of the GNU General Public License as published by the</span>
-<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">    option) any later version.</span>
-<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">    Public License for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">table_desat_aa</span> <span class="o">=</span> <span class="n">begin</span>
     <span class="n">table_desat_cc</span> <span class="o">=</span> <span class="n">end</span>
@@ -525,19 +511,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License
-Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-https://aim-lab.github.io/
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details. 
+        &copy; Copyright 
 
     </p>
   </div>

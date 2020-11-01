@@ -151,45 +151,35 @@
 <span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">hamming</span><span class="p">,</span> <span class="n">welch</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 
-<span class="kn">from</span> <span class="nn">pobm._ErrorHandler</span> <span class="kn">import</span> <span class="n">_check_shape_</span><span class="p">,</span> <span class="n">_check_fragment_PRSA_</span>
+<span class="kn">from</span> <span class="nn">pobm._ErrorHandler</span> <span class="kn">import</span> <span class="n">_check_shape_</span><span class="p">,</span> <span class="n">_check_fragment_PRSA_</span><span class="p">,</span> <span class="n">WrongParameter</span>
 <span class="kn">from</span> <span class="nn">pobm._ResultsClasses</span> <span class="kn">import</span> <span class="n">PRSAResults</span><span class="p">,</span> <span class="n">PSDResults</span>
 
 
 <div class="viewcode-block" id="PRSAMeasures"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.periodicity.PRSAMeasures">[docs]</a><span class="k">class</span> <span class="nc">PRSAMeasures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function that calculates PRSA Features from spo2 time series.</span>
-<span class="sd">    Suppose that the data has been preprocessed.</span>
-
-<span class="sd">    :param</span>
-<span class="sd">        PRSA_Window: Fragment duration of PRSA.</span>
-<span class="sd">        K_AC: Number of values to shift when computing autocorrelation</span>
-
-<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">    Released under the GNU General Public License</span>
-
-<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">    https://aim-lab.github.io/</span>
-
-<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">    under the terms of the GNU General Public License as published by the</span>
-<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">    option) any later version.</span>
-<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">    Public License for more details.</span>
+<span class="sd">    The method compute runs all the biomarker of this category.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">PRSA_Window</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">K_AC</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">PRSA_Window</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">K_AC</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param PRSA_Window: Fragment duration of PRSA.</span>
+<span class="sd">        :type PRSA_Window: int, optional</span>
+<span class="sd">        :param K_AC: Number of values to shift when computing autocorrelation</span>
+<span class="sd">        :type K_AC: int, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">PRSA_Window</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WrongParameter</span><span class="p">(</span><span class="s2">&quot;DI_Window should be strictly positive&quot;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">PRSA_Window</span> <span class="o">=</span> <span class="n">PRSA_Window</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">K_AC</span> <span class="o">=</span> <span class="n">K_AC</span>
 
 <div class="viewcode-block" id="PRSAMeasures.compute"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.periodicity.PRSAMeasures.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PRSAResults</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
-<span class="sd">        :return:</span>
-<span class="sd">            PRSAResults class containing the following features:</span>
+<span class="sd">        :return: PRSAResults class containing the following features:</span>
 <span class="sd">                -	PRSAc: PRSA capacity.</span>
 <span class="sd">                -	PRSAad: PRSA amplitude difference.</span>
 <span class="sd">                -	PRSAos: PRSA overall slope.</span>
@@ -209,21 +199,6 @@
 <span class="sd">            # Compute the biomarkers</span>
 <span class="sd">            results_PRSA = prsa_class.compute(spo2_signal)</span>
 
-<span class="sd">        PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">        Released under the GNU General Public License</span>
-
-<span class="sd">        Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">        https://aim-lab.github.io/</span>
-
-<span class="sd">        This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">        under the terms of the GNU General Public License as published by the</span>
-<span class="sd">        Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">        option) any later version.</span>
-<span class="sd">        This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">        WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">        Public License for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_check_shape_</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
 
@@ -231,24 +206,32 @@
         <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PRSA_Window</span>
         <span class="n">_check_fragment_PRSA_</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
         <span class="n">anchor_points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">anchor_found</span> <span class="o">=</span> <span class="kc">False</span>
+
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">d</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">d</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">if</span> <span class="n">signal</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">signal</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">anchor_found</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">anchor_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">signal</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">d</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">d</span><span class="p">])</span>
-        <span class="n">anchor_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">anchor_points</span><span class="p">)</span>
-        <span class="n">windows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">d</span><span class="p">):</span>
-            <span class="n">windows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">anchor_points</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">anchor_points</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">anchor_found</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">PRSA_features</span> <span class="o">=</span> <span class="n">PRSAResults</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="s2">&quot;same&quot;</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">K_AC</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">anchor_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">anchor_points</span><span class="p">)</span>
+            <span class="n">windows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
 
-        <span class="n">PRSA_features</span> <span class="o">=</span> <span class="n">PRSAResults</span><span class="p">((</span><span class="n">windows</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">+</span> <span class="n">windows</span><span class="p">[</span><span class="n">d</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">windows</span><span class="p">[</span><span class="n">d</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">windows</span><span class="p">[</span><span class="n">d</span> <span class="o">-</span> <span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
-                                    <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">windows</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">windows</span><span class="p">),</span>
-                                    <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">d</span><span class="p">),</span> <span class="n">windows</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">windows</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
-                                    <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">windows</span><span class="p">[</span><span class="n">d</span><span class="p">:],</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
-                                    <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="s2">&quot;same&quot;</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">K_AC</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">d</span><span class="p">):</span>
+                <span class="n">windows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">anchor_points</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">anchor_points</span><span class="p">)</span>
+
+            <span class="n">PRSA_features</span> <span class="o">=</span> <span class="n">PRSAResults</span><span class="p">((</span><span class="n">windows</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">+</span> <span class="n">windows</span><span class="p">[</span><span class="n">d</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">windows</span><span class="p">[</span><span class="n">d</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">windows</span><span class="p">[</span><span class="n">d</span> <span class="o">-</span> <span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                        <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">windows</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">windows</span><span class="p">),</span>
+                                        <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">d</span><span class="p">),</span> <span class="n">windows</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                                        <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">windows</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">d</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                                        <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">windows</span><span class="p">[</span><span class="n">d</span><span class="p">:],</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                                        <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="s2">&quot;same&quot;</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">K_AC</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="n">PRSA_features</span></div></div>
 
@@ -256,32 +239,14 @@
 <div class="viewcode-block" id="PSDMeasures"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.periodicity.PSDMeasures">[docs]</a><span class="k">class</span> <span class="nc">PSDMeasures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function that calculates PSD Features from spo2 time series.</span>
-<span class="sd">    Suppose that the data has been preprocessed.</span>
-
-<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">    Released under the GNU General Public License</span>
-
-<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">    https://aim-lab.github.io/</span>
-
-<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">    under the terms of the GNU General Public License as published by the</span>
-<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">    option) any later version.</span>
-<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">    Public License for more details.</span>
+<span class="sd">    The method compute runs all the biomarker of this category.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="PSDMeasures.compute"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.periodicity.PSDMeasures.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PSDResults</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param</span>
-<span class="sd">            signal: The SpO2 signal, of shape (N,)</span>
+<span class="sd">        :param signal: The SpO2 signal, of shape (N,)</span>
 
-<span class="sd">        :return:</span>
-<span class="sd">            PSDResults class containing the following features:</span>
+<span class="sd">        :return: PSDResults class containing the following features:</span>
 <span class="sd">                -   PSD_total: The amplitude of the spectral signal.</span>
 <span class="sd">                -   PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.</span>
 <span class="sd">                -   PSD_ratio: The ratio between PSD_total and PSD_band.</span>
@@ -300,21 +265,6 @@
 <span class="sd">            # Compute the biomarkers</span>
 <span class="sd">            results_PSD = psd_class.compute(spo2_signal)</span>
 
-<span class="sd">        PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">        Released under the GNU General Public License</span>
-
-<span class="sd">        Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">        The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">        https://aim-lab.github.io/</span>
-
-<span class="sd">        This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">        under the terms of the GNU General Public License as published by the</span>
-<span class="sd">        Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">        option) any later version.</span>
-<span class="sd">        This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">        WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">        Public License for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_check_shape_</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
 
@@ -382,19 +332,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License
-Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-https://aim-lab.github.io/
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details. 
+        &copy; Copyright 
 
     </p>
   </div>

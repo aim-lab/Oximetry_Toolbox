@@ -152,43 +152,46 @@
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span><span class="p">,</span> <span class="n">stats</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 
-<span class="kn">from</span> <span class="nn">pobm._ErrorHandler</span> <span class="kn">import</span> <span class="n">_check_shape_</span><span class="p">,</span> <span class="n">_check_len_ApEn_</span>
+<span class="kn">from</span> <span class="nn">pobm._ErrorHandler</span> <span class="kn">import</span> <span class="n">_check_shape_</span><span class="p">,</span> <span class="n">_check_len_ApEn_</span><span class="p">,</span> <span class="n">WrongParameter</span>
 <span class="kn">from</span> <span class="nn">pobm._ResultsClasses</span> <span class="kn">import</span> <span class="n">ComplexityMeasuresResults</span>
 
 
 <div class="viewcode-block" id="ComplexityMeasures"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures">[docs]</a><span class="k">class</span> <span class="nc">ComplexityMeasures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class that calculates Complexity Features from spo2 time series.</span>
-<span class="sd">    Suppose that the data has been preprocessed.</span>
-
-<span class="sd">    :param</span>
-<span class="sd">        signal: 1-d array, of shape (N,) where N is the length of the signal</span>
-<span class="sd">        CTM_Threshold: Radius of Central Tendency Measure.</span>
-<span class="sd">        DFA_Window: Length of window to calculate DFA biomarker.</span>
-<span class="sd">        M_Sampen: Embedding dimension to compute SampEn.</span>
-<span class="sd">        R_Sampen: Tolerance to compute SampEn.</span>
-<span class="sd">        M_ApEn: Embedding dimension to compute ApEn.</span>
-<span class="sd">        R_ApEn: Tolerance to compute ApEn.</span>
-
-
-<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">    Released under the GNU General Public License</span>
-
-<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">    https://aim-lab.github.io/</span>
-
-<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">    under the terms of the GNU General Public License as published by the</span>
-<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">    option) any later version.</span>
-<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">    Public License for more details.</span>
+<span class="sd">    The method compute runs all the biomarker of this category.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CTM_Threshold</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">DFA_Window</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">M_Sampen</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">R_Sampen</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">M_ApEn</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">R_ApEn</span><span class="o">=</span><span class="mf">0.25</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CTM_Threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">DFA_Window</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">M_Sampen</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">R_Sampen</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+                 <span class="n">M_ApEn</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">R_ApEn</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param CTM_Threshold: Radius of Central Tendency Measure.</span>
+<span class="sd">        :type CTM_Threshold: float, optional</span>
+<span class="sd">        :param DFA_Window: Length of window to calculate DFA biomarker.</span>
+<span class="sd">        :type DFA_Window: int, optional</span>
+<span class="sd">        :param M_Sampen: Embedding dimension to compute SampEn.</span>
+<span class="sd">        :type M_Sampen: int, optional</span>
+<span class="sd">        :param R_Sampen: Tolerance to compute SampEn.</span>
+<span class="sd">        :type R_Sampen: float, optional</span>
+<span class="sd">        :param M_ApEn: Embedding dimension to compute ApEn.</span>
+<span class="sd">        :type M_ApEn: int, optional</span>
+<span class="sd">        :param R_ApEn: Tolerance to compute ApEn.</span>
+<span class="sd">        :type R_ApEn: float, optional</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">DFA_Window</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WrongParameter</span><span class="p">(</span><span class="s2">&quot;DFA_Window should be strictly positive&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">M_Sampen</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WrongParameter</span><span class="p">(</span><span class="s2">&quot;M_Sampen should be strictly positive&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">R_Sampen</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WrongParameter</span><span class="p">(</span><span class="s2">&quot;R_Sampen should be strictly positive&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">M_ApEn</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WrongParameter</span><span class="p">(</span><span class="s2">&quot;DFA_Window should be strictly positive&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">R_ApEn</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WrongParameter</span><span class="p">(</span><span class="s2">&quot;R_ApEn should be strictly positive&quot;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">CTM_Threshold</span> <span class="o">=</span> <span class="n">CTM_Threshold</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">DFA_Window</span> <span class="o">=</span> <span class="n">DFA_Window</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">M_Sampen</span> <span class="o">=</span> <span class="n">M_Sampen</span>
@@ -198,9 +201,9 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.compute"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComplexityMeasuresResults</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
-<span class="sd">        :return:</span>
-<span class="sd">            ComplexityMeasuresResults class containing the following features:</span>
+<span class="sd">        :return: ComplexityMeasuresResults class containing the following features:</span>
 <span class="sd">                -	ApEn: Approximate Entropy.</span>
 <span class="sd">                -   LZ: Lempel-Ziv complexity.</span>
 <span class="sd">                -	CTM: Central Tendency Measure.</span>
@@ -220,37 +223,21 @@
 <span class="sd">            # Compute the biomarkers</span>
 <span class="sd">            results_complexity = complexity_class.compute(spo2_signal)</span>
 
-
-<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">    Released under the GNU General Public License</span>
-
-<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">    https://aim-lab.github.io/</span>
-
-<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">    under the terms of the GNU General Public License as published by the</span>
-<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">    option) any later version.</span>
-<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">    Public License for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_check_shape_</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ComplexityMeasuresResults</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__comp_apen</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__comp_lz</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span>
-                                         <span class="bp">self</span><span class="o">.</span><span class="n">__comp_ctm</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span>
-                                         <span class="bp">self</span><span class="o">.</span><span class="n">__comp_sampen</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span>
-                                         <span class="bp">self</span><span class="o">.</span><span class="n">__comp_dfa</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">ComplexityMeasuresResults</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comp_apen</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_lz</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">comp_ctm</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">comp_sampen</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">comp_dfa</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span></div>
 
-    <span class="k">def</span> <span class="nf">__comp_apen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
+<div class="viewcode-block" id="ComplexityMeasures.comp_apen"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_apen">[docs]</a>    <span class="k">def</span> <span class="nf">comp_apen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the approximate entropy, according to the paper</span>
 <span class="sd">        Utility of Approximate Entropy From Overnight Pulse Oximetry Data in the Diagnosis</span>
 <span class="sd">        of the Obstructive Sleep Apnea Syndrome</span>
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
-<span class="sd">        :return: ApEn</span>
+<span class="sd">        :return: ApEn (float)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
         <span class="n">signal</span> <span class="o">=</span> <span class="n">signal</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">signal</span><span class="p">))]</span>
@@ -259,8 +246,7 @@
         <span class="n">phi_m1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__apen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M_ApEn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
             <span class="n">res</span> <span class="o">=</span> <span class="n">phi_m</span> <span class="o">-</span> <span class="n">phi_m1</span>
-
-        <span class="k">return</span> <span class="n">res</span>
+        <span class="k">return</span> <span class="n">res</span></div>
 
     <span class="k">def</span> <span class="nf">__apen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -288,31 +274,32 @@
         <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">window1</span> <span class="o">-</span> <span class="n">window2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">r</span>
 
-    <span class="k">def</span> <span class="nf">__comp_lz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
+<div class="viewcode-block" id="ComplexityMeasures.comp_lz"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_lz">[docs]</a>    <span class="k">def</span> <span class="nf">comp_lz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute lempel-ziv, according to the paper</span>
 <span class="sd">        Non-linear characteristics of blood oxygen saturation from nocturnal oximetry</span>
 <span class="sd">        for obstructive sleep apnoea detection</span>
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
-<span class="sd">        :return: LZ</span>
+<span class="sd">        :return: LZ (float)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
         <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">signal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">median</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">))]</span>
         <span class="n">byte</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">))</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">res</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">lempel_ziv_complexity</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">byte</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">lempel_ziv_complexity</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">byte</span><span class="p">))</span></div>
 
-    <span class="k">def</span> <span class="nf">__comp_ctm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
+<div class="viewcode-block" id="ComplexityMeasures.comp_ctm"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_ctm">[docs]</a>    <span class="k">def</span> <span class="nf">comp_ctm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute CTM, according to the paper</span>
 <span class="sd">        Non-linear characteristics of blood oxygen saturation from nocturnal oximetry</span>
 <span class="sd">        for obstructive sleep apnoea detection</span>
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
-<span class="sd">        :return: CTM</span>
+<span class="sd">        :return: CTM (float)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
             <span class="n">res</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__d_ctm</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CTM_Threshold</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">res</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__d_ctm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -322,11 +309,11 @@
             <span class="k">return</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">__comp_sampen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
+<div class="viewcode-block" id="ComplexityMeasures.comp_sampen"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_sampen">[docs]</a>    <span class="k">def</span> <span class="nf">comp_sampen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the Sample Entropy</span>
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
-<span class="sd">        :return: SampEn</span>
+<span class="sd">        :return: SampEn (float)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
         <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M_Sampen</span>
@@ -348,13 +335,13 @@
             <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">xmi</span> <span class="o">-</span> <span class="n">xm</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">xmi</span> <span class="ow">in</span> <span class="n">xm</span><span class="p">])</span>
 
         <span class="c1"># Return SampEn</span>
-        <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">A</span> <span class="o">/</span> <span class="n">B</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">A</span> <span class="o">/</span> <span class="n">B</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__comp_dfa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
+<div class="viewcode-block" id="ComplexityMeasures.comp_dfa"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_dfa">[docs]</a>    <span class="k">def</span> <span class="nf">comp_dfa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute DFA</span>
+<span class="sd">        Compute DFA, Detrended Fluctuation Analysis</span>
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
-<span class="sd">        :return: DFA</span>
+<span class="sd">        :return: DFA (float)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DFA_Window</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">cumtrapz</span><span class="p">(</span><span class="n">signal</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span>
@@ -374,7 +361,7 @@
             <span class="n">least_square</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">intercept</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="n">n</span>
 
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">least_square</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">least_square</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span></div></div>
 </pre></div>
 
            </div>
@@ -388,19 +375,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License
-Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-https://aim-lab.github.io/
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details. 
+        &copy; Copyright 
 
     </p>
   </div>

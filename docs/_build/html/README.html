@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pobm &mdash; pobm  documentation</title>
+  <title>OBM Toolbox &mdash; pobm  documentation</title>
   
 
   
@@ -129,13 +129,13 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>pobm</li>
+      <li>OBM Toolbox</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/README.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -148,30 +148,36 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="pobm">
-<h1>pobm<a class="headerlink" href="#pobm" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="pobm.html">pobm package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pobm.obm.html">pobm.obm package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pobm.obm.html#module-pobm.obm.burden">pobm.obm.burden</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pobm.obm.html#module-pobm.obm.complex">pobm.obm.complex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pobm.obm.html#module-pobm.obm.desat">pobm.obm.desat</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pobm.obm.html#module-pobm.obm.general">pobm.obm.general</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pobm.obm.html#module-pobm.obm.periodicity">pobm.obm.periodicity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pobm.obm.html#module-pobm.obm">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pobm.spo2.html">pobm.spo2 package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pobm.spo2.html#pobm-spo2-single-biomarkers">pobm.spo2.single_biomarkers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pobm.spo2.html#module-pobm.spo2">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pobm.html#module-pobm.prep">pobm.prep</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pobm.html#module-pobm">Module contents</a></li>
-</ul>
-</li>
-</ul>
+  <div class="section" id="obm-toolbox">
+<h1>OBM Toolbox<a class="headerlink" href="#obm-toolbox" title="Permalink to this headline">¶</a></h1>
+<p>Python package for extracting biomarkers from oximetry signal, the SpO2.
+Based on the paper Levy Jeremy, Álvarez Daniel, Rosenberg Aviv A., del Campo Felix and Behar Joachim A. “Oximetry digital biomarkers for assessing respiratory function during sleep: standards of measurement, physiological interpretation, and clinical use”.
+Under review in Nature Digital Medicine.</p>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>5 types of biomarkers are extracted:</p>
+<p>General Statistics: time-based statistics describing the oxygen saturation time series data distribution.</p>
+<p>Complexity: quantify the presence of long-range correlations in non-stationary time series.</p>
+<p>Periodicity: quantify consecutive events creating some periodicity in the oxygen saturation time series.</p>
+<p>Desaturations: time-based measures that are descriptive statistics of the desaturation patterns happening throughout the time series.</p>
+<p>Hypoxic burden: time-based measures quantifying the overall degree of hypoxemia imposed to the heart and other organs during the recording period.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Available on pip, with the command:
+python -m pip install –extra-index-url <a class="reference external" href="https://test.pypi.org/simple/">https://test.pypi.org/simple/</a> obmtoolbox</p>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>numpy==1.18.2</p>
+<p>scikit-learn==0.22.2</p>
+<p>scipy==1.4.1</p>
+<p>lempel-ziv-complexity==0.2.2</p>
+<p>All the requirements are installed when the toolbox is installed, no need for additional commands.</p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>Available at <a class="reference external" href="https://oximetry-toolbox.readthedocs.io/en/latest/">https://oximetry-toolbox.readthedocs.io/en/latest/</a></p>
 </div>
 </div>
 

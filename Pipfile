@@ -14,6 +14,7 @@ pytest-cov = "*"
 ipython = "*"
 black = "*"
 pylint = "*"
+m2r2 = ">=0.2.5"
 
 [packages]
 pobm = {editable = true, path = "."}
@@ -22,6 +23,7 @@ pobm = {editable = true, path = "."}
 numpy = "~=1.19.0"
 scipy = "~=1.5.1"
 lempel-ziv-complexity = "~=0.2.2"
+spinx_rtd_theme = ">=0.3.1"
 
 [pipenv]
 allow_prereleases = true

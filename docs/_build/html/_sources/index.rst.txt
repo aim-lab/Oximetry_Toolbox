@@ -5,12 +5,14 @@
 
 Welcome to pobm's documentation!
 ================================
+.. include:: README.rst
 
 .. toctree::
    :maxdepth: 4
    :caption: Contents:
 
    pobm
+
 
 
 Indices and tables

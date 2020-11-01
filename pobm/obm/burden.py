@@ -14,7 +14,6 @@ class HypoxicBurdenMeasures:
 
     def __init__(self, begin, end, CT_Threshold: float = 90, CA_Baseline: float = None):
         """
-
         :param begin: List of indices of beginning of each desaturation event.
         :type begin: list
         :param end: List of indices of end of each desaturation event. begin and end should have the same length.
@@ -39,10 +38,8 @@ class HypoxicBurdenMeasures:
                 -	CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time
                 -   CT: Percentage of the time spent below the xx% oxygen saturation level
                 -   POD: Percentage of oxygen desaturation events
-                -   AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline
-                    and normalized by the total recording time
-                -   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized
-                    by the total recording time
+                -   AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline and normalized by the total recording time
+                -   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized by the total recording time
 
         Example:
         

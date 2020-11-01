@@ -11,6 +11,7 @@ set SOURCEDIR=.
 set BUILDDIR=_build
 
 if "%1" == "" goto help
+if "%1" == "docs" goto docs
 
 %SPHINXBUILD% >NUL 2>NUL
 if errorlevel 9009 (
@@ -26,6 +27,15 @@ if errorlevel 9009 (
 )
 
 %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+goto end
+
+:docs
+ECHO Converting README.md to README.rst...
+cd ..
+m2r2 README.md README.rst --overwrite
+copy README.rst "docs\README.rst" /A
+cd docs
+make html
 goto end
 
 :help
