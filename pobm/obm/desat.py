@@ -11,17 +11,25 @@ class DesaturationsMeasures:
     The method compute runs all the biomarker of this category.
     """
 
-    def __init__(self, ODI_Threshold: int = 3):
+    def __init__(self, ODI_Threshold: int = 3, hard_threshold: int = 90, relative: bool = True):
         """
 
         :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.
         :type ODI_Threshold: int, optional
+        :param hard_threshold: Hard threshold to detect desaturations.
+        :type hard_threshold: int, optional
+        :param relative: Whether to use a relative or hard threshold to detect desaturations.
+        :type relative: bool, optional
         """
 
         if ODI_Threshold <= 0:
             raise WrongParameter("ODI_Threshold should be strictly positive")
+        if hard_threshold <= 0:
+            raise WrongParameter("hard_threshold should be strictly positive")
 
         self.ODI_Threshold = ODI_Threshold
+        self.hard_threshold = hard_threshold
+        self.relative = relative
         self.begin = []
         self.end = []
 
@@ -66,6 +74,9 @@ class DesaturationsMeasures:
         warnings.filterwarnings("ignore", category=RuntimeWarning)
 
         ODI = self.desaturation_detector(signal)
+        if self.relative is False:
+            self.__hard_threshold_detector(signal, self.hard_threshold)
+
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
         desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
         desaturation_slope_all = desat_embedding(self.begin, self.end)
@@ -141,7 +152,7 @@ class DesaturationsMeasures:
 
     def desaturation_detector(self, signal):
         """
-        run desaturation detector, implemented by Dr. Joachim Behar
+        run desaturation detector
 
         :param signal: The SpO2 signal, of shape (N,)
         :return: ODI: the average number of desaturation events per hour (int).
@@ -274,6 +285,36 @@ class DesaturationsMeasures:
                 aa = aa + 1
 
         return desat, table_desat_aa, table_desat_bb, table_desat_cc
+
+    def __hard_threshold_detector(self, signal, hard_threshold):
+        """
+        Finds desaturation with hard threshold
+
+        :param signal: The SpO2 signal, of shape (N,)
+        :param threshold: Threshold to detect desaturations
+        :type threshold: int, optional
+        :return:
+        """
+        begin_desat, end_desat = [], []
+        turn_begin = True
+
+        for i in range(len(signal)):
+            if i == 0:
+                continue
+            if (signal[i - 1] >= hard_threshold) and (signal[i] < hard_threshold):
+                if turn_begin is True:
+                    begin_desat.append(i)
+                    turn_begin = False
+            if (signal[i - 1] < hard_threshold) and (signal[i] >= hard_threshold):
+                if turn_begin is False:
+                    end_desat.append(i)
+                    turn_begin = True
+
+        if turn_begin is False:
+            begin_desat = begin_desat[0:-1]
+
+        self.begin = begin_desat
+        self.end = end_desat
 
 
 def desat_embedding(begin, end):
