@@ -159,10 +159,12 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class that calculates Hypoxic Burden Features from spo2 time series.</span>
 <span class="sd">    The method compute runs all the biomarker of this category.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">begin</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">CT_Threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span> <span class="n">CA_Baseline</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
 <span class="sd">        :param begin: Numpy array of indices of beginning of each desaturation event.</span>
 <span class="sd">        :type begin: Numpy array</span>
 <span class="sd">        :param end: Numpy array of indices of end of each desaturation event. begin and end should have the same length.</span>
@@ -171,6 +173,7 @@
 <span class="sd">        :type CT_Threshold: float, optional</span>
 <span class="sd">        :param CA_Baseline: Baseline to compute the CA feature. Default value is mean of the signal.</span>
 <span class="sd">        :type CA_Baseline: float, optional</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
@@ -196,6 +199,7 @@
 <span class="sd">            * POD: Percentage of oxygen desaturation events</span>
 <span class="sd">            * AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline and normalized by the total recording time</span>
 <span class="sd">            * AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized by the total recording time</span>
+
 
 <span class="sd">        Example:</span>
 <span class="sd">        </span>
@@ -225,8 +229,8 @@
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :param desaturations_signal: dict with 2 keys:</span>
-<span class="sd">            -   begin: indices of begininning of each desaturation</span>
-<span class="sd">            -   end: indices of end of each desaturation</span>
+<span class="sd">            - begin: indices of begininning of each desaturation</span>
+<span class="sd">            - end: indices of end of each desaturation</span>
 <span class="sd">        :return: HypoxicBurdenMeasuresResults class containing the following features:</span>
 
 <span class="sd">            * CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time</span>
