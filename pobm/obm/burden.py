@@ -143,7 +143,6 @@ class HypoxicBurdenMeasures:
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: CT, the cumulative time (float)
 
-
         """
         with np.errstate(invalid='ignore'):
             return 100 * len(signal[signal <= self.CT_Threshold]) / len(signal)
