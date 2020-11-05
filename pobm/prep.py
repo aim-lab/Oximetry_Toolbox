@@ -4,28 +4,16 @@ from scipy import signal
 
 def set_range(signal, Range_min=50, Range_max=100):
     """
-    Range function. Remove values lower than 50 or greater than 100, considered as non-physiological
+    Range function. Remove values lower than Range_min or greater than Range_max, considered as non-physiological
 
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
+    :param Range_min: minimum value for removing the data
+    :type Range_min: int, optional
+    :param Range_max: maximum value for removing the data
+    :type Range_max: int, optional
 
     :return: preprocessed signal, 1-d numpy array.
 
-
-    PhysioZoo OBM toolbox 2020, version 1.0
-    Released under the GNU General Public License
-
-    Authors: Jeremy Levy and Joachim A. Behar
-    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-    https://aim-lab.github.io/
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-    Public License for more details.
     """
 
     # return np.delete(signal, np.argwhere((signal >= Range_max) | (signal <= Range_min)))
@@ -46,22 +34,6 @@ def resamp_spo2(signal, OriginalFreq):
 
     :return: resampled signal, 1-d numpy array, the resampled spo2 time series at 1Hz
 
-
-    PhysioZoo OBM toolbox 2020, version 1.0
-    Released under the GNU General Public License
-
-    Authors: Jeremy Levy and Joachim A. Behar
-    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-    https://aim-lab.github.io/
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-    Public License for more details.
     """
 
     len_in = len(signal)
@@ -79,25 +51,10 @@ def dfilter(signal, Diff=4):
 
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
     :param Diff: parameter of the delta filter.
+    :type Diff: int, optional
 
     :return: preprocessed signal, 1-d numpy array.
 
-
-    PhysioZoo OBM toolbox 2020, version 1.0
-    Released under the GNU General Public License
-
-    Authors: Jeremy Levy and Joachim A. Behar
-    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-    https://aim-lab.github.io/
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-    Public License for more details.
     """
 
     signal_filtered = []
@@ -122,22 +79,6 @@ def median_spo2(signal_spo2, FilterLength=9):
 
     :return: preprocessed signal, 1-d numpy array.
 
-
-    PhysioZoo OBM toolbox 2020, version 1.0
-    Released under the GNU General Public License
-
-    Authors: Jeremy Levy and Joachim A. Behar
-    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-    https://aim-lab.github.io/
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-    Public License for more details.
     """
 
     data_med = signal.medfilt(np.round(signal_spo2), FilterLength)
@@ -150,26 +91,11 @@ def block_data(signal, treshold=50):
     Apply a block data filter to the SpO2 signal.
 
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
-    :param treshold (Optional): treshold parameter for block data filter.
+    :param treshold: treshold parameter for block data filter.
+    :type treshold: int, optional
 
     :return: preprocessed signal, 1-d numpy array.
 
-
-    PhysioZoo OBM toolbox 2020, version 1.0
-    Released under the GNU General Public License
-
-    Authors: Jeremy Levy and Joachim A. Behar
-    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-    https://aim-lab.github.io/
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-    Public License for more details.
     """
     signal = np.array(signal)
     mask = np.ones(len(signal), dtype=bool)
