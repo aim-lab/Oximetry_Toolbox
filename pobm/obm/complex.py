@@ -55,11 +55,12 @@ class ComplexityMeasures:
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: ComplexityMeasuresResults class containing the following features:
-                -	ApEn: Approximate Entropy.
-                -   LZ: Lempel-Ziv complexity.
-                -	CTM: Central Tendency Measure.
-                -   SampEn: Sample Entropy.
-                -	DFA: Detrended Fluctuation Analysis.
+
+            * ApEn: Approximate Entropy.
+            * LZ: Lempel-Ziv complexity.
+            * CTM: Central Tendency Measure.
+            * SampEn: Sample Entropy.
+            * DFA: Detrended Fluctuation Analysis.
 
 
         Example:

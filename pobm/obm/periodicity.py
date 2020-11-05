@@ -31,12 +31,13 @@ class PRSAMeasures:
         """
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: PRSAResults class containing the following features:
-                -	PRSAc: PRSA capacity.
-                -	PRSAad: PRSA amplitude difference.
-                -	PRSAos: PRSA overall slope.
-                -	PRSAsb: PRSA slope before the anchor point.
-                -	PRSAsa: PRSA slope after the anchor point.
-                -	AC: Autocorrelation.
+
+            * PRSAc: PRSA capacity.
+            * PRSAad: PRSA amplitude difference.
+            * PRSAos: PRSA overall slope.
+            * PRSAsb: PRSA slope before the anchor point.
+            * PRSAsa: PRSA slope after the anchor point.
+            * AC: Autocorrelation.
 
         Example:
         
@@ -98,10 +99,11 @@ class PSDMeasures:
         :param signal: The SpO2 signal, of shape (N,)
 
         :return: PSDResults class containing the following features:
-                -   PSD_total: The amplitude of the spectral signal.
-                -   PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.
-                -   PSD_ratio: The ratio between PSD_total and PSD_band.
-                -   PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.
+        
+            * PSD_total: The amplitude of the spectral signal.
+            * PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.
+            * PSD_ratio: The ratio between PSD_total and PSD_band.
+            * PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.
 
 
         Example:

@@ -34,15 +34,16 @@ class OverallGeneralMeasures:
         """
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: OveralGeneralMeasuresResult class containing the following features:
-                -	AV: Average of the signal.
-                -	MED: Median of the signal.
-                -	Min: Minimum value of the signal.
-                -	SD: Std of the signal.
-                -	RG: SpO2 range (difference between the max and min value).
-                -	P: percentile.
-                -	M: Percentage of the signal x% below median oxygen saturation.
-                -	ZC: Number of zero-crossing points.
-                -	DI: Delta Index.
+        
+            * AV: Average of the signal.
+            * MED: Median of the signal.
+            * Min: Minimum value of the signal.
+            * SD: Std of the signal.
+            * RG: SpO2 range (difference between the max and min value).
+            * P: percentile.
+            * M: Percentage of the signal x% below median oxygen saturation.
+            * ZC: Number of zero-crossing points.
+            * DI: Delta Index.
 
         Example:
         

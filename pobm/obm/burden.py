@@ -35,11 +35,12 @@ class HypoxicBurdenMeasures:
         """
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: HypoxicBurdenMeasuresResults class containing the following features:
-                -	CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time
-                -   CT: Percentage of the time spent below the xx% oxygen saturation level
-                -   POD: Percentage of oxygen desaturation events
-                -   AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline and normalized by the total recording time
-                -   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized by the total recording time
+
+            * CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time
+            * CT: Percentage of the time spent below the xx% oxygen saturation level
+            * POD: Percentage of oxygen desaturation events
+            * AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline and normalized by the total recording time
+            * AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized by the total recording time
 
         Example:
         
@@ -72,15 +73,15 @@ class HypoxicBurdenMeasures:
         :param desaturations_signal: dict with 2 keys:
             -   begin: indices of begininning of each desaturation
             -   end: indices of end of each desaturation
-        :return:
-            HypoxicBurdenMeasuresResults class containing the following features:
-                -	CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time
-                -   CT: Percentage of the time spent below the xx% oxygen saturation level
-                -   POD: Percentage of oxygen desaturation events
-                -   AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline
-                    and normalized by the total recording time
-                -   AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized
-                    by the total recording time
+        :return: HypoxicBurdenMeasuresResults class containing the following features:
+
+            * CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time
+            * CT: Percentage of the time spent below the xx% oxygen saturation level
+            * POD: Percentage of oxygen desaturation events
+            * AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline
+              and normalized by the total recording time
+            * AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized
+              by the total recording time
 
         """
 
