@@ -88,6 +88,7 @@ class ComplexityMeasures:
         Compute the approximate entropy, according to the paper
         Utility of Approximate Entropy From Overnight Pulse Oximetry Data in the Diagnosis
         of the Obstructive Sleep Apnea Syndrome
+
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: ApEn (float)
         """
@@ -131,6 +132,7 @@ class ComplexityMeasures:
         Compute lempel-ziv, according to the paper
         Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
         for obstructive sleep apnoea detection
+
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: LZ (float)
         """
@@ -145,6 +147,7 @@ class ComplexityMeasures:
         Compute CTM, according to the paper
         Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
         for obstructive sleep apnoea detection
+
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: CTM (float)
         """
@@ -164,6 +167,7 @@ class ComplexityMeasures:
     def comp_sampen(self, signal):
         """
         Compute the Sample Entropy
+
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: SampEn (float)
         """
@@ -192,6 +196,7 @@ class ComplexityMeasures:
     def comp_dfa(self, signal):
         """
         Compute DFA, Detrended Fluctuation Analysis
+
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: DFA (float)
         """
