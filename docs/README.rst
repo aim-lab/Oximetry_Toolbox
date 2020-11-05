@@ -25,7 +25,7 @@ Installation
 ------------
 
 Available on pip, with the command: 
-python -m pip install --extra-index-url https://test.pypi.org/simple/ obmtoolbox
+python -m pip install --extra-index-url https://test.pypi.org/simple/ pobm
 
 Requirements
 ------------
