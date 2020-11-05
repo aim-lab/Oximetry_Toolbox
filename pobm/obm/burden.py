@@ -10,10 +10,12 @@ class HypoxicBurdenMeasures:
     """
     Class that calculates Hypoxic Burden Features from spo2 time series.
     The method compute runs all the biomarker of this category.
+
     """
 
     def __init__(self, begin: np.array, end: np.array, CT_Threshold: float = 90, CA_Baseline: float = None):
         """
+        
         :param begin: Numpy array of indices of beginning of each desaturation event.
         :type begin: Numpy array
         :param end: Numpy array of indices of end of each desaturation event. begin and end should have the same length.
@@ -22,6 +24,7 @@ class HypoxicBurdenMeasures:
         :type CT_Threshold: float, optional
         :param CA_Baseline: Baseline to compute the CA feature. Default value is mean of the signal.
         :type CA_Baseline: float, optional
+
         """
 
         if isinstance(begin, int):
@@ -47,6 +50,7 @@ class HypoxicBurdenMeasures:
             * POD: Percentage of oxygen desaturation events
             * AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline and normalized by the total recording time
             * AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized by the total recording time
+
 
         Example:
         
@@ -76,8 +80,8 @@ class HypoxicBurdenMeasures:
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :param desaturations_signal: dict with 2 keys:
-            -   begin: indices of begininning of each desaturation
-            -   end: indices of end of each desaturation
+            - begin: indices of begininning of each desaturation
+            - end: indices of end of each desaturation
         :return: HypoxicBurdenMeasuresResults class containing the following features:
 
             * CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time
