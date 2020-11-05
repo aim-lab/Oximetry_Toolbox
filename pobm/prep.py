@@ -75,8 +75,9 @@ def median_spo2(signal_spo2, FilterLength=9):
     Assumption: any missing/abnormal values are represented as 'np.nan'
 
     :param signal: 1-d array, of shape (N,) where N is the length of the signal
-    :param FilterLength (Optional): The length of the filter.
-
+    :param FilterLength: The length of the filter.
+    :type FilterLength: int, optional
+    
     :return: preprocessed signal, 1-d numpy array.
 
     """
