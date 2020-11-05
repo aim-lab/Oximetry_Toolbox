@@ -11,7 +11,8 @@ class DesaturationsMeasures:
     The method compute runs all the biomarker of this category.
     """
 
-    def __init__(self, ODI_Threshold: int = 3, hard_threshold: int = 90, relative: bool = True):
+    def __init__(self, ODI_Threshold: int = 3, hard_threshold: int = 90, relative: bool = True,
+                 desat_max_length: int = 90):
         """
 
         :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.
@@ -20,16 +21,21 @@ class DesaturationsMeasures:
         :type hard_threshold: int, optional
         :param relative: Whether to use a relative or hard threshold to detect desaturations.
         :type relative: bool, optional
+        :param desat_max_length: The maximum length of desaturations.
+        :type desat_max_length: int, optional
         """
 
         if ODI_Threshold <= 0:
             raise WrongParameter("ODI_Threshold should be strictly positive")
         if hard_threshold <= 0:
             raise WrongParameter("hard_threshold should be strictly positive")
+        if desat_max_length <= 0:
+            raise WrongParameter("desat_max_length should be strictly positive")
 
         self.ODI_Threshold = ODI_Threshold
         self.hard_threshold = hard_threshold
         self.relative = relative
+        self.desat_max_length = desat_max_length
         self.begin = []
         self.end = []
 
@@ -74,9 +80,10 @@ class DesaturationsMeasures:
         warnings.simplefilter('ignore', np.RankWarning)
         warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-        ODI = self.desaturation_detector(signal)
-        if self.relative is False:
-            self.__hard_threshold_detector(signal, self.hard_threshold)
+        if self.relative is True:
+            ODI = self.desaturation_detector(signal)
+        else:
+            ODI = self.__hard_threshold_detector(signal)
 
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
         desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
@@ -187,14 +194,14 @@ class DesaturationsMeasures:
             else:
                 found = False
                 min_duration = table_desat_cc[i] - table_desat_aa[i]
-                for j in range(min_duration, 90):
+                for j in range(min_duration, self.desat_max_length):
                     if table_desat_aa[i] + j < len(signal):
                         if signal[table_desat_aa[i] + j] >= signal[table_desat_aa[i]] - 1:
                             found = True
                             table_desat_dd.append(table_desat_aa[i] + j)
                             break
                 if found is False:
-                    table_desat_dd.append(min(table_desat_aa[i] + 90, len(signal) - 1))
+                    table_desat_dd.append(min(table_desat_aa[i] + self.desat_max_length, len(signal) - 1))
         return table_desat_dd
 
     def __sc_desaturations(self, data):
@@ -222,7 +229,7 @@ class DesaturationsMeasures:
 
         aa = 1
         desat = 0
-        max_desat_lg = 120  # was 90 sec in the original paper. Changed to 120 because I have seen longer desaturations.
+        max_desat_lg = self.desat_max_length
         lg_dat = len(data)
         thres = self.ODI_Threshold
         table_desat_aa = []
@@ -287,15 +294,14 @@ class DesaturationsMeasures:
 
         return desat, table_desat_aa, table_desat_bb, table_desat_cc
 
-    def __hard_threshold_detector(self, signal, hard_threshold):
+    def __hard_threshold_detector(self, signal):
         """
         Finds desaturation with hard threshold
 
         :param signal: The SpO2 signal, of shape (N,)
-        :param threshold: Threshold to detect desaturations
-        :type threshold: int, optional
-        :return:
+        :return: ODI
         """
+        hard_threshold = self.hard_threshold
         begin_desat, end_desat = [], []
         turn_begin = True
 
@@ -314,8 +320,14 @@ class DesaturationsMeasures:
         if turn_begin is False:
             begin_desat = begin_desat[0:-1]
 
+        begin_desat = np.array(begin_desat).astype(int)
+        end_desat = np.array(end_desat).astype(int)
+
         self.begin = begin_desat
         self.end = end_desat
+
+        ODI = len(begin_desat) / len(signal) * 3600  # Convert to event/h
+        return ODI
 
 
 def desat_embedding(begin, end):

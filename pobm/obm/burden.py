@@ -12,17 +12,23 @@ class HypoxicBurdenMeasures:
     The method compute runs all the biomarker of this category.
     """
 
-    def __init__(self, begin, end, CT_Threshold: float = 90, CA_Baseline: float = None):
+    def __init__(self, begin: np.array, end: np.array, CT_Threshold: float = 90, CA_Baseline: float = None):
         """
-        :param begin: List of indices of beginning of each desaturation event.
-        :type begin: list
-        :param end: List of indices of end of each desaturation event. begin and end should have the same length.
-        :type end: list
+        :param begin: Numpy array of indices of beginning of each desaturation event.
+        :type begin: Numpy array
+        :param end: Numpy array of indices of end of each desaturation event. begin and end should have the same length.
+        :type end: Numpy array
         :param CT_Threshold: Percentage of the time spent below the “CT_Threshold” % oxygen saturation level.
         :type CT_Threshold: float, optional
         :param CA_Baseline: Baseline to compute the CA feature. Default value is mean of the signal.
         :type CA_Baseline: float, optional
         """
+
+        if isinstance(begin, int):
+            begin = np.array([begin])
+        if isinstance(end, int):
+            end = np.array([end])
+
         if len(begin) != len(end):
             raise WrongParameter("The parameters begin and end should have the same length")
 
@@ -58,14 +64,13 @@ class HypoxicBurdenMeasures:
 
         _check_shape_(signal)
         warnings.filterwarnings("ignore", category=RuntimeWarning)
-        desaturations = {'begin': self.begin, 'end': self.end}
 
         if self.CA_Baseline is None:
             self.CA_Baseline = np.nanmean(signal)
 
-        return self.__comp_hypoxic(signal, desaturations)
+        return self.__comp_hypoxic(signal)
 
-    def __comp_hypoxic(self, signal, desaturations_signal):
+    def __comp_hypoxic(self, signal):
         """
         Helper function, to calculate the Hypoxic Burden biomarkers from the desaturations
 
@@ -87,7 +92,7 @@ class HypoxicBurdenMeasures:
 
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
         desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
-        desaturation_slope_all = desat_embedding(desaturations_signal['begin'], desaturations_signal['end'])
+        desaturation_slope_all = desat_embedding(self.begin, self.end)
 
         time_spo2_array = np.array(range(len(signal)))
         for (i, desaturation) in enumerate(desaturations):

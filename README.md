@@ -21,7 +21,7 @@ Hypoxic burden: time-based measures quantifying the overall degree of hypoxemia 
 ## Installation
 
 Available on pip, with the command: 
-python -m pip install --extra-index-url https://test.pypi.org/simple/ obmtoolbox
+python -m pip install --extra-index-url https://test.pypi.org/simple/ pobm
 
 ## Requirements
 
