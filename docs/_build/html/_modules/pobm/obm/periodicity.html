@@ -180,12 +180,13 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: PRSAResults class containing the following features:</span>
-<span class="sd">                -	PRSAc: PRSA capacity.</span>
-<span class="sd">                -	PRSAad: PRSA amplitude difference.</span>
-<span class="sd">                -	PRSAos: PRSA overall slope.</span>
-<span class="sd">                -	PRSAsb: PRSA slope before the anchor point.</span>
-<span class="sd">                -	PRSAsa: PRSA slope after the anchor point.</span>
-<span class="sd">                -	AC: Autocorrelation.</span>
+
+<span class="sd">            * PRSAc: PRSA capacity.</span>
+<span class="sd">            * PRSAad: PRSA amplitude difference.</span>
+<span class="sd">            * PRSAos: PRSA overall slope.</span>
+<span class="sd">            * PRSAsb: PRSA slope before the anchor point.</span>
+<span class="sd">            * PRSAsa: PRSA slope after the anchor point.</span>
+<span class="sd">            * AC: Autocorrelation.</span>
 
 <span class="sd">        Example:</span>
 <span class="sd">        </span>
@@ -247,10 +248,11 @@
 <span class="sd">        :param signal: The SpO2 signal, of shape (N,)</span>
 
 <span class="sd">        :return: PSDResults class containing the following features:</span>
-<span class="sd">                -   PSD_total: The amplitude of the spectral signal.</span>
-<span class="sd">                -   PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.</span>
-<span class="sd">                -   PSD_ratio: The ratio between PSD_total and PSD_band.</span>
-<span class="sd">                -   PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.</span>
+<span class="sd">        </span>
+<span class="sd">            * PSD_total: The amplitude of the spectral signal.</span>
+<span class="sd">            * PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.</span>
+<span class="sd">            * PSD_ratio: The ratio between PSD_total and PSD_band.</span>
+<span class="sd">            * PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.</span>
 
 
 <span class="sd">        Example:</span>

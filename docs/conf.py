@@ -38,6 +38,14 @@ release = ''
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+
+# This value selects what content will be inserted into the main body of an autoclass directive. The possible values are:
+# "class" Only the class’ docstring is inserted. This is the default. You can still document __init__ as a separate method using automethod or the members option to autoclass.
+# "both" Both the class’ and the __init__ method’s docstring are concatenated and inserted.
+# "init" Only the __init__ method’s docstring is inserted.
+autoclass_content = "both"
+
+
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
