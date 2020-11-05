@@ -68,9 +68,6 @@ class HypoxicBurdenMeasures:
         _check_shape_(signal)
         warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-        if self.CA_Baseline is None:
-            self.CA_Baseline = np.nanmean(signal)
-
         return self.__comp_hypoxic(signal)
 
     def __comp_hypoxic(self, signal):
@@ -132,6 +129,10 @@ class HypoxicBurdenMeasures:
         :return: CA, the cumulative area (float)
 
         """
+
+        if self.CA_Baseline is None:
+            self.CA_Baseline = np.nanmean(signal)
+
         res = 0
         for value in signal:
             if value < self.CA_Baseline:
