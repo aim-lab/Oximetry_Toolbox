@@ -8,7 +8,7 @@ Welcome to pobm's documentation!
 .. include:: README.rst
 
 .. toctree::
-   :maxdepth: 5
+   :maxdepth: 4
    :caption: Contents:
 
    pobm
