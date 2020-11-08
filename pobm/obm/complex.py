@@ -51,7 +51,7 @@ class ComplexityMeasures:
 
     def compute(self, signal) -> ComplexityMeasuresResults:
         """
-        Runs all the biomarkers of this category.
+        Computes all the biomarkers of this category.
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: ComplexityMeasuresResults class containing the following features:
@@ -85,9 +85,8 @@ class ComplexityMeasures:
 
     def comp_apen(self, signal):
         """
-        Compute the approximate entropy, according to the paper
-        Utility of Approximate Entropy From Overnight Pulse Oximetry Data in the Diagnosis
-        of the Obstructive Sleep Apnea Syndrome
+        Compute the approximate entropy, according to:
+        Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: ApEn (float)
@@ -129,9 +128,8 @@ class ComplexityMeasures:
 
     def comp_lz(self, signal):
         """
-        Compute lempel-ziv, according to the paper
-        Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
-        for obstructive sleep apnoea detection
+        Compute Lempel-Ziv, according to:
+        Lempel, A. & Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf. Theory 22, 75–81 (1976).
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: LZ (float)
@@ -144,9 +142,8 @@ class ComplexityMeasures:
 
     def comp_ctm(self, signal):
         """
-        Compute CTM, according to the paper
-        Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
-        for obstructive sleep apnoea detection
+        Compute CTM, according to:
+        Cohen, M. E., Hudson, D. L. & Deedwania, P. C. Applying continuous chaotic modeling to cardiac signal analysis. IEEE Eng. Med. Biol. Mag. 15, 97–102 (1996).
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: CTM (float)
@@ -166,7 +163,8 @@ class ComplexityMeasures:
 
     def comp_sampen(self, signal):
         """
-        Compute the Sample Entropy
+        Compute the sample entropy, according to
+        Richman, J. S. & Moorman, J. R. Physiological time-series analysis using approximate entropy and sample entropy. Am J Physiol-Heart C 278, H2039–H2049 (2000).
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: SampEn (float)
@@ -195,7 +193,8 @@ class ComplexityMeasures:
 
     def comp_dfa(self, signal):
         """
-        Compute DFA, Detrended Fluctuation Analysis
+        Compute DFA, Detrended Fluctuation Analysis according to
+        Peng, C. ‐K., Havlin, S., Stanley, H. E. & Goldberger, A. L. Quantification of scaling exponents and crossover phenomena in nonstationary heartbeat time series. Chaos An Interdiscip. J. Nonlinear Sci. 5, 82–87 (1995).
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: DFA (float)

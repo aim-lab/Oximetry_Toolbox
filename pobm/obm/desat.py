@@ -40,7 +40,7 @@ class DesaturationsMeasures:
 
     def compute(self, signal) -> DesaturationsMeasuresResults:
         """
-        Runs all the biomarkers of this category.
+        Computes all the biomarkers of this category.
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: DesaturationsMeasuresResults class containing the following features:
@@ -333,7 +333,7 @@ class DesaturationsMeasures:
 
 def desat_embedding(begin, end):
     """
-    Help function for the class
+    Help function for the DesaturationsMeasures class
 
     :return: helper arrays containing the information about desaturation lengths and areas.
 

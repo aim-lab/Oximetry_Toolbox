@@ -31,7 +31,7 @@ class OverallGeneralMeasures:
 
     def compute(self, signal) -> OverallGeneralMeasuresResult:
         """
-        Runs all the biomarkers of this category.
+        Computes all the biomarkers of this category.
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: OveralGeneralMeasuresResult class containing the following features:
@@ -125,7 +125,8 @@ class OverallGeneralMeasures:
 
     def __delta_index(self, signal):
         """
-        Compute the delta index biomarker from the SpO2 signal
+        Compute the delta index biomarker from the SpO2 signal according to
+        Pepin, J. L., Levy, P., Lepaulle, B., Brambilla, C. & Guilleminault, C. Does oximetry contribute to the detection of apneic events? Mathematical processing of the SaO2 signal. Chest 99, 1151–1157 (1991).
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: the DI biomarker

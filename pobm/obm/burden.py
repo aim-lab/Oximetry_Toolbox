@@ -40,8 +40,8 @@ class HypoxicBurdenMeasures:
 
     def compute(self, signal):
         """
-        Runs all the biomarkers of this category.
-        
+        Computes all the biomarkers of this category.
+
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: HypoxicBurdenMeasuresResults class containing the following features:
 
