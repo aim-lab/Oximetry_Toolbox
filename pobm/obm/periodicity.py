@@ -103,6 +103,9 @@ class PSDMeasures:
         :type frequency_high_threshold: float, optional
         """
 
+        if frequency_low_threshold >= frequency_high_threshold:
+            raise WrongParameter("frequency_low_threshold should be lower than frequency_high_threshold")
+
         self.frequency_low = frequency_low_threshold
         self.frequency_high = frequency_high_threshold
 
