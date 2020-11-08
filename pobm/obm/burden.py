@@ -8,8 +8,7 @@ from pobm._ResultsClasses import HypoxicBurdenMeasuresResults
 
 class HypoxicBurdenMeasures:
     """
-    Class that calculates Hypoxic Burden Features from spo2 time series.
-    The method compute runs all the biomarker of this category.
+    Class that calculates hypoxic burden features from SpO2 time series.
     """
 
     def __init__(self, begin: np.array, end: np.array, CT_Threshold: float = 90, CA_Baseline: float = None):
@@ -41,6 +40,8 @@ class HypoxicBurdenMeasures:
 
     def compute(self, signal):
         """
+        Runs all the biomarkers of this category.
+        
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: HypoxicBurdenMeasuresResults class containing the following features:
 
@@ -72,7 +73,7 @@ class HypoxicBurdenMeasures:
 
     def __comp_hypoxic(self, signal):
         """
-        Helper function, to calculate the Hypoxic Burden biomarkers from the desaturations
+        Helper function, to calculate the hypoxic burden biomarkers from the desaturations
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :param desaturations_signal: dict with 2 keys:

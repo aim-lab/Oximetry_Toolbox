@@ -8,8 +8,7 @@ from pobm._ResultsClasses import PRSAResults, PSDResults
 
 class PRSAMeasures:
     """
-    Function that calculates PRSA Features from spo2 time series.
-    The method compute runs all the biomarker of this category.
+    Function that calculates PRSA features from SpO2 time series.
     """
 
     def __init__(self, PRSA_Window: int = 10, K_AC: int = 2):
@@ -29,6 +28,8 @@ class PRSAMeasures:
 
     def compute(self, signal) -> PRSAResults:
         """
+        Runs all the biomarkers of this category.
+
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: PRSAResults class containing the following features:
 
@@ -90,12 +91,13 @@ class PRSAMeasures:
 
 class PSDMeasures:
     """
-    Function that calculates PSD Features from spo2 time series.
-    The method compute runs all the biomarker of this category.
+    Function that calculates PSD features from SpO2 time series.
     """
 
     def compute(self, signal) -> PSDResults:
         """
+        Runs all the biomarkers of this category.
+
         :param signal: The SpO2 signal, of shape (N,)
 
         :return: PSDResults class containing the following features:

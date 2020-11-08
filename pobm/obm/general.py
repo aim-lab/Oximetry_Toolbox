@@ -7,8 +7,7 @@ from pobm._ResultsClasses import OverallGeneralMeasuresResult
 
 class OverallGeneralMeasures:
     """
-    Class that calculates Overall General Features from spo2 time series.
-    The method compute runs all the biomarker of this category.
+    Class that calculates overall general features from SpO2 time series.
     """
 
     def __init__(self, ZC_Baseline: float = None, percentile: int = 1, M_Threshold: int = 2, DI_Window: int = 12):
@@ -32,6 +31,8 @@ class OverallGeneralMeasures:
 
     def compute(self, signal) -> OverallGeneralMeasuresResult:
         """
+        Runs all the biomarkers of this category.
+
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: OveralGeneralMeasuresResult class containing the following features:
         
@@ -74,7 +75,7 @@ class OverallGeneralMeasures:
 
     def __apply_percentile(self, signal):
         """
-        Apply percentile to the spo2 signal
+        Apply percentile to the SpO2 signal
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: the percentile
@@ -83,7 +84,7 @@ class OverallGeneralMeasures:
 
     def __below_median(self, signal):
         """
-        Compute the below median biomarker from the spo2 signal
+        Compute the below median biomarker from the SpO2 signal
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: the BM biomarker
@@ -94,7 +95,7 @@ class OverallGeneralMeasures:
 
     def __compute_range(self, signal):
         """
-        Compute the range biomarker from the spo2 signal
+        Compute the range biomarker from the SpO2 signal
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: the R biomarker
@@ -103,7 +104,7 @@ class OverallGeneralMeasures:
 
     def __num_zc(self, signal):
         """
-        Compute the numZC biomarker from the spo2 signal
+        Compute the numZC biomarker from the SpO2 signal
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: the ZC biomarker
@@ -124,7 +125,7 @@ class OverallGeneralMeasures:
 
     def __delta_index(self, signal):
         """
-        Compute the delta index biomarker from the spo2 signal
+        Compute the delta index biomarker from the SpO2 signal
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: the DI biomarker
