@@ -163,7 +163,7 @@ class ComplexityMeasures:
 
     def comp_sampen(self, signal):
         """
-        Compute the sample entropy, according to
+        Compute the sample entropy, according to:
         Richman, J. S. & Moorman, J. R. Physiological time-series analysis using approximate entropy and sample entropy. Am J Physiol-Heart C 278, H2039–H2049 (2000).
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
@@ -193,7 +193,7 @@ class ComplexityMeasures:
 
     def comp_dfa(self, signal):
         """
-        Compute DFA, Detrended Fluctuation Analysis according to
+        Compute DFA, Detrended Fluctuation Analysis according to:
         Peng, C. ‐K., Havlin, S., Stanley, H. E. & Goldberger, A. L. Quantification of scaling exponents and crossover phenomena in nonstationary heartbeat time series. Chaos An Interdiscip. J. Nonlinear Sci. 5, 82–87 (1995).
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
