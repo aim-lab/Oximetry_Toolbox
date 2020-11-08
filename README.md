@@ -1,6 +1,7 @@
 # OBM Toolbox
 
-Python package for extracting biomarkers from oximetry signal, the SpO2.
+Oximetry digital biomarkers for the analysis of continuous oximetry (SpO2) recordings.
+
 Based on the paper Levy Jeremy, Álvarez Daniel, Rosenberg Aviv A., del Campo Felix and Behar Joachim A. "Oximetry digital biomarkers for assessing respiratory function during sleep: standards of measurement, physiological interpretation, and clinical use". 
 Under review in Nature Digital Medicine.
 
