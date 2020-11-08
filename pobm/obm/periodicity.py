@@ -94,6 +94,18 @@ class PSDMeasures:
     Class that calculates PSD features from SpO2 time series.
     """
 
+    def __init__(self, frequency_low_threshold: float = 0.014, frequency_high_threshold: float = 0.033):
+        """
+
+        :param frequency_low_threshold: Low threshold for the PSD_band biomarker.
+        :type frequency_low_threshold: float, optional
+        :param frequency_high_threshold: High threshold for the PSD_band biomarker.
+        :type frequency_high_threshold: float, optional
+        """
+
+        self.frequency_low = frequency_low_threshold
+        self.frequency_high = frequency_high_threshold
+
     def compute(self, signal) -> PSDResults:
         """
         Computes all the biomarkers of this category.
@@ -103,9 +115,9 @@ class PSDMeasures:
         :return: PSDResults class containing the following features:
         
             * PSD_total: The amplitude of the spectral signal.
-            * PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.
+            * PSD_band: The amplitude of the signal multiplied by a band-pass filter in the desired band.
             * PSD_ratio: The ratio between PSD_total and PSD_band.
-            * PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.
+            * PDS_peak: The max value of the FFT into the desired band.
 
 
         Example:
