@@ -146,7 +146,7 @@ class PSDMeasures:
         amplitude_signal = amplitude_signal[0:int(len(amplitude_signal) / 2)]
 
         # Taking the spectral signal in the relevant band
-        amplitude_bp = self.__get_bandpass(amplitude_signal, freq, 0.014, 0.033)
+        amplitude_bp = self.__get_bandpass(amplitude_signal, freq, self.frequency_low, self.frequency_high)
 
         return PSDResults(np.nansum(amplitude_signal), np.nansum(amplitude_bp),
                           np.nansum(amplitude_bp) / np.nansum(amplitude_signal),
