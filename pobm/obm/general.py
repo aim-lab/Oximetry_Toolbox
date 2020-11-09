@@ -19,6 +19,8 @@ class OverallGeneralMeasures:
         :type percentile: int, optional
         :param M_Threshold: Percentage of the signal M_Threshold % below median oxygen saturation. Typically use 1,2 or 5
         :type M_Threshold: int, optional
+        :param DI_Window: Length of window to calculate the Delta Index.
+        :type DI_Window: int, optional
         """
 
         if DI_Window <= 0:
