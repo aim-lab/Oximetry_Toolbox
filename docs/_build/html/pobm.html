@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pobm package &mdash; pobm  documentation</title>
+  <title>pobm package &mdash; PhysioZoo OBM  documentation</title>
   
 
   
@@ -51,9 +51,12 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pobm
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> PhysioZoo OBM
           
 
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -105,7 +108,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">pobm</a>
+          <a href="index.html">PhysioZoo OBM</a>
         
       </nav>
 
@@ -173,96 +176,21 @@
 <div class="section" id="module-pobm.prep">
 <span id="pobm-prep"></span><h2>pobm.prep<a class="headerlink" href="#module-pobm.prep" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="pobm.prep.block_data">
-<code class="sig-prename descclassname">pobm.prep.</code><code class="sig-name descname">block_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em>, <em class="sig-param"><span class="n">treshold</span><span class="o">=</span><span class="default_value">50</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/prep.html#block_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.prep.block_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply a block data filter to the SpO2 signal.</p>
+<dt id="pobm.prep.set_range">
+<code class="sig-prename descclassname">pobm.prep.</code><code class="sig-name descname">set_range</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em>, <em class="sig-param"><span class="n">Range_min</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">Range_max</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/prep.html#set_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.prep.set_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Range function. Remove values lower than Range_min or greater than Range_max, considered as non-physiological</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p></li>
-<li><p><strong>(</strong><strong>Optional</strong><strong>)</strong> (<em>treshold</em>) – treshold parameter for block data filter.</p></li>
+<li><p><strong>Range_min</strong> (<em>int</em><em>, </em><em>optional</em>) – minimum value for removing the data</p></li>
+<li><p><strong>Range_max</strong> (<em>int</em><em>, </em><em>optional</em>) – maximum value for removing the data</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>preprocessed signal, 1-d numpy array.</p>
 </dd>
 </dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pobm.prep.dfilter">
-<code class="sig-prename descclassname">pobm.prep.</code><code class="sig-name descname">dfilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em>, <em class="sig-param"><span class="n">Diff</span><span class="o">=</span><span class="default_value">4</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/prep.html#dfilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.prep.dfilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply Delta Filter to the signal.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p></li>
-<li><p><strong>Diff</strong> – parameter of the delta filter.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>preprocessed signal, 1-d numpy array.</p>
-</dd>
-</dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="pobm.prep.median_spo2">
-<code class="sig-prename descclassname">pobm.prep.</code><code class="sig-name descname">median_spo2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal_spo2</span></em>, <em class="sig-param"><span class="n">FilterLength</span><span class="o">=</span><span class="default_value">9</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/prep.html#median_spo2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.prep.median_spo2" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply a median filter to the SpO2 signal.
-Median filter used to smooth the spo2 time series and avoid sporadic increase/decrease of spo2 which could 
-affect the detection of the desaturations.
-Assumption: any missing/abnormal values are represented as ‘np.nan’</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p></li>
-<li><p><strong>(</strong><strong>Optional</strong><strong>)</strong> (<em>FilterLength</em>) – The length of the filter.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>preprocessed signal, 1-d numpy array.</p>
-</dd>
-</dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -281,46 +209,60 @@ Assumption: any missing/abnormal values are represented as ‘np.nan’</p>
 <dd class="field-even"><p>resampled signal, 1-d numpy array, the resampled spo2 time series at 1Hz</p>
 </dd>
 </dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="pobm.prep.set_range">
-<code class="sig-prename descclassname">pobm.prep.</code><code class="sig-name descname">set_range</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em>, <em class="sig-param"><span class="n">Range_min</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">Range_max</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/prep.html#set_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.prep.set_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Range function. Remove values lower than 50 or greater than 100, considered as non-physiological</p>
+<dt id="pobm.prep.dfilter">
+<code class="sig-prename descclassname">pobm.prep.</code><code class="sig-name descname">dfilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em>, <em class="sig-param"><span class="n">Diff</span><span class="o">=</span><span class="default_value">4</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/prep.html#dfilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.prep.dfilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply Delta Filter to the signal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p></li>
+<li><p><strong>Diff</strong> (<em>int</em><em>, </em><em>optional</em>) – parameter of the delta filter.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>preprocessed signal, 1-d numpy array.</p>
 </dd>
 </dl>
-<p>PhysioZoo OBM toolbox 2020, version 1.0
-Released under the GNU General Public License</p>
-<p>Authors: Jeremy Levy and Joachim A. Behar
-The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)
-<a class="reference external" href="https://aim-lab.github.io/">https://aim-lab.github.io/</a></p>
-<p>This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pobm.prep.median_spo2">
+<code class="sig-prename descclassname">pobm.prep.</code><code class="sig-name descname">median_spo2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal_spo2</span></em>, <em class="sig-param"><span class="n">FilterLength</span><span class="o">=</span><span class="default_value">9</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/prep.html#median_spo2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.prep.median_spo2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a median filter to the SpO2 signal.
+Median filter used to smooth the spo2 time series and avoid sporadic increase/decrease of spo2 which could 
+affect the detection of the desaturations.
+Assumption: any missing/abnormal values are represented as ‘np.nan’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p></li>
+<li><p><strong>FilterLength</strong> (<em>int</em><em>, </em><em>optional</em>) – The length of the filter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>preprocessed signal, 1-d numpy array.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pobm.prep.block_data">
+<code class="sig-prename descclassname">pobm.prep.</code><code class="sig-name descname">block_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em>, <em class="sig-param"><span class="n">treshold</span><span class="o">=</span><span class="default_value">50</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/prep.html#block_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.prep.block_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a block data filter to the SpO2 signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p></li>
+<li><p><strong>treshold</strong> (<em>int</em><em>, </em><em>optional</em>) – treshold parameter for block data filter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>preprocessed signal, 1-d numpy array.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pobm.obm.complex &mdash; pobm  documentation</title>
+  <title>pobm.obm.complex &mdash; PhysioZoo OBM  documentation</title>
   
 
   
@@ -49,9 +49,12 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> pobm
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> PhysioZoo OBM
           
 
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -98,7 +101,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">pobm</a>
+          <a href="../../../index.html">PhysioZoo OBM</a>
         
       </nav>
 
@@ -158,8 +161,7 @@
 
 <div class="viewcode-block" id="ComplexityMeasures"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures">[docs]</a><span class="k">class</span> <span class="nc">ComplexityMeasures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Class that calculates Complexity Features from spo2 time series.</span>
-<span class="sd">    The method compute runs all the biomarker of this category.</span>
+<span class="sd">    Class that calculates complexity features from SpO2 time series.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CTM_Threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">DFA_Window</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">M_Sampen</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">R_Sampen</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
@@ -201,6 +203,7 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.compute"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComplexityMeasuresResults</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes all the biomarkers of this category.</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: ComplexityMeasuresResults class containing the following features:</span>
@@ -234,9 +237,9 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.comp_apen"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_apen">[docs]</a>    <span class="k">def</span> <span class="nf">comp_apen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute the approximate entropy, according to the paper</span>
-<span class="sd">        Utility of Approximate Entropy From Overnight Pulse Oximetry Data in the Diagnosis</span>
-<span class="sd">        of the Obstructive Sleep Apnea Syndrome</span>
+<span class="sd">        Compute the approximate entropy, according to:</span>
+<span class="sd">        Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).</span>
+
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: ApEn (float)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -277,9 +280,9 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.comp_lz"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_lz">[docs]</a>    <span class="k">def</span> <span class="nf">comp_lz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute lempel-ziv, according to the paper</span>
-<span class="sd">        Non-linear characteristics of blood oxygen saturation from nocturnal oximetry</span>
-<span class="sd">        for obstructive sleep apnoea detection</span>
+<span class="sd">        Compute Lempel-Ziv, according to:</span>
+<span class="sd">        Lempel, A. &amp; Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf. Theory 22, 75–81 (1976).</span>
+
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: LZ (float)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -291,9 +294,9 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.comp_ctm"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_ctm">[docs]</a>    <span class="k">def</span> <span class="nf">comp_ctm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute CTM, according to the paper</span>
-<span class="sd">        Non-linear characteristics of blood oxygen saturation from nocturnal oximetry</span>
-<span class="sd">        for obstructive sleep apnoea detection</span>
+<span class="sd">        Compute CTM, according to:</span>
+<span class="sd">        Cohen, M. E., Hudson, D. L. &amp; Deedwania, P. C. Applying continuous chaotic modeling to cardiac signal analysis. IEEE Eng. Med. Biol. Mag. 15, 97–102 (1996).</span>
+
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: CTM (float)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -312,7 +315,9 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.comp_sampen"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_sampen">[docs]</a>    <span class="k">def</span> <span class="nf">comp_sampen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute the Sample Entropy</span>
+<span class="sd">        Compute the sample entropy, according to:</span>
+<span class="sd">        Richman, J. S. &amp; Moorman, J. R. Physiological time-series analysis using approximate entropy and sample entropy. Am J Physiol-Heart C 278, H2039–H2049 (2000).</span>
+
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: SampEn (float)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -340,7 +345,9 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.comp_dfa"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_dfa">[docs]</a>    <span class="k">def</span> <span class="nf">comp_dfa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute DFA, Detrended Fluctuation Analysis</span>
+<span class="sd">        Compute DFA, Detrended Fluctuation Analysis according to:</span>
+<span class="sd">        Peng, C. ‐K., Havlin, S., Stanley, H. E. &amp; Goldberger, A. L. Quantification of scaling exponents and crossover phenomena in nonstationary heartbeat time series. Chaos An Interdiscip. J. Nonlinear Sci. 5, 82–87 (1995).</span>
+
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: DFA (float)</span>
 <span class="sd">        &quot;&quot;&quot;</span>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pobm.obm.general &mdash; pobm  documentation</title>
+  <title>pobm.obm.general &mdash; PhysioZoo OBM  documentation</title>
   
 
   
@@ -49,9 +49,12 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> pobm
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> PhysioZoo OBM
           
 
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -98,7 +101,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">pobm</a>
+          <a href="../../../index.html">PhysioZoo OBM</a>
         
       </nav>
 
@@ -156,8 +159,7 @@
 
 <div class="viewcode-block" id="OverallGeneralMeasures"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.general.OverallGeneralMeasures">[docs]</a><span class="k">class</span> <span class="nc">OverallGeneralMeasures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Class that calculates Overall General Features from spo2 time series.</span>
-<span class="sd">    The method compute runs all the biomarker of this category.</span>
+<span class="sd">    Class that calculates overall general features from SpO2 time series.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ZC_Baseline</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">percentile</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">M_Threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">DI_Window</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span><span class="p">):</span>
@@ -169,6 +171,8 @@
 <span class="sd">        :type percentile: int, optional</span>
 <span class="sd">        :param M_Threshold: Percentage of the signal M_Threshold % below median oxygen saturation. Typically use 1,2 or 5</span>
 <span class="sd">        :type M_Threshold: int, optional</span>
+<span class="sd">        :param DI_Window: Length of window to calculate the Delta Index.</span>
+<span class="sd">        :type DI_Window: int, optional</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">DI_Window</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
@@ -181,6 +185,8 @@
 
 <div class="viewcode-block" id="OverallGeneralMeasures.compute"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.general.OverallGeneralMeasures.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OverallGeneralMeasuresResult</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes all the biomarkers of this category.</span>
+
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: OveralGeneralMeasuresResult class containing the following features:</span>
 <span class="sd">        </span>
@@ -223,7 +229,7 @@
 
     <span class="k">def</span> <span class="nf">__apply_percentile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Apply percentile to the spo2 signal</span>
+<span class="sd">        Apply percentile to the SpO2 signal</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: the percentile</span>
@@ -232,7 +238,7 @@
 
     <span class="k">def</span> <span class="nf">__below_median</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute the below median biomarker from the spo2 signal</span>
+<span class="sd">        Compute the below median biomarker from the SpO2 signal</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: the BM biomarker</span>
@@ -243,7 +249,7 @@
 
     <span class="k">def</span> <span class="nf">__compute_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute the range biomarker from the spo2 signal</span>
+<span class="sd">        Compute the range biomarker from the SpO2 signal</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: the R biomarker</span>
@@ -252,7 +258,7 @@
 
     <span class="k">def</span> <span class="nf">__num_zc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute the numZC biomarker from the spo2 signal</span>
+<span class="sd">        Compute the numZC biomarker from the SpO2 signal</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: the ZC biomarker</span>
@@ -273,7 +279,8 @@
 
     <span class="k">def</span> <span class="nf">__delta_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute the delta index biomarker from the spo2 signal</span>
+<span class="sd">        Compute the delta index biomarker from the SpO2 signal according to</span>
+<span class="sd">        Pepin, J. L., Levy, P., Lepaulle, B., Brambilla, C. &amp; Guilleminault, C. Does oximetry contribute to the detection of apneic events? Mathematical processing of the SaO2 signal. Chest 99, 1151–1157 (1991).</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: the DI biomarker</span>

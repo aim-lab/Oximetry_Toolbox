@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pobm.prep &mdash; pobm  documentation</title>
+  <title>pobm.prep &mdash; PhysioZoo OBM  documentation</title>
   
 
   
@@ -49,9 +49,12 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> pobm
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> PhysioZoo OBM
           
 
+          
+            
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -98,7 +101,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">pobm</a>
+          <a href="../../index.html">PhysioZoo OBM</a>
         
       </nav>
 
@@ -153,28 +156,16 @@
 
 <div class="viewcode-block" id="set_range"><a class="viewcode-back" href="../../pobm.html#pobm.prep.set_range">[docs]</a><span class="k">def</span> <span class="nf">set_range</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">Range_min</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">Range_max</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Range function. Remove values lower than 50 or greater than 100, considered as non-physiological</span>
+<span class="sd">    Range function. Remove values lower than Range_min or greater than Range_max, considered as non-physiological</span>
 
 <span class="sd">    :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
+<span class="sd">    :param Range_min: minimum value for removing the data</span>
+<span class="sd">    :type Range_min: int, optional</span>
+<span class="sd">    :param Range_max: maximum value for removing the data</span>
+<span class="sd">    :type Range_max: int, optional</span>
 
 <span class="sd">    :return: preprocessed signal, 1-d numpy array.</span>
 
-
-<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">    Released under the GNU General Public License</span>
-
-<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">    https://aim-lab.github.io/</span>
-
-<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">    under the terms of the GNU General Public License as published by the</span>
-<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">    option) any later version.</span>
-<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">    Public License for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># return np.delete(signal, np.argwhere((signal &gt;= Range_max) | (signal &lt;= Range_min)))</span>
@@ -195,22 +186,6 @@
 
 <span class="sd">    :return: resampled signal, 1-d numpy array, the resampled spo2 time series at 1Hz</span>
 
-
-<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">    Released under the GNU General Public License</span>
-
-<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">    https://aim-lab.github.io/</span>
-
-<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">    under the terms of the GNU General Public License as published by the</span>
-<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">    option) any later version.</span>
-<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">    Public License for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">len_in</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
@@ -228,25 +203,10 @@
 
 <span class="sd">    :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">    :param Diff: parameter of the delta filter.</span>
+<span class="sd">    :type Diff: int, optional</span>
 
 <span class="sd">    :return: preprocessed signal, 1-d numpy array.</span>
 
-
-<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">    Released under the GNU General Public License</span>
-
-<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">    https://aim-lab.github.io/</span>
-
-<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">    under the terms of the GNU General Public License as published by the</span>
-<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">    option) any later version.</span>
-<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">    Public License for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">signal_filtered</span> <span class="o">=</span> <span class="p">[]</span>
@@ -267,26 +227,11 @@
 <span class="sd">    Assumption: any missing/abnormal values are represented as &#39;np.nan&#39;</span>
 
 <span class="sd">    :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
-<span class="sd">    :param FilterLength (Optional): The length of the filter.</span>
-
+<span class="sd">    :param FilterLength: The length of the filter.</span>
+<span class="sd">    :type FilterLength: int, optional</span>
+<span class="sd">    </span>
 <span class="sd">    :return: preprocessed signal, 1-d numpy array.</span>
 
-
-<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">    Released under the GNU General Public License</span>
-
-<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">    https://aim-lab.github.io/</span>
-
-<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">    under the terms of the GNU General Public License as published by the</span>
-<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">    option) any later version.</span>
-<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">    Public License for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">data_med</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">medfilt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">signal_spo2</span><span class="p">),</span> <span class="n">FilterLength</span><span class="p">)</span>
@@ -299,26 +244,11 @@
 <span class="sd">    Apply a block data filter to the SpO2 signal.</span>
 
 <span class="sd">    :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
-<span class="sd">    :param treshold (Optional): treshold parameter for block data filter.</span>
+<span class="sd">    :param treshold: treshold parameter for block data filter.</span>
+<span class="sd">    :type treshold: int, optional</span>
 
 <span class="sd">    :return: preprocessed signal, 1-d numpy array.</span>
 
-
-<span class="sd">    PhysioZoo OBM toolbox 2020, version 1.0</span>
-<span class="sd">    Released under the GNU General Public License</span>
-
-<span class="sd">    Authors: Jeremy Levy and Joachim A. Behar</span>
-<span class="sd">    The Technion Artificial Intelligence in Medicine Laboratory (AIMLab.)</span>
-<span class="sd">    https://aim-lab.github.io/</span>
-
-<span class="sd">    This program is free software; you can redistribute it and/or modify it</span>
-<span class="sd">    under the terms of the GNU General Public License as published by the</span>
-<span class="sd">    Free Software Foundation; either version 2 of the License, or (at your</span>
-<span class="sd">    option) any later version.</span>
-<span class="sd">    This program is distributed in the hope that it will be useful, but</span>
-<span class="sd">    WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General</span>
-<span class="sd">    Public License for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>

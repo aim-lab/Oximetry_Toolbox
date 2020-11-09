@@ -23,7 +23,8 @@ pobm.obm.desat
 
 .. automodule:: pobm.obm.desat
    :members:
-   :undoc-members:
+   :undoc-members: 
+   :exclude-members: desat_embedding
    :show-inheritance:
 
 pobm.obm.general

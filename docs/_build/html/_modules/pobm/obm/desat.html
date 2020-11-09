@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pobm.obm.desat &mdash; pobm  documentation</title>
+  <title>pobm.obm.desat &mdash; PhysioZoo OBM  documentation</title>
   
 
   
@@ -49,9 +49,12 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> pobm
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> PhysioZoo OBM
           
 
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -98,7 +101,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">pobm</a>
+          <a href="../../../index.html">PhysioZoo OBM</a>
         
       </nav>
 
@@ -156,8 +159,7 @@
 
 <div class="viewcode-block" id="DesaturationsMeasures"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.DesaturationsMeasures">[docs]</a><span class="k">class</span> <span class="nc">DesaturationsMeasures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Class that calculates the Desaturation Features from spo2 time series.</span>
-<span class="sd">    The method compute runs all the biomarker of this category.</span>
+<span class="sd">    Class that calculates the desaturation features from SpO2 time series.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ODI_Threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">hard_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span> <span class="n">relative</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -190,6 +192,8 @@
 
 <div class="viewcode-block" id="DesaturationsMeasures.compute"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.DesaturationsMeasures.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DesaturationsMeasuresResults</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes all the biomarkers of this category.</span>
+
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: DesaturationsMeasuresResults class containing the following features:</span>
 
@@ -309,7 +313,8 @@
 
 <div class="viewcode-block" id="DesaturationsMeasures.desaturation_detector"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.DesaturationsMeasures.desaturation_detector">[docs]</a>    <span class="k">def</span> <span class="nf">desaturation_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        run desaturation detector</span>
+<span class="sd">        Runs desaturation detector, compute the ODI biomarker according to:</span>
+<span class="sd">        Jung, D. W. et al. Real-Time Automatic Apneic Event Detection Using Nocturnal Pulse Oximetry. IEEE Trans. Biomed. Eng. 65, 706–712 (2018).</span>
 
 <span class="sd">        :param signal: The SpO2 signal, of shape (N,)</span>
 <span class="sd">        :return: ODI: the average number of desaturation events per hour (int).</span>
@@ -481,7 +486,7 @@
 
 <div class="viewcode-block" id="desat_embedding"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.desat.desat_embedding">[docs]</a><span class="k">def</span> <span class="nf">desat_embedding</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Help function for the class</span>
+<span class="sd">    Help function for the DesaturationsMeasures class</span>
 
 <span class="sd">    :return: helper arrays containing the information about desaturation lengths and areas.</span>
 

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pobm.obm.burden &mdash; pobm  documentation</title>
+  <title>pobm.obm.burden &mdash; PhysioZoo OBM  documentation</title>
   
 
   
@@ -49,9 +49,12 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> pobm
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> PhysioZoo OBM
           
 
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -98,7 +101,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">pobm</a>
+          <a href="../../../index.html">PhysioZoo OBM</a>
         
       </nav>
 
@@ -157,8 +160,7 @@
 
 <div class="viewcode-block" id="HypoxicBurdenMeasures"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.burden.HypoxicBurdenMeasures">[docs]</a><span class="k">class</span> <span class="nc">HypoxicBurdenMeasures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Class that calculates Hypoxic Burden Features from spo2 time series.</span>
-<span class="sd">    The method compute runs all the biomarker of this category.</span>
+<span class="sd">    Class that calculates hypoxic burden features from SpO2 time series.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">begin</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">CT_Threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span> <span class="n">CA_Baseline</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -190,6 +192,8 @@
 
 <div class="viewcode-block" id="HypoxicBurdenMeasures.compute"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.burden.HypoxicBurdenMeasures.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes all the biomarkers of this category.</span>
+
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: HypoxicBurdenMeasuresResults class containing the following features:</span>
 
@@ -217,14 +221,11 @@
         <span class="n">_check_shape_</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CA_Baseline</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">CA_Baseline</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
-
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__comp_hypoxic</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__comp_hypoxic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Helper function, to calculate the Hypoxic Burden biomarkers from the desaturations</span>
+<span class="sd">        Helper function, to calculate the hypoxic burden biomarkers from the desaturations</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :param desaturations_signal: dict with 2 keys:</span>
@@ -281,6 +282,10 @@
 <span class="sd">        :return: CA, the cumulative area (float)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CA_Baseline</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">CA_Baseline</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+
         <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">signal</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CA_Baseline</span><span class="p">:</span>

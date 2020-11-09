@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pobm.obm.periodicity &mdash; pobm  documentation</title>
+  <title>pobm.obm.periodicity &mdash; PhysioZoo OBM  documentation</title>
   
 
   
@@ -49,9 +49,12 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> pobm
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> PhysioZoo OBM
           
 
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -98,7 +101,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">pobm</a>
+          <a href="../../../index.html">PhysioZoo OBM</a>
         
       </nav>
 
@@ -157,8 +160,7 @@
 
 <div class="viewcode-block" id="PRSAMeasures"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.periodicity.PRSAMeasures">[docs]</a><span class="k">class</span> <span class="nc">PRSAMeasures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Function that calculates PRSA Features from spo2 time series.</span>
-<span class="sd">    The method compute runs all the biomarker of this category.</span>
+<span class="sd">    Class that calculates PRSA features from SpO2 time series.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">PRSA_Window</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">K_AC</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
@@ -178,6 +180,8 @@
 
 <div class="viewcode-block" id="PRSAMeasures.compute"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.periodicity.PRSAMeasures.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PRSAResults</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes all the biomarkers of this category.</span>
+
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: PRSAResults class containing the following features:</span>
 
@@ -239,20 +243,36 @@
 
 <div class="viewcode-block" id="PSDMeasures"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.periodicity.PSDMeasures">[docs]</a><span class="k">class</span> <span class="nc">PSDMeasures</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Function that calculates PSD Features from spo2 time series.</span>
-<span class="sd">    The method compute runs all the biomarker of this category.</span>
+<span class="sd">    Class that calculates PSD features from SpO2 time series.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frequency_low_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.014</span><span class="p">,</span> <span class="n">frequency_high_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.033</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param frequency_low_threshold: Low threshold for the PSD_band biomarker.</span>
+<span class="sd">        :type frequency_low_threshold: float, optional</span>
+<span class="sd">        :param frequency_high_threshold: High threshold for the PSD_band biomarker.</span>
+<span class="sd">        :type frequency_high_threshold: float, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">frequency_low_threshold</span> <span class="o">&gt;=</span> <span class="n">frequency_high_threshold</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">WrongParameter</span><span class="p">(</span><span class="s2">&quot;frequency_low_threshold should be lower than frequency_high_threshold&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequency_low</span> <span class="o">=</span> <span class="n">frequency_low_threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequency_high</span> <span class="o">=</span> <span class="n">frequency_high_threshold</span>
 
 <div class="viewcode-block" id="PSDMeasures.compute"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.periodicity.PSDMeasures.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PSDResults</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes all the biomarkers of this category.</span>
+
 <span class="sd">        :param signal: The SpO2 signal, of shape (N,)</span>
 
 <span class="sd">        :return: PSDResults class containing the following features:</span>
 <span class="sd">        </span>
 <span class="sd">            * PSD_total: The amplitude of the spectral signal.</span>
-<span class="sd">            * PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.</span>
+<span class="sd">            * PSD_band: The amplitude of the signal multiplied by a band-pass filter in the desired band.</span>
 <span class="sd">            * PSD_ratio: The ratio between PSD_total and PSD_band.</span>
-<span class="sd">            * PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.</span>
+<span class="sd">            * PDS_peak: The max value of the FFT into the desired band.</span>
 
 
 <span class="sd">        Example:</span>
@@ -281,7 +301,7 @@
         <span class="n">amplitude_signal</span> <span class="o">=</span> <span class="n">amplitude_signal</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">amplitude_signal</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span>
 
         <span class="c1"># Taking the spectral signal in the relevant band</span>
-        <span class="n">amplitude_bp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_bandpass</span><span class="p">(</span><span class="n">amplitude_signal</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="mf">0.014</span><span class="p">,</span> <span class="mf">0.033</span><span class="p">)</span>
+        <span class="n">amplitude_bp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_bandpass</span><span class="p">(</span><span class="n">amplitude_signal</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency_low</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency_high</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">PSDResults</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">amplitude_signal</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">amplitude_bp</span><span class="p">),</span>
                           <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">amplitude_bp</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">amplitude_signal</span><span class="p">),</span>

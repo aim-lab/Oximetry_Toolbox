@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pobm.obm package &mdash; pobm  documentation</title>
+  <title>pobm.obm package &mdash; PhysioZoo OBM  documentation</title>
   
 
   
@@ -50,9 +50,12 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pobm
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> PhysioZoo OBM
           
 
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -112,7 +115,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">pobm</a>
+          <a href="index.html">PhysioZoo OBM</a>
         
       </nav>
 
@@ -172,8 +175,7 @@
 <dt id="pobm.obm.burden.HypoxicBurdenMeasures">
 <em class="property">class </em><code class="sig-prename descclassname">pobm.obm.burden.</code><code class="sig-name descname">HypoxicBurdenMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">begin</span><span class="p">:</span> <span class="n">numpy.array</span></em>, <em class="sig-param"><span class="n">end</span><span class="p">:</span> <span class="n">numpy.array</span></em>, <em class="sig-param"><span class="n">CT_Threshold</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">90</span></em>, <em class="sig-param"><span class="n">CA_Baseline</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/burden.html#HypoxicBurdenMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.burden.HypoxicBurdenMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class that calculates Hypoxic Burden Features from spo2 time series.
-The method compute runs all the biomarker of this category.</p>
+<p>Class that calculates hypoxic burden features from SpO2 time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -184,6 +186,38 @@ The method compute runs all the biomarker of this category.</p>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="pobm.obm.burden.HypoxicBurdenMeasures.compute">
+<code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/burden.html#HypoxicBurdenMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.burden.HypoxicBurdenMeasures.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes all the biomarkers of this category.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>HypoxicBurdenMeasuresResults class containing the following features:</p>
+<ul class="simple">
+<li><p>CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time</p></li>
+<li><p>CT: Percentage of the time spent below the xx% oxygen saturation level</p></li>
+<li><p>POD: Percentage of oxygen desaturation events</p></li>
+<li><p>AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline and normalized by the total recording time</p></li>
+<li><p>AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized by the total recording time</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.burden</span> <span class="kn">import</span> <span class="n">HypoxicBurdenMeasures</span>
+
+<span class="c1"># Initialize the class with the desired parameters</span>
+<span class="n">hypoxic_class</span> <span class="o">=</span> <span class="n">HypoxicBurdenMeasures</span><span class="p">(</span><span class="n">results_desat</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="n">results_desat</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">CT_Threshold</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">CA_Baseline</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+<span class="c1"># Compute the biomarkers</span>
+<span class="n">results_hypoxic</span> <span class="o">=</span> <span class="n">hypoxic_class</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">spo2_signal</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="py method">
 <dt id="pobm.obm.burden.HypoxicBurdenMeasures.comp_ca">
 <code class="sig-name descname">comp_ca</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/burden.html#HypoxicBurdenMeasures.comp_ca"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.burden.HypoxicBurdenMeasures.comp_ca" title="Permalink to this definition">¶</a></dt>
@@ -212,37 +246,6 @@ The method compute runs all the biomarker of this category.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="pobm.obm.burden.HypoxicBurdenMeasures.compute">
-<code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/burden.html#HypoxicBurdenMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.burden.HypoxicBurdenMeasures.compute" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>HypoxicBurdenMeasuresResults class containing the following features:</p>
-<ul class="simple">
-<li><p>CA: Integral SpO2 below the xx SpO2 level normalized by the total recording time</p></li>
-<li><p>CT: Percentage of the time spent below the xx% oxygen saturation level</p></li>
-<li><p>POD: Percentage of oxygen desaturation events</p></li>
-<li><p>AODmax: The area under the oxygen desaturation event curve, using the maximum SpO2 value as baseline and normalized by the total recording time</p></li>
-<li><p>AOD100: Cumulative area of desaturations under the 100% SpO2 level as baseline and normalized by the total recording time</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.burden</span> <span class="kn">import</span> <span class="n">HypoxicBurdenMeasures</span>
-
-<span class="c1"># Initialize the class with the desired parameters</span>
-<span class="n">hypoxic_class</span> <span class="o">=</span> <span class="n">HypoxicBurdenMeasures</span><span class="p">(</span><span class="n">results_desat</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="n">results_desat</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">CT_Threshold</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">CA_Baseline</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
-
-<span class="c1"># Compute the biomarkers</span>
-<span class="n">results_hypoxic</span> <span class="o">=</span> <span class="n">hypoxic_class</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">spo2_signal</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </dd></dl>
 
 </div>
@@ -252,8 +255,7 @@ The method compute runs all the biomarker of this category.</p>
 <dt id="pobm.obm.complex.ComplexityMeasures">
 <em class="property">class </em><code class="sig-prename descclassname">pobm.obm.complex.</code><code class="sig-name descname">ComplexityMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">CTM_Threshold</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0.25</span></em>, <em class="sig-param"><span class="n">DFA_Window</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">20</span></em>, <em class="sig-param"><span class="n">M_Sampen</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">3</span></em>, <em class="sig-param"><span class="n">R_Sampen</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0.2</span></em>, <em class="sig-param"><span class="n">M_ApEn</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2</span></em>, <em class="sig-param"><span class="n">R_ApEn</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0.25</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class that calculates Complexity Features from spo2 time series.
-The method compute runs all the biomarker of this category.</p>
+<p>Class that calculates complexity features from SpO2 time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -267,55 +269,10 @@ The method compute runs all the biomarker of this category.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="pobm.obm.complex.ComplexityMeasures.comp_apen">
-<code class="sig-name descname">comp_apen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_apen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_apen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the approximate entropy, according to the paper
-Utility of Approximate Entropy From Overnight Pulse Oximetry Data in the Diagnosis
-of the Obstructive Sleep Apnea Syndrome
-:param signal: 1-d array, of shape (N,) where N is the length of the signal
-:return: ApEn (float)</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pobm.obm.complex.ComplexityMeasures.comp_ctm">
-<code class="sig-name descname">comp_ctm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_ctm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_ctm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute CTM, according to the paper
-Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
-for obstructive sleep apnoea detection
-:param signal: 1-d array, of shape (N,) where N is the length of the signal
-:return: CTM (float)</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pobm.obm.complex.ComplexityMeasures.comp_dfa">
-<code class="sig-name descname">comp_dfa</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_dfa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_dfa" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute DFA, Detrended Fluctuation Analysis
-:param signal: 1-d array, of shape (N,) where N is the length of the signal
-:return: DFA (float)</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pobm.obm.complex.ComplexityMeasures.comp_lz">
-<code class="sig-name descname">comp_lz</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_lz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_lz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute lempel-ziv, according to the paper
-Non-linear characteristics of blood oxygen saturation from nocturnal oximetry
-for obstructive sleep apnoea detection
-:param signal: 1-d array, of shape (N,) where N is the length of the signal
-:return: LZ (float)</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="pobm.obm.complex.ComplexityMeasures.comp_sampen">
-<code class="sig-name descname">comp_sampen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_sampen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_sampen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the Sample Entropy
-:param signal: 1-d array, of shape (N,) where N is the length of the signal
-:return: SampEn (float)</p>
-</dd></dl>
-
-<dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.ComplexityMeasuresResults<a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.compute" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Computes all the biomarkers of this category.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
 </dd>
@@ -343,6 +300,81 @@ for obstructive sleep apnoea detection
 </div>
 </dd></dl>
 
+<dl class="py method">
+<dt id="pobm.obm.complex.ComplexityMeasures.comp_apen">
+<code class="sig-name descname">comp_apen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_apen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_apen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the approximate entropy, according to:
+Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ApEn (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pobm.obm.complex.ComplexityMeasures.comp_lz">
+<code class="sig-name descname">comp_lz</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_lz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_lz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Lempel-Ziv, according to:
+Lempel, A. &amp; Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf. Theory 22, 75–81 (1976).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>LZ (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pobm.obm.complex.ComplexityMeasures.comp_ctm">
+<code class="sig-name descname">comp_ctm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_ctm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_ctm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute CTM, according to:
+Cohen, M. E., Hudson, D. L. &amp; Deedwania, P. C. Applying continuous chaotic modeling to cardiac signal analysis. IEEE Eng. Med. Biol. Mag. 15, 97–102 (1996).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>CTM (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pobm.obm.complex.ComplexityMeasures.comp_sampen">
+<code class="sig-name descname">comp_sampen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_sampen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_sampen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the sample entropy, according to:
+Richman, J. S. &amp; Moorman, J. R. Physiological time-series analysis using approximate entropy and sample entropy. Am J Physiol-Heart C 278, H2039–H2049 (2000).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>SampEn (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pobm.obm.complex.ComplexityMeasures.comp_dfa">
+<code class="sig-name descname">comp_dfa</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_dfa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_dfa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute DFA, Detrended Fluctuation Analysis according to:
+Peng, C. ‐K., Havlin, S., Stanley, H. E. &amp; Goldberger, A. L. Quantification of scaling exponents and crossover phenomena in nonstationary heartbeat time series. Chaos An Interdiscip. J. Nonlinear Sci. 5, 82–87 (1995).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>DFA (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -352,8 +384,7 @@ for obstructive sleep apnoea detection
 <dt id="pobm.obm.desat.DesaturationsMeasures">
 <em class="property">class </em><code class="sig-prename descclassname">pobm.obm.desat.</code><code class="sig-name descname">DesaturationsMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ODI_Threshold</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">3</span></em>, <em class="sig-param"><span class="n">hard_threshold</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">90</span></em>, <em class="sig-param"><span class="n">relative</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">desat_max_length</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">90</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class that calculates the Desaturation Features from spo2 time series.
-The method compute runs all the biomarker of this category.</p>
+<p>Class that calculates the desaturation features from SpO2 time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -367,7 +398,8 @@ The method compute runs all the biomarker of this category.</p>
 <dl class="py method">
 <dt id="pobm.obm.desat.DesaturationsMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.DesaturationsMeasuresResults<a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures.compute" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Computes all the biomarkers of this category.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
 </dd>
@@ -410,7 +442,8 @@ The method compute runs all the biomarker of this category.</p>
 <dl class="py method">
 <dt id="pobm.obm.desat.DesaturationsMeasures.desaturation_detector">
 <code class="sig-name descname">desaturation_detector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures.desaturation_detector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures.desaturation_detector" title="Permalink to this definition">¶</a></dt>
-<dd><p>run desaturation detector</p>
+<dd><p>Runs desaturation detector, compute the ODI biomarker according to:
+Jung, D. W. et al. Real-Time Automatic Apneic Event Detection Using Nocturnal Pulse Oximetry. IEEE Trans. Biomed. Eng. 65, 706–712 (2018).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – The SpO2 signal, of shape (N,)</p>
@@ -423,17 +456,6 @@ The method compute runs all the biomarker of this category.</p>
 
 </dd></dl>
 
-<dl class="py function">
-<dt id="pobm.obm.desat.desat_embedding">
-<code class="sig-prename descclassname">pobm.obm.desat.</code><code class="sig-name descname">desat_embedding</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">begin</span></em>, <em class="sig-param"><span class="n">end</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#desat_embedding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.desat_embedding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Help function for the class</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>helper arrays containing the information about desaturation lengths and areas.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 <div class="section" id="module-pobm.obm.general">
 <span id="pobm-obm-general"></span><h2>pobm.obm.general<a class="headerlink" href="#module-pobm.obm.general" title="Permalink to this headline">¶</a></h2>
@@ -441,21 +463,22 @@ The method compute runs all the biomarker of this category.</p>
 <dt id="pobm.obm.general.OverallGeneralMeasures">
 <em class="property">class </em><code class="sig-prename descclassname">pobm.obm.general.</code><code class="sig-name descname">OverallGeneralMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ZC_Baseline</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">percentile</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">1</span></em>, <em class="sig-param"><span class="n">M_Threshold</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2</span></em>, <em class="sig-param"><span class="n">DI_Window</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">12</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/general.html#OverallGeneralMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.general.OverallGeneralMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class that calculates Overall General Features from spo2 time series.
-The method compute runs all the biomarker of this category.</p>
+<p>Class that calculates overall general features from SpO2 time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ZC_Baseline</strong> (<em>int</em><em>, </em><em>optional</em>) – Baseline for calculating number of zero-crossing points.</p></li>
 <li><p><strong>percentile</strong> (<em>int</em><em>, </em><em>optional</em>) – Percentile to perform. For example, for percentile 1, the argument should be 1</p></li>
 <li><p><strong>M_Threshold</strong> (<em>int</em><em>, </em><em>optional</em>) – Percentage of the signal M_Threshold % below median oxygen saturation. Typically use 1,2 or 5</p></li>
+<li><p><strong>DI_Window</strong> (<em>int</em><em>, </em><em>optional</em>) – Length of window to calculate the Delta Index.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt id="pobm.obm.general.OverallGeneralMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.OverallGeneralMeasuresResult<a class="reference internal" href="_modules/pobm/obm/general.html#OverallGeneralMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.general.OverallGeneralMeasures.compute" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Computes all the biomarkers of this category.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
 </dd>
@@ -496,8 +519,7 @@ The method compute runs all the biomarker of this category.</p>
 <dt id="pobm.obm.periodicity.PRSAMeasures">
 <em class="property">class </em><code class="sig-prename descclassname">pobm.obm.periodicity.</code><code class="sig-name descname">PRSAMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">PRSA_Window</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">10</span></em>, <em class="sig-param"><span class="n">K_AC</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/periodicity.html#PRSAMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.periodicity.PRSAMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Function that calculates PRSA Features from spo2 time series.
-The method compute runs all the biomarker of this category.</p>
+<p>Class that calculates PRSA features from SpO2 time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -509,7 +531,8 @@ The method compute runs all the biomarker of this category.</p>
 <dl class="py method">
 <dt id="pobm.obm.periodicity.PRSAMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.PRSAResults<a class="reference internal" href="_modules/pobm/obm/periodicity.html#PRSAMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.periodicity.PRSAMeasures.compute" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Computes all the biomarkers of this category.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
 </dd>
@@ -542,14 +565,22 @@ The method compute runs all the biomarker of this category.</p>
 
 <dl class="py class">
 <dt id="pobm.obm.periodicity.PSDMeasures">
-<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.periodicity.</code><code class="sig-name descname">PSDMeasures</code><a class="reference internal" href="_modules/pobm/obm/periodicity.html#PSDMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.periodicity.PSDMeasures" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.periodicity.</code><code class="sig-name descname">PSDMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">frequency_low_threshold</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0.014</span></em>, <em class="sig-param"><span class="n">frequency_high_threshold</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0.033</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/periodicity.html#PSDMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.periodicity.PSDMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Function that calculates PSD Features from spo2 time series.
-The method compute runs all the biomarker of this category.</p>
+<p>Class that calculates PSD features from SpO2 time series.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frequency_low_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Low threshold for the PSD_band biomarker.</p></li>
+<li><p><strong>frequency_high_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – High threshold for the PSD_band biomarker.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="pobm.obm.periodicity.PSDMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.PSDResults<a class="reference internal" href="_modules/pobm/obm/periodicity.html#PSDMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.periodicity.PSDMeasures.compute" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Computes all the biomarkers of this category.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – The SpO2 signal, of shape (N,)</p>
 </dd>
@@ -557,9 +588,9 @@ The method compute runs all the biomarker of this category.</p>
 <dd class="field-even"><p><p>PSDResults class containing the following features:</p>
 <ul class="simple">
 <li><p>PSD_total: The amplitude of the spectral signal.</p></li>
-<li><p>PSD_band: The amplitude of the signal multiplied by a band-pass filter between 0.014 and 0.033 Hz.</p></li>
+<li><p>PSD_band: The amplitude of the signal multiplied by a band-pass filter in the desired band.</p></li>
 <li><p>PSD_ratio: The ratio between PSD_total and PSD_band.</p></li>
-<li><p>PDS_peak: The max value of the FFT into the band 0.014-0.033 Hz.</p></li>
+<li><p>PDS_peak: The max value of the FFT into the desired band.</p></li>
 </ul>
 </p>
 </dd>
