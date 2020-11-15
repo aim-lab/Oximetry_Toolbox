@@ -5,22 +5,22 @@ OBM Toolbox
 Oximetry digital biomarkers for the analysis of continuous oximetry (SpO2) time series.
 
 Based on the paper Levy Jeremy, Álvarez Daniel, Rosenberg Aviv A., del Campo Felix and Behar Joachim A. "Oximetry digital biomarkers for assessing respiratory function during sleep: standards of measurement, physiological interpretation, and clinical use". 
-Under review in Nature Digital Medicine.
+Accepted for publication in NPJ Digital Medicine
 
 Description
 -----------
 
-5 types of biomarkers are extracted:
+Five types of biomarkers may be evaluated:
 
-General Statistics: time-based statistics describing the oxygen saturation time series data distribution.
+1.  General statistics: time-based statistics describing the oxygen saturation time series data distribution.
 
-Complexity: quantify the presence of long-range correlations in non-stationary time series.
+2.  Complexity: quantify the presence of long-range correlations in non-stationary time series.
 
-Periodicity: quantify consecutive events creating some periodicity in the oxygen saturation time series.
+3.  Periodicity: quantify consecutive events creating some periodicity in the oxygen saturation time series.
 
-Desaturations: time-based measures that are descriptive statistics of the desaturation patterns happening throughout the time series.
+4.  Desaturations: time-based measures that are descriptive statistics of the desaturation patterns happening throughout the time series.
 
-Hypoxic burden: time-based measures quantifying the overall degree of hypoxemia imposed to the heart and other organs during the recording period.
+5.  Hypoxic burden: time-based measures quantifying the overall degree of hypoxemia imposed to the heart and other organs during the recording period.
 
 Installation
 ------------
