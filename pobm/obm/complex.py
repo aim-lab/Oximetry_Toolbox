@@ -14,7 +14,7 @@ class ComplexityMeasures:
 
     '''
     .. _target_apen:
-    Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).
+    
     '''
 
     def __init__(self, CTM_Threshold: float = 0.25, DFA_Window: int = 20, M_Sampen: int = 3, R_Sampen: float = 0.2,
@@ -90,11 +90,12 @@ class ComplexityMeasures:
 
     def comp_apen(self, signal):
         """
-        Compute the approximate entropy, according to:
-        :ref: '_target_apen'.
+        Compute the approximate entropy, according to [1]_
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: ApEn (float)
+
+        .. [1] Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).
         """
         signal = np.array(signal)
         signal = signal[np.logical_not(np.isnan(signal))]
