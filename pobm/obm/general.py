@@ -127,11 +127,13 @@ class OverallGeneralMeasures:
 
     def __delta_index(self, signal):
         """
-        Compute the delta index biomarker from the SpO2 signal according to
-        Pepin, J. L., Levy, P., Lepaulle, B., Brambilla, C. & Guilleminault, C. Does oximetry contribute to the detection of apneic events? Mathematical processing of the SaO2 signal. Chest 99, 1151–1157 (1991).
+        Compute the delta index biomarker from the SpO2 signal according to [7]_
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: the DI biomarker
+
+        .. [7] Pepin, J. L., Levy, P., Lepaulle, B., Brambilla, C. & Guilleminault, C. Does oximetry contribute to the detection of apneic events? Mathematical processing of the SaO2 signal. Chest 99, 1151–1157 (1991).
+
         """
         _check_window_delta_(len(signal), self.DI_Window)
 

@@ -161,11 +161,12 @@ class DesaturationsMeasures:
 
     def desaturation_detector(self, signal):
         """
-        Runs desaturation detector, compute the ODI biomarker according to:
-        Jung, D. W. et al. Real-Time Automatic Apneic Event Detection Using Nocturnal Pulse Oximetry. IEEE Trans. Biomed. Eng. 65, 706–712 (2018).
+        Runs desaturation detector, compute the ODI biomarker according to [6]_
 
         :param signal: The SpO2 signal, of shape (N,)
         :return: ODI: the average number of desaturation events per hour (int).
+
+        .. [6] Jung, D. W. et al. Real-Time Automatic Apneic Event Detection Using Nocturnal Pulse Oximetry. IEEE Trans. Biomed. Eng. 65, 706–712 (2018).
 
         """
         _, table_desat_aa, _, table_desat_cc = self.__sc_desaturations(signal)
