@@ -1,5 +1,5 @@
 
-OBM Toolbox
+PhysioZoo OBM documentation
 ===========
 
 Oximetry digital biomarkers for the analysis of continuous oximetry (SpO2) time series.
