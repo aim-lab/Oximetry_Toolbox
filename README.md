@@ -1,6 +1,6 @@
 # OBM Toolbox
 
-Oximetry digital biomarkers for the analysis of continuous oximetry (SpO2) recordings.
+Oximetry digital biomarkers for the analysis of continuous oximetry (SpO2) time series.
 
 Based on the paper Levy Jeremy, Álvarez Daniel, Rosenberg Aviv A., del Campo Felix and Behar Joachim A. "Oximetry digital biomarkers for assessing respiratory function during sleep: standards of measurement, physiological interpretation, and clinical use". 
 Under review in Nature Digital Medicine.
