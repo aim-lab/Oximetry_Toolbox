@@ -83,7 +83,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">POBM API REFERENCE:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../pobm.html">pobm package</a></li>
 </ul>
@@ -279,11 +279,13 @@
 
     <span class="k">def</span> <span class="nf">__delta_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute the delta index biomarker from the SpO2 signal according to</span>
-<span class="sd">        Pepin, J. L., Levy, P., Lepaulle, B., Brambilla, C. &amp; Guilleminault, C. Does oximetry contribute to the detection of apneic events? Mathematical processing of the SaO2 signal. Chest 99, 1151–1157 (1991).</span>
+<span class="sd">        Compute the delta index biomarker from the SpO2 signal according to [7]_</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: the DI biomarker</span>
+
+<span class="sd">        .. [7] Pepin, J. L., Levy, P., Lepaulle, B., Brambilla, C. &amp; Guilleminault, C. Does oximetry contribute to the detection of apneic events? Mathematical processing of the SaO2 signal. Chest 99, 1151–1157 (1991).</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_check_window_delta_</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">DI_Window</span><span class="p">)</span>
 

@@ -8,7 +8,7 @@
 
 .. toctree::
    :maxdepth: 4
-   :caption: Contents:
+   :caption: POBM API REFERENCE:
 
    pobm
 

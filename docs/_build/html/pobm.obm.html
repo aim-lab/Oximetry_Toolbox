@@ -84,7 +84,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">POBM API REFERENCE:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="pobm.html">pobm package</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">pobm.obm package</a><ul>
@@ -303,8 +303,7 @@
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.comp_apen">
 <code class="sig-name descname">comp_apen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_apen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_apen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the approximate entropy, according to:
-Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).</p>
+<dd><p>Compute the approximate entropy, according to <a class="footnote-reference brackets" href="#id2" id="id1">1</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
@@ -313,13 +312,17 @@ Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl.
 <dd class="field-even"><p>ApEn (float)</p>
 </dd>
 </dl>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.comp_lz">
 <code class="sig-name descname">comp_lz</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_lz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_lz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute Lempel-Ziv, according to:
-Lempel, A. &amp; Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf. Theory 22, 75–81 (1976).</p>
+<dd><p>Compute Lempel-Ziv, according to <a class="footnote-reference brackets" href="#id4" id="id3">2</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
@@ -328,13 +331,17 @@ Lempel, A. &amp; Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf.
 <dd class="field-even"><p>LZ (float)</p>
 </dd>
 </dl>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>Lempel, A. &amp; Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf. Theory 22, 75–81 (1976).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.comp_ctm">
 <code class="sig-name descname">comp_ctm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_ctm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_ctm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute CTM, according to:
-Cohen, M. E., Hudson, D. L. &amp; Deedwania, P. C. Applying continuous chaotic modeling to cardiac signal analysis. IEEE Eng. Med. Biol. Mag. 15, 97–102 (1996).</p>
+<dd><p>Compute CTM, according to <a class="footnote-reference brackets" href="#id6" id="id5">3</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
@@ -343,13 +350,17 @@ Cohen, M. E., Hudson, D. L. &amp; Deedwania, P. C. Applying continuous chaotic m
 <dd class="field-even"><p>CTM (float)</p>
 </dd>
 </dl>
+<dl class="footnote brackets">
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
+<dd><p>Cohen, M. E., Hudson, D. L. &amp; Deedwania, P. C. Applying continuous chaotic modeling to cardiac signal analysis. IEEE Eng. Med. Biol. Mag. 15, 97–102 (1996).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.comp_sampen">
 <code class="sig-name descname">comp_sampen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_sampen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_sampen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the sample entropy, according to:
-Richman, J. S. &amp; Moorman, J. R. Physiological time-series analysis using approximate entropy and sample entropy. Am J Physiol-Heart C 278, H2039–H2049 (2000).</p>
+<dd><p>Compute the sample entropy, according to <a class="footnote-reference brackets" href="#id8" id="id7">4</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
@@ -358,19 +369,28 @@ Richman, J. S. &amp; Moorman, J. R. Physiological time-series analysis using app
 <dd class="field-even"><p>SampEn (float)</p>
 </dd>
 </dl>
+<dl class="footnote brackets">
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id7">4</a></span></dt>
+<dd><p>Richman, J. S. &amp; Moorman, J. R. Physiological time-series analysis using approximate entropy and sample entropy. Am J Physiol-Heart C 278, H2039–H2049 (2000).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.comp_dfa">
 <code class="sig-name descname">comp_dfa</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_dfa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_dfa" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute DFA, Detrended Fluctuation Analysis according to:
-Peng, C. ‐K., Havlin, S., Stanley, H. E. &amp; Goldberger, A. L. Quantification of scaling exponents and crossover phenomena in nonstationary heartbeat time series. Chaos An Interdiscip. J. Nonlinear Sci. 5, 82–87 (1995).</p>
+<dd><p>Compute DFA, Detrended Fluctuation Analysis according to <a class="footnote-reference brackets" href="#id10" id="id9">5</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>DFA (float)</p>
+</dd>
+</dl>
+<dl class="footnote brackets">
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id9">5</a></span></dt>
+<dd><p>Peng, C. ‐K., Havlin, S., Stanley, H. E. &amp; Goldberger, A. L. Quantification of scaling exponents and crossover phenomena in nonstationary heartbeat time series. Chaos An Interdiscip. J. Nonlinear Sci. 5, 82–87 (1995).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -442,14 +462,18 @@ Peng, C. ‐K., Havlin, S., Stanley, H. E. &amp; Goldberger, A. L. Quantificatio
 <dl class="py method">
 <dt id="pobm.obm.desat.DesaturationsMeasures.desaturation_detector">
 <code class="sig-name descname">desaturation_detector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures.desaturation_detector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures.desaturation_detector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs desaturation detector, compute the ODI biomarker according to:
-Jung, D. W. et al. Real-Time Automatic Apneic Event Detection Using Nocturnal Pulse Oximetry. IEEE Trans. Biomed. Eng. 65, 706–712 (2018).</p>
+<dd><p>Runs desaturation detector, compute the ODI biomarker according to <a class="footnote-reference brackets" href="#id12" id="id11">6</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – The SpO2 signal, of shape (N,)</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>ODI: the average number of desaturation events per hour (int).</p>
+</dd>
+</dl>
+<dl class="footnote brackets">
+<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id11">6</a></span></dt>
+<dd><p>Jung, D. W. et al. Real-Time Automatic Apneic Event Detection Using Nocturnal Pulse Oximetry. IEEE Trans. Biomed. Eng. 65, 706–712 (2018).</p>
 </dd>
 </dl>
 </dd></dl>

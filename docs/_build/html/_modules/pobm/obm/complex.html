@@ -83,7 +83,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">POBM API REFERENCE:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../pobm.html">pobm package</a></li>
 </ul>
@@ -237,11 +237,12 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.comp_apen"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_apen">[docs]</a>    <span class="k">def</span> <span class="nf">comp_apen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute the approximate entropy, according to:</span>
-<span class="sd">        Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).</span>
+<span class="sd">        Compute the approximate entropy, according to [1]_</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: ApEn (float)</span>
+
+<span class="sd">        .. [1] Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
         <span class="n">signal</span> <span class="o">=</span> <span class="n">signal</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">signal</span><span class="p">))]</span>
@@ -280,11 +281,12 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.comp_lz"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_lz">[docs]</a>    <span class="k">def</span> <span class="nf">comp_lz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute Lempel-Ziv, according to:</span>
-<span class="sd">        Lempel, A. &amp; Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf. Theory 22, 75–81 (1976).</span>
+<span class="sd">        Compute Lempel-Ziv, according to [2]_</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: LZ (float)</span>
+
+<span class="sd">        .. [2] Lempel, A. &amp; Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf. Theory 22, 75–81 (1976).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
@@ -294,11 +296,12 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.comp_ctm"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_ctm">[docs]</a>    <span class="k">def</span> <span class="nf">comp_ctm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute CTM, according to:</span>
-<span class="sd">        Cohen, M. E., Hudson, D. L. &amp; Deedwania, P. C. Applying continuous chaotic modeling to cardiac signal analysis. IEEE Eng. Med. Biol. Mag. 15, 97–102 (1996).</span>
+<span class="sd">        Compute CTM, according to [3]_</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: CTM (float)</span>
+
+<span class="sd">        .. [3] Cohen, M. E., Hudson, D. L. &amp; Deedwania, P. C. Applying continuous chaotic modeling to cardiac signal analysis. IEEE Eng. Med. Biol. Mag. 15, 97–102 (1996).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
@@ -315,11 +318,13 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.comp_sampen"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_sampen">[docs]</a>    <span class="k">def</span> <span class="nf">comp_sampen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute the sample entropy, according to:</span>
-<span class="sd">        Richman, J. S. &amp; Moorman, J. R. Physiological time-series analysis using approximate entropy and sample entropy. Am J Physiol-Heart C 278, H2039–H2049 (2000).</span>
+<span class="sd">        Compute the sample entropy, according to [4]_</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: SampEn (float)</span>
+
+<span class="sd">        .. [4] Richman, J. S. &amp; Moorman, J. R. Physiological time-series analysis using approximate entropy and sample entropy. Am J Physiol-Heart C 278, H2039–H2049 (2000).</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
         <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">M_Sampen</span>
@@ -345,11 +350,13 @@
 
 <div class="viewcode-block" id="ComplexityMeasures.comp_dfa"><a class="viewcode-back" href="../../../pobm.obm.html#pobm.obm.complex.ComplexityMeasures.comp_dfa">[docs]</a>    <span class="k">def</span> <span class="nf">comp_dfa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compute DFA, Detrended Fluctuation Analysis according to:</span>
-<span class="sd">        Peng, C. ‐K., Havlin, S., Stanley, H. E. &amp; Goldberger, A. L. Quantification of scaling exponents and crossover phenomena in nonstationary heartbeat time series. Chaos An Interdiscip. J. Nonlinear Sci. 5, 82–87 (1995).</span>
+<span class="sd">        Compute DFA, Detrended Fluctuation Analysis according to [5]_</span>
 
 <span class="sd">        :param signal: 1-d array, of shape (N,) where N is the length of the signal</span>
 <span class="sd">        :return: DFA (float)</span>
+
+<span class="sd">        .. [5] Peng, C. ‐K., Havlin, S., Stanley, H. E. &amp; Goldberger, A. L. Quantification of scaling exponents and crossover phenomena in nonstationary heartbeat time series. Chaos An Interdiscip. J. Nonlinear Sci. 5, 82–87 (1995).</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DFA_Window</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">cumtrapz</span><span class="p">(</span><span class="n">signal</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span>
