@@ -22,7 +22,9 @@ Five types of biomarkers may be evaluated:
 ## Installation
 
 Available on pip, with the command: 
-python -m pip install --extra-index-url https://test.pypi.org/simple/ pobm
+pip install pobm
+
+pip project: https://pypi.org/project/pobm/
 
 ## Requirements
 
