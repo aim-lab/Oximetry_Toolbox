@@ -81,9 +81,9 @@ class PRSAMeasures:
 
             PRSA_features = PRSAResults((windows[d] + windows[d + 1] - windows[d - 1] - windows[d - 2]) / 4,
                                         np.nanmax(windows) - np.nanmin(windows),
-                                        np.polyfit(range(2 * d), windows, 1)[0],
-                                        np.polyfit(range(d), windows[0:d], 1)[0],
-                                        np.polyfit(range(d), windows[d:], 1)[0],
+                                        float(np.polyfit(range(2 * d), windows, 1)[0]),
+                                        float(np.polyfit(range(d), windows[0:d], 1)[0]),
+                                        float(np.polyfit(range(d), windows[d:], 1)[0]),
                                         np.correlate(windows, windows, "same")[self.K_AC])
 
         return PRSA_features
@@ -151,11 +151,14 @@ class PSDMeasures:
         # Taking the spectral signal in the relevant band
         amplitude_bp = self.__get_bandpass(amplitude_signal, freq, self.frequency_low, self.frequency_high)
 
+        if len(amplitude_bp) == 0:
+            return PSDResults(np.nansum(amplitude_signal), 0, 0, 0)
         return PSDResults(np.nansum(amplitude_signal), np.nansum(amplitude_bp),
                           np.nansum(amplitude_bp) / np.nansum(amplitude_signal),
-                          np.nanmax(amplitude_bp))
+                          float(np.nanmax(amplitude_bp)))
 
-    def __get_bandpass(self, signal, freq, lower_f, higher_f):
+    @staticmethod
+    def __get_bandpass(signal, freq, lower_f, higher_f):
         """
         Helper function, to get the amplitude within the desired band.
 
@@ -171,7 +174,8 @@ class PSDMeasures:
         amplitude_bp = amplitude_bp[freq_bp < higher_f]
         return amplitude_bp
 
-    def __get_psd(self, signal):
+    @staticmethod
+    def __get_psd(signal):
         """
         Helper function, compute the PSD
         
