@@ -15,7 +15,6 @@ class ComplexityMeasures:
     def __init__(self, CTM_Threshold: float = 0.25, DFA_Window: int = 20, M_Sampen: int = 3, R_Sampen: float = 0.2,
                  M_ApEn: int = 2, R_ApEn: float = 0.25):
         """
-
         :param CTM_Threshold: Radius of Central Tendency Measure.
         :type CTM_Threshold: float, optional
         :param DFA_Window: Length of window to calculate DFA biomarker.
@@ -28,7 +27,6 @@ class ComplexityMeasures:
         :type M_ApEn: int, optional
         :param R_ApEn: Tolerance to compute ApEn.
         :type R_ApEn: float, optional
-
         """
 
         if DFA_Window <= 0:
@@ -52,29 +50,22 @@ class ComplexityMeasures:
     def compute(self, signal) -> ComplexityMeasuresResults:
         """
         Computes all the biomarkers of this category.
-
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: ComplexityMeasuresResults class containing the following features:
-
             * ApEn: Approximate Entropy.
             * LZ: Lempel-Ziv complexity.
             * CTM: Central Tendency Measure.
             * SampEn: Sample Entropy.
             * DFA: Detrended Fluctuation Analysis.
-
-
         Example:
         
         .. code-block:: python
-
             from pobm.obm.complex import ComplexityMeasures
-
             # Initialize the class with the desired parameters
             complexity_class = ComplexityMeasures(CTM_Threshold=0.25, DFA_Window=20, M_Sampen=3, R_Sampen=0.2, M_ApEn=2, R_ApEn=0.25)
             
             # Compute the biomarkers
             results_complexity = complexity_class.compute(spo2_signal)
-
         """
         _check_shape_(signal)
         warnings.filterwarnings("ignore", category=RuntimeWarning)
@@ -86,10 +77,8 @@ class ComplexityMeasures:
     def comp_apen(self, signal):
         """
         Compute the approximate entropy, according to [1]_
-
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: ApEn (float)
-
         .. [1] Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).
         """
         signal = np.array(signal)
@@ -130,25 +119,23 @@ class ComplexityMeasures:
     def comp_lz(self, signal):
         """
         Compute Lempel-Ziv, according to [2]_
-
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: LZ (float)
-
         .. [2] Lempel, A. & Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf. Theory 22, 75–81 (1976).
         """
 
-        median = np.median(signal)
-        res = [signal[i] > median for i in range(0, len(signal))]
-        byte = [str(int(b is True)) for b in res]
+        median = np.nanmedian(signal)
+        signal = np.array(signal)
+        bool_median = signal > median
+        byte = [str(int(b == np.bool(True))) for b in bool_median]
+
         return lempel_ziv_complexity(''.join(byte))
 
     def comp_ctm(self, signal):
         """
         Compute CTM, according to [3]_
-
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: CTM (float)
-
         .. [3] Cohen, M. E., Hudson, D. L. & Deedwania, P. C. Applying continuous chaotic modeling to cardiac signal analysis. IEEE Eng. Med. Biol. Mag. 15, 97–102 (1996).
         """
         res = 0
@@ -167,12 +154,9 @@ class ComplexityMeasures:
     def comp_sampen(self, signal):
         """
         Compute the sample entropy, according to [4]_
-
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: SampEn (float)
-
         .. [4] Richman, J. S. & Moorman, J. R. Physiological time-series analysis using approximate entropy and sample entropy. Am J Physiol-Heart C 278, H2039–H2049 (2000).
-
         """
         N = len(signal)
         m = self.M_Sampen
@@ -199,12 +183,9 @@ class ComplexityMeasures:
     def comp_dfa(self, signal):
         """
         Compute DFA, Detrended Fluctuation Analysis according to [5]_
-
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :return: DFA (float)
-
         .. [5] Peng, C. ‐K., Havlin, S., Stanley, H. E. & Goldberger, A. L. Quantification of scaling exponents and crossover phenomena in nonstationary heartbeat time series. Chaos An Interdiscip. J. Nonlinear Sci. 5, 82–87 (1995).
-
         """
         n = self.DFA_Window
         y = integrate.cumtrapz(signal - np.nanmean(signal))
