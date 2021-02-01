@@ -116,20 +116,45 @@ class ComplexityMeasures:
         with np.errstate(invalid='ignore'):
             return np.nanmax(abs(window1 - window2), axis=1) < r
 
-    def comp_lz(self, signal):
+    def comp_lz(self, signal, dual_quantization=True):
         """
         Compute Lempel-Ziv, according to [2]_
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
+        :param dual_quantization: if True, the signal is converted into a binary signal, according to the original algorithm  [2]_. If False, the signal is quantized in 4 levels.
         :return: LZ (float)
         .. [2] Lempel, A. & Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf. Theory 22, 75–81 (1976).
         """
-
-        median = np.nanmedian(signal)
         signal = np.array(signal)
-        bool_median = signal > median
-        byte = [str(int(b == np.bool(True))) for b in bool_median]
 
-        return lempel_ziv_complexity(''.join(byte))
+        if dual_quantization is True:
+            median = np.nanmedian(signal)
+            bool_median = signal > median
+            byte = [str(int(b == np.bool(True))) for b in bool_median]
+        else:
+            quantile1, median, quantile3 = np.quantile(signal, 0.25), np.quantile(signal, 0.5), np.quantile(signal, 0.75)
+            byte = np.empty(shape=signal.shape, dtype=str)
+            byte[signal <= quantile1] = "0"
+            byte[(signal > quantile1) & (signal <= median)] = "1"
+            byte[(signal > median) & (signal <= quantile3)] = "2"
+            byte[signal > quantile3] = "3"
+
+        sequence = ''.join(byte)
+
+        sub_strings = set()
+
+        ind = 0
+        inc = 1
+        while True:
+            if ind + inc > len(sequence):
+                break
+            sub_str = sequence[ind: ind + inc]
+            if sub_str in sub_strings:
+                inc += 1
+            else:
+                sub_strings.add(sub_str)
+                ind += inc
+                inc = 1
+        return len(sub_strings)
 
     def comp_ctm(self, signal):
         """
