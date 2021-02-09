@@ -92,8 +92,7 @@ class HypoxicBurdenMeasures:
         """
 
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
-        desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
-        desaturation_slope_all = desat_embedding(self.begin, self.end)
+        desaturation_int_max_all, _, _, _, _, _ = desat_embedding(self.begin, self.end, self.end)
 
         time_spo2_array = np.array(range(len(signal)))
         for (i, desaturation) in enumerate(desaturations):

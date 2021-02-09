@@ -36,6 +36,7 @@ class DesaturationsMeasures:
         self.relative = relative
         self.desat_max_length = desat_max_length
         self.begin = []
+        self.min_desat = []
         self.end = []
 
     def compute(self, signal) -> DesaturationsMeasuresResults:
@@ -88,7 +89,8 @@ class DesaturationsMeasures:
 
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
         desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
-        desaturation_slope_all = desat_embedding(self.begin, self.end)
+        desaturation_slope_all, desaturations_min_begin, desaturations_end_min = \
+            desat_embedding(self.begin, self.end, self.min_desat)
 
         time_spo2_array = np.array(range(len(signal)))
 
@@ -107,7 +109,11 @@ class DesaturationsMeasures:
             desaturation_max = np.nanmax(desaturation_spo2)
 
             desaturation_valid[i] = True
+
             desaturation_length_all[i] = desaturation['Duration']
+            desaturations_min_begin[i] = desaturation['Min_to_Begin']
+            desaturations_end_min[i] = desaturation['End_to_Min']
+
             desaturation_int_100_all[i] = np.nansum(100 - desaturation_spo2)
             desaturation_int_max_all[i] = np.nansum(desaturation_max - desaturation_spo2)
             desaturation_depth_100_all[i] = 100 - desaturation_min
@@ -120,43 +126,52 @@ class DesaturationsMeasures:
 
             # Due to mislabeling, the max value may be after the min value, in which case ignore the desaturation.
             if len(desaturation_idx_max_min) > 0:
-                p = np.polyfit(np.int64(desaturation_time[desaturation_idx_max_min]),
-                               desaturation_spo2[desaturation_idx_max_min], 1)
-
-                desaturation_slope_all[i] = p[0]
+                try:
+                    p = np.polyfit(np.int64(desaturation_time[desaturation_idx_max_min]),
+                                   desaturation_spo2[desaturation_idx_max_min], 1)
+                    desaturation_slope_all[i] = p[0]
+                except:
+                    desaturation_slope_all[i] = np.nan
 
         diff_desats = abs(starts - np.roll(starts, 1))
         diff_desats = diff_desats[1:]
 
         if np.sum(desaturation_valid) != 0:
-            DL_u = np.nanmean(desaturation_length_all[desaturation_valid])
-            DL_sd = np.nanstd(desaturation_length_all[desaturation_valid])
-            DA100_u = np.nanmean(desaturation_int_100_all[desaturation_valid])
-            DA100_sd = np.nanstd(desaturation_int_100_all[desaturation_valid])
-            DAmax_u = np.nanmean(desaturation_int_max_all[desaturation_valid])
-            DAmax_sd = np.nanstd(desaturation_int_max_all[desaturation_valid])
-            DD100_u = np.nanmean(desaturation_depth_100_all[desaturation_valid])
-            DD100_sd = np.nanstd(desaturation_depth_100_all[desaturation_valid])
-            DDmax_u = np.nanmean(desaturation_depth_max_all[desaturation_valid])
-            DDmax_sd = np.nanstd(desaturation_depth_max_all[desaturation_valid])
+            DL_u = float(np.nanmean(desaturation_length_all[desaturation_valid]))
+            DL_sd = float(np.nanstd(desaturation_length_all[desaturation_valid]))
+            DA100_u = float(np.nanmean(desaturation_int_100_all[desaturation_valid]))
+            DA100_sd = float(np.nanstd(desaturation_int_100_all[desaturation_valid]))
+            DAmax_u = float(np.nanmean(desaturation_int_max_all[desaturation_valid]))
+            DAmax_sd = float(np.nanstd(desaturation_int_max_all[desaturation_valid]))
+            DD100_u = float(np.nanmean(desaturation_depth_100_all[desaturation_valid]))
+            DD100_sd = float(np.nanstd(desaturation_depth_100_all[desaturation_valid]))
+            DDmax_u = float(np.nanmean(desaturation_depth_max_all[desaturation_valid]))
+            DDmax_sd = float(np.nanstd(desaturation_depth_max_all[desaturation_valid]))
 
-            DS_u = np.nanmean(desaturation_slope_all[desaturation_valid])
-            DS_sd = np.nanstd(desaturation_slope_all[desaturation_valid])
+            DS_u = float(np.nanmean(desaturation_slope_all[desaturation_valid]))
+            DS_sd = float(np.nanstd(desaturation_slope_all[desaturation_valid]))
 
-            TD_u = np.nanmean(diff_desats)
-            TD_sd = np.nanstd(diff_desats)
+            TD_u = float(np.nanmean(diff_desats))
+            TD_sd = float(np.nanstd(diff_desats))
+
+            DL_a_u = float(np.nanmean(desaturations_min_begin[desaturation_valid]))
+            DL_a_sd = float(np.nanstd(desaturations_min_begin[desaturation_valid]))
+
+            DL_b_u = float(np.nanmean(desaturations_end_min[desaturation_valid]))
+            DL_b_sd = float(np.nanstd(desaturations_end_min[desaturation_valid]))
 
             desaturation_features = DesaturationsMeasuresResults(ODI, DL_u, DL_sd, DA100_u, DA100_sd, DAmax_u, DAmax_sd,
                                                                  DD100_u, DD100_sd, DDmax_u, DDmax_sd, DS_u, DS_sd,
-                                                                 TD_u, TD_sd, self.begin, self.end)
-        else:
-            desaturation_features = DesaturationsMeasuresResults(ODI, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                 TD_u, TD_sd, DL_a_u, DL_a_sd, DL_b_u, DL_b_sd,
                                                                  self.begin, self.end)
+        else:
+            desaturation_features = DesaturationsMeasuresResults(ODI, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                                 0, self.begin, self.end)
 
-        if desaturation_features.DS_u is None:
-            desaturation_features.DS_u = 0
-        if desaturation_features.DS_sd is None:
-            desaturation_features.DS_sd = 0
+        # if desaturation_features.DS_u is None:
+        #     desaturation_features.DS_u = 0
+        # if desaturation_features.DS_sd is None:
+        #     desaturation_features.DS_sd = 0
         return desaturation_features
 
     def desaturation_detector(self, signal):
@@ -169,15 +184,19 @@ class DesaturationsMeasures:
         .. [6] Jung, D. W. et al. Real-Time Automatic Apneic Event Detection Using Nocturnal Pulse Oximetry. IEEE Trans. Biomed. Eng. 65, 706–712 (2018).
 
         """
-        _, table_desat_aa, _, table_desat_cc = self.__sc_desaturations(signal)
+        _, table_desat_aa, table_desat_bb, table_desat_cc = self.__sc_desaturations(signal)
+
         table_desat_cc = np.array(table_desat_cc).astype(int)
         table_desat_aa = np.array(table_desat_aa).astype(int)
+        table_desat_bb = np.array(table_desat_bb).astype(int)
+
         table_desat_dd = self.__find_d_points(signal, table_desat_aa, table_desat_cc)
         table_desat_dd = np.array(table_desat_dd).astype(int)
         ODI = len(table_desat_aa) / len(signal) * 3600  # Convert to event/h
 
         self.begin = table_desat_aa
         self.end = table_desat_dd
+        self.min_desat = table_desat_bb
 
         return ODI
 
@@ -305,7 +324,7 @@ class DesaturationsMeasures:
         :return: ODI
         """
         hard_threshold = self.hard_threshold
-        begin_desat, end_desat = [], []
+        begin_desat, min_desat, end_desat = [], [], []
         turn_begin = True
 
         for i in range(len(signal)):
@@ -318,6 +337,7 @@ class DesaturationsMeasures:
             if (signal[i - 1] < hard_threshold) and (signal[i] >= hard_threshold):
                 if turn_begin is False:
                     end_desat.append(i)
+                    min_desat.append(begin_desat[-1] + np.argmin(signal[begin_desat[-1]: end_desat[-1]]))
                     turn_begin = True
 
         if turn_begin is False:
@@ -328,12 +348,13 @@ class DesaturationsMeasures:
 
         self.begin = begin_desat
         self.end = end_desat
+        self.min_desat = min_desat
 
         ODI = len(begin_desat) / len(signal) * 3600  # Convert to event/h
         return ODI
 
 
-def desat_embedding(begin, end):
+def desat_embedding(begin, end, min_desat):
     """
     Help function for the DesaturationsMeasures class
 
@@ -345,6 +366,8 @@ def desat_embedding(begin, end):
 
     if isinstance(table_desat_aa, int):
         table_desat_aa = [table_desat_aa]
+    if isinstance(min_desat, int):
+        min_desat = [min_desat]
     if isinstance(table_desat_cc, int):
         table_desat_cc = [table_desat_cc]
 
@@ -353,7 +376,9 @@ def desat_embedding(begin, end):
         desaturations.append({
             'Start': int(table_desat_aa[kk]),
             'Duration': table_desat_cc[kk] - table_desat_aa[kk],
-            'End': int(table_desat_cc[kk])
+            'End': int(table_desat_cc[kk]),
+            'Min_to_Begin': min_desat[kk] - table_desat_aa[kk],
+            'End_to_Min': table_desat_cc[kk] - min_desat[kk],
         })
 
     desaturation_valid = np.full(len(desaturations), False)
@@ -363,5 +388,8 @@ def desat_embedding(begin, end):
     desaturation_depth_100_all = np.full(len(desaturations), np.nan)
     desaturation_depth_max_all = np.full(len(desaturations), np.nan)
     desaturation_slope_all = np.full(len(desaturations), np.nan)
+    desaturations_min_begin = np.full(len(desaturations), np.nan)
+    desaturations_end_min = np.full(len(desaturations), np.nan)
     return desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
-           desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, desaturation_slope_all
+           desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, desaturation_slope_all, \
+           desaturations_min_begin, desaturations_end_min

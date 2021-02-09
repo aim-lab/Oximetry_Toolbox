@@ -46,6 +46,12 @@ class DesaturationsMeasuresResults:
     DS_sd: float
     TD_u: float
     TD_sd: float
+
+    DL_a_u: float
+    DL_a_sd: float
+    DL_b_u: float
+    DL_b_sd: float
+
     begin: np.array
     end: np.array
 
