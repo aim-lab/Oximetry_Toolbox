@@ -1,3 +1,5 @@
+from collections import Counter
+
 from pobm._ErrorHandler import _check_shape_, WrongParameter
 import numpy as np
 import warnings
@@ -11,7 +13,7 @@ class DesaturationsMeasures:
     """
 
     def __init__(self, ODI_Threshold: int = 3, hard_threshold: int = 90, relative: bool = True,
-                 desat_max_length: int = 90):
+                 desat_max_length: int = 90, min_dist_meta_event: int = 90, desat_min_length: int = 90):
         """
 
         :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.
@@ -35,9 +37,12 @@ class DesaturationsMeasures:
         self.hard_threshold = hard_threshold
         self.relative = relative
         self.desat_max_length = desat_max_length
+        self.min_dist_meta_event = min_dist_meta_event
+        self.desat_min_length = desat_min_length
         self.begin = []
         self.min_desat = []
         self.end = []
+        self.counter_desat = []
 
     def compute(self, signal) -> DesaturationsMeasuresResults:
         """
@@ -65,14 +70,14 @@ class DesaturationsMeasures:
             * end: List of indices of end of each desaturation event
 
         Example:
-        
+
         .. code-block:: python
 
             from pobm.obm.desat import DesaturationsMeasures
 
             # Initialize the class with the desired parameters
             desat_class = DesaturationsMeasures(ODI_Threshold=3)
-        
+
             # Compute the biomarkers
             results_desat = desat_class.compute(spo2_signal)
 
@@ -87,6 +92,9 @@ class DesaturationsMeasures:
         else:
             ODI = self.__hard_threshold_detector(signal)
 
+        self.group_meta_desat(signal)
+        self.remove_small_desats()
+
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
         desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
         desaturation_slope_all, desaturations_min_begin, desaturations_end_min = \
@@ -96,11 +104,12 @@ class DesaturationsMeasures:
 
         starts = []
         for (i, desaturation) in enumerate(desaturations):
-            starts.append(desaturation['Start'])
             desaturation_idx = (time_spo2_array >= desaturation['Start']) & (time_spo2_array <= desaturation['End'])
 
             if np.sum(desaturation_idx) == 0:
                 continue
+
+            starts.append(desaturation['Start'])
             signal = np.array(signal)
 
             desaturation_time = time_spo2_array[desaturation_idx]
@@ -173,6 +182,57 @@ class DesaturationsMeasures:
         # if desaturation_features.DS_sd is None:
         #     desaturation_features.DS_sd = 0
         return desaturation_features
+
+    def group_meta_desat(self, signal):
+        end_before = - self.min_dist_meta_event - 5
+
+        new_idx_desat = np.zeros(shape=(len(self.begin)), dtype=np.int8)
+        count_desat, count_meta_desat = 0, -1
+
+        for begin_index, end_index in zip(self.begin, self.end):
+            if begin_index - end_before > self.min_dist_meta_event:
+                count_meta_desat += 1
+
+            new_idx_desat[count_desat] = count_meta_desat
+            end_before = end_index
+            count_desat += 1
+
+        curr_meta_desat = 0
+        begin_inserted = False
+        new_begin, new_end = np.zeros(shape=(len(self.begin))), np.zeros(shape=(len(self.begin)))
+        new_min = np.zeros(shape=(len(self.begin)))
+        for idx_desat, idx_meta_desat in enumerate(new_idx_desat):
+            if idx_meta_desat != curr_meta_desat:
+                curr_meta_desat += 1
+                begin_inserted = False
+
+            if begin_inserted is False:
+                new_begin[idx_meta_desat] = self.begin[idx_desat]
+                begin_inserted = True
+            new_end[idx_meta_desat] = max(self.end[idx_desat], int(new_end[idx_meta_desat]))
+            new_min[idx_meta_desat] = new_begin[idx_meta_desat] + \
+                                      np.argmin(signal[int(new_begin[idx_meta_desat]): int(new_end[idx_meta_desat])])
+
+        self.begin = new_begin[new_begin != 0].astype(int)
+        self.end = new_end[new_end != 0].astype(int)
+        self.min_desat = new_min[new_min != 0].astype(int)
+
+        counter_desat = Counter(new_idx_desat)
+        self.counter_desat = list(counter_desat.values())
+
+    def remove_small_desats(self):
+        new_begin, new_end, new_min, new_counter = [], [], [], []
+        for i_begin, i_end, i_min, i_counter in zip(self.begin, self.end, self.min_desat, self.counter_desat):
+            if i_end - i_begin > self.desat_min_length:
+                new_begin.append(i_begin)
+                new_end.append(i_end)
+                new_min.append(i_min)
+                new_counter.append(i_counter)
+
+        self.begin = new_begin
+        self.end = new_end
+        self.min_desat = new_min
+        self.counter_desat = new_counter
 
     def desaturation_detector(self, signal):
         """
@@ -329,6 +389,8 @@ class DesaturationsMeasures:
 
         for i in range(len(signal)):
             if i == 0:
+                continue
+            if signal[i] != signal[i]:  # Check for NaN
                 continue
             if (signal[i - 1] >= hard_threshold) and (signal[i] < hard_threshold):
                 if turn_begin is True:
