@@ -13,7 +13,7 @@ class DesaturationsMeasures:
     """
 
     def __init__(self, ODI_Threshold: int = 3, hard_threshold: int = 90, relative: bool = True,
-                 desat_max_length: int = 90, min_dist_meta_event: int = 90, desat_min_length: int = 90):
+                 desat_max_length: int = 90, min_dist_meta_event: int = 0, desat_min_length: int = 0):
         """
 
         :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.
@@ -24,6 +24,8 @@ class DesaturationsMeasures:
         :type relative: bool, optional
         :param desat_max_length: The maximum length of desaturations.
         :type desat_max_length: int, optional
+        :param min_dist_meta_event: The maximal distance between 2 desaturations to convert them into a meta desat
+        :type min_dist_meta_event: int, optional
         """
 
         if ODI_Threshold <= 0:
@@ -88,12 +90,14 @@ class DesaturationsMeasures:
         warnings.filterwarnings("ignore", category=RuntimeWarning)
 
         if self.relative is True:
-            ODI = self.desaturation_detector(signal)
+            self.desaturation_detector(signal)
         else:
-            ODI = self.__hard_threshold_detector(signal)
+            self.__hard_threshold_detector(signal)
 
         self.group_meta_desat(signal)
         self.remove_small_desats()
+
+        ODI = len(self.begin) / len(signal) * 3600
 
         desaturations, desaturation_valid, desaturation_length_all, desaturation_int_100_all, \
         desaturation_int_max_all, desaturation_depth_100_all, desaturation_depth_max_all, \
@@ -145,6 +149,9 @@ class DesaturationsMeasures:
         diff_desats = abs(starts - np.roll(starts, 1))
         diff_desats = diff_desats[1:]
 
+        self.begin = np.array(self.begin)
+        self.end = np.array(self.end)
+
         if np.sum(desaturation_valid) != 0:
             DL_u = float(np.nanmean(desaturation_length_all[desaturation_valid]))
             DL_sd = float(np.nanstd(desaturation_length_all[desaturation_valid]))
@@ -181,6 +188,7 @@ class DesaturationsMeasures:
         #     desaturation_features.DS_u = 0
         # if desaturation_features.DS_sd is None:
         #     desaturation_features.DS_sd = 0
+
         return desaturation_features
 
     def group_meta_desat(self, signal):
