@@ -36,6 +36,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Preprocessing" href="tutorials/pobm_preprocessing.html" />
     <link rel="prev" title="pobm package" href="pobm.html" /> 
 </head>
 
@@ -100,6 +101,8 @@
 <li class="toctree-l2"><a class="reference internal" href="pobm.html#module-pobm">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/pobm_preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/pobm_analysis.html">Oximetry time series analysis</a></li>
 </ul>
 
             
@@ -271,128 +274,65 @@
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span> &#x2192; pobm._ResultsClasses.ComplexityMeasuresResults<a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.compute" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes all the biomarkers of this category.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>ComplexityMeasuresResults class containing the following features:</p>
-<ul class="simple">
+<dd><p>Computes all the biomarkers of this category.
+:param signal: 1-d array, of shape (N,) where N is the length of the signal
+:return: ComplexityMeasuresResults class containing the following features:</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>ApEn: Approximate Entropy.</p></li>
 <li><p>LZ: Lempel-Ziv complexity.</p></li>
 <li><p>CTM: Central Tendency Measure.</p></li>
 <li><p>SampEn: Sample Entropy.</p></li>
 <li><p>DFA: Detrended Fluctuation Analysis.</p></li>
 </ul>
-</p>
-</dd>
-</dl>
+</div></blockquote>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pobm.obm.complex</span> <span class="kn">import</span> <span class="n">ComplexityMeasures</span>
-
-<span class="c1"># Initialize the class with the desired parameters</span>
-<span class="n">complexity_class</span> <span class="o">=</span> <span class="n">ComplexityMeasures</span><span class="p">(</span><span class="n">CTM_Threshold</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">DFA_Window</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">M_Sampen</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">R_Sampen</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">M_ApEn</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">R_ApEn</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
-
-<span class="c1"># Compute the biomarkers</span>
-<span class="n">results_complexity</span> <span class="o">=</span> <span class="n">complexity_class</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">spo2_signal</span><span class="p">)</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.comp_apen">
 <code class="sig-name descname">comp_apen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_apen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_apen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the approximate entropy, according to <a class="footnote-reference brackets" href="#id2" id="id1">1</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>ApEn (float)</p>
-</dd>
-</dl>
-<dl class="footnote brackets">
-<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).</p>
-</dd>
-</dl>
+<dd><p>Compute the approximate entropy, according to <a href="#id9"><span class="problematic" id="id1">[1]_</span></a>
+:param signal: 1-d array, of shape (N,) where N is the length of the signal
+:return: ApEn (float)
+.. [1] Pincus, S. M. Approximate entropy as a measure of system complexity. Proc. Natl. Acad. Sci. U. S. A. 88, 2297–2301 (1991).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.comp_lz">
-<code class="sig-name descname">comp_lz</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_lz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_lz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute Lempel-Ziv, according to <a class="footnote-reference brackets" href="#id4" id="id3">2</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>LZ (float)</p>
-</dd>
-</dl>
-<dl class="footnote brackets">
-<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
-<dd><p>Lempel, A. &amp; Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf. Theory 22, 75–81 (1976).</p>
-</dd>
-</dl>
+<code class="sig-name descname">comp_lz</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em>, <em class="sig-param"><span class="n">dual_quantization</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_lz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_lz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Lempel-Ziv, according to <a href="#id10"><span class="problematic" id="id2">[2]_</span></a>
+:param signal: 1-d array, of shape (N,) where N is the length of the signal
+:param dual_quantization: if True, the signal is converted into a binary signal, according to the original algorithm  <a href="#id11"><span class="problematic" id="id3">[2]_</span></a>. If False, the signal is quantized in 4 levels.
+:return: LZ (float)
+.. [2] Lempel, A. &amp; Ziv, J. On the Complexity of Finite Sequences. IEEE Trans. Inf. Theory 22, 75–81 (1976).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.comp_ctm">
 <code class="sig-name descname">comp_ctm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_ctm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_ctm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute CTM, according to <a class="footnote-reference brackets" href="#id6" id="id5">3</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>CTM (float)</p>
-</dd>
-</dl>
-<dl class="footnote brackets">
-<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
-<dd><p>Cohen, M. E., Hudson, D. L. &amp; Deedwania, P. C. Applying continuous chaotic modeling to cardiac signal analysis. IEEE Eng. Med. Biol. Mag. 15, 97–102 (1996).</p>
-</dd>
-</dl>
+<dd><p>Compute CTM, according to <a href="#id12"><span class="problematic" id="id4">[3]_</span></a>
+:param signal: 1-d array, of shape (N,) where N is the length of the signal
+:return: CTM (float)
+.. [3] Cohen, M. E., Hudson, D. L. &amp; Deedwania, P. C. Applying continuous chaotic modeling to cardiac signal analysis. IEEE Eng. Med. Biol. Mag. 15, 97–102 (1996).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.comp_sampen">
 <code class="sig-name descname">comp_sampen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_sampen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_sampen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the sample entropy, according to <a class="footnote-reference brackets" href="#id8" id="id7">4</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>SampEn (float)</p>
-</dd>
-</dl>
-<dl class="footnote brackets">
-<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id7">4</a></span></dt>
-<dd><p>Richman, J. S. &amp; Moorman, J. R. Physiological time-series analysis using approximate entropy and sample entropy. Am J Physiol-Heart C 278, H2039–H2049 (2000).</p>
-</dd>
-</dl>
+<dd><p>Compute the sample entropy, according to <a href="#id13"><span class="problematic" id="id5">[4]_</span></a>
+:param signal: 1-d array, of shape (N,) where N is the length of the signal
+:return: SampEn (float)
+.. [4] Richman, J. S. &amp; Moorman, J. R. Physiological time-series analysis using approximate entropy and sample entropy. Am J Physiol-Heart C 278, H2039–H2049 (2000).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pobm.obm.complex.ComplexityMeasures.comp_dfa">
 <code class="sig-name descname">comp_dfa</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/complex.html#ComplexityMeasures.comp_dfa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.complex.ComplexityMeasures.comp_dfa" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute DFA, Detrended Fluctuation Analysis according to <a class="footnote-reference brackets" href="#id10" id="id9">5</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>signal</strong> – 1-d array, of shape (N,) where N is the length of the signal</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>DFA (float)</p>
-</dd>
-</dl>
-<dl class="footnote brackets">
-<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id9">5</a></span></dt>
-<dd><p>Peng, C. ‐K., Havlin, S., Stanley, H. E. &amp; Goldberger, A. L. Quantification of scaling exponents and crossover phenomena in nonstationary heartbeat time series. Chaos An Interdiscip. J. Nonlinear Sci. 5, 82–87 (1995).</p>
-</dd>
-</dl>
+<dd><p>Compute DFA, Detrended Fluctuation Analysis according to <a href="#id14"><span class="problematic" id="id6">[5]_</span></a>
+:param signal: 1-d array, of shape (N,) where N is the length of the signal
+:return: DFA (float)
+.. [5] Peng, C. ‐K., Havlin, S., Stanley, H. E. &amp; Goldberger, A. L. Quantification of scaling exponents and crossover phenomena in nonstationary heartbeat time series. Chaos An Interdiscip. J. Nonlinear Sci. 5, 82–87 (1995).</p>
 </dd></dl>
 
 </dd></dl>
@@ -402,7 +342,7 @@
 <span id="pobm-obm-desat"></span><h2>pobm.obm.desat<a class="headerlink" href="#module-pobm.obm.desat" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="pobm.obm.desat.DesaturationsMeasures">
-<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.desat.</code><code class="sig-name descname">DesaturationsMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ODI_Threshold</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">3</span></em>, <em class="sig-param"><span class="n">hard_threshold</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">90</span></em>, <em class="sig-param"><span class="n">relative</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">desat_max_length</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">90</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pobm.obm.desat.</code><code class="sig-name descname">DesaturationsMeasures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ODI_Threshold</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">3</span></em>, <em class="sig-param"><span class="n">hard_threshold</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">90</span></em>, <em class="sig-param"><span class="n">relative</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">desat_max_length</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">90</span></em>, <em class="sig-param"><span class="n">min_dist_meta_event</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">desat_min_length</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class that calculates the desaturation features from SpO2 time series.</p>
 <dl class="field-list simple">
@@ -412,6 +352,7 @@
 <li><p><strong>hard_threshold</strong> (<em>int</em><em>, </em><em>optional</em>) – Hard threshold to detect desaturations.</p></li>
 <li><p><strong>relative</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use a relative or hard threshold to detect desaturations.</p></li>
 <li><p><strong>desat_max_length</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum length of desaturations.</p></li>
+<li><p><strong>min_dist_meta_event</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximal distance between 2 desaturations to convert them into a meta desat</p></li>
 </ul>
 </dd>
 </dl>
@@ -460,9 +401,19 @@
 </dd></dl>
 
 <dl class="py method">
+<dt id="pobm.obm.desat.DesaturationsMeasures.group_meta_desat">
+<code class="sig-name descname">group_meta_desat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures.group_meta_desat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures.group_meta_desat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pobm.obm.desat.DesaturationsMeasures.remove_small_desats">
+<code class="sig-name descname">remove_small_desats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures.remove_small_desats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures.remove_small_desats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="pobm.obm.desat.DesaturationsMeasures.desaturation_detector">
 <code class="sig-name descname">desaturation_detector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">signal</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pobm/obm/desat.html#DesaturationsMeasures.desaturation_detector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pobm.obm.desat.DesaturationsMeasures.desaturation_detector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs desaturation detector, compute the ODI biomarker according to <a class="footnote-reference brackets" href="#id12" id="id11">6</a></p>
+<dd><p>Runs desaturation detector, compute the ODI biomarker according to <a class="footnote-reference brackets" href="#id8" id="id7">6</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>signal</strong> – The SpO2 signal, of shape (N,)</p>
@@ -472,7 +423,7 @@
 </dd>
 </dl>
 <dl class="footnote brackets">
-<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id11">6</a></span></dt>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id7">6</a></span></dt>
 <dd><p>Jung, D. W. et al. Real-Time Automatic Apneic Event Detection Using Nocturnal Pulse Oximetry. IEEE Trans. Biomed. Eng. 65, 706–712 (2018).</p>
 </dd>
 </dl>
@@ -646,6 +597,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorials/pobm_preprocessing.html" class="btn btn-neutral float-right" title="Preprocessing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="pobm.html" class="btn btn-neutral float-left" title="pobm package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

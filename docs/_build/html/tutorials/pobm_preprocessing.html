@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Preprocessing &mdash; PhysioZoo OBM  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Oximetry time series analysis" href="pobm_analysis.html" />
+    <link rel="prev" title="pobm.obm package" href="../pobm.obm.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> PhysioZoo OBM
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">POBM API REFERENCE:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../pobm.html">pobm package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Preprocessing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction"><strong>Introduction</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-is-preprocessing-important"><strong>Why is preprocessing important?</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preprocessing-methods-in-physiozoo"><strong>Preprocessing methods in PhysioZoo</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pobm_analysis.html">Oximetry time series analysis</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PhysioZoo OBM</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Preprocessing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/pobm_preprocessing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="preprocessing">
+<h1>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial you will learn how to preprocess your oximetry time series within <strong>PhysioZoo OBM</strong>.
+(link: <a class="reference external" href="https://physiozoo.com/">https://physiozoo.com/</a>)</p>
+<div class="section" id="introduction">
+<h2><strong>Introduction</strong><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>When loading an oximetry time series in <strong>PhysioZoo OBM</strong> the first step is to preprocess your signal to remove abnormal measurements.</p>
+<p>We implemented in <strong>PhysioZoo OBM</strong> three methods for pre-filtering the oximetry time series:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Range,</p></li>
+<li><p>Delta Filter,</p></li>
+<li><p>Block of data filter.</p></li>
+</ul>
+</div></blockquote>
+<p>In addition, a median filter is available and may be applied to the signal after one of the preprocessing methods.</p>
+</div>
+<div class="section" id="why-is-preprocessing-important">
+<h2><strong>Why is preprocessing important?</strong><a class="headerlink" href="#why-is-preprocessing-important" title="Permalink to this headline">¶</a></h2>
+<p>Raw oximetry data often has missing values and artefacts. Indeed, any motion of the oximeter, or lack of contact between the device and the finger could alterate the signal.</p>
+<p>The example below shows an oximetry time series before preprocessing (raw data), after Delta filter and then after median filter. We can see that the raw data contains some non-physiological values (drop to 0) which are removed by the Delta filter. The median filter smoothes the signal.</p>
+<img alt="../_images/pobm_preprocessing.png" class="align-center" src="../_images/pobm_preprocessing.png" />
+</div>
+<div class="section" id="preprocessing-methods-in-physiozoo">
+<h2><strong>Preprocessing methods in PhysioZoo</strong><a class="headerlink" href="#preprocessing-methods-in-physiozoo" title="Permalink to this headline">¶</a></h2>
+<p>You can select the preprocessing filter with the dropdown “Preprocessing” located under the Main tab. You can then check the box “Median filter”, to choose to apply the median filter. If you want to customize the preprocessing further, you can modify the parameters of each preprocessing methods under Options-&gt;Filtering.</p>
+<p>The image below shows an example of an oximetry time series (the blue signal) which has been filtered (green signal). The resulting preprocessed time series is shown as a green time series, using the Range filter, associated with median filter (as the box median filter is marked with V). The desaturations are highlighted in red.</p>
+<img alt="../_images/pobm_preprocessing_PZ.PNG" class="align-center" src="../_images/pobm_preprocessing_PZ.PNG" />
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pobm_analysis.html" class="btn btn-neutral float-right" title="Oximetry time series analysis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../pobm.obm.html" class="btn btn-neutral float-left" title="pobm.obm package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

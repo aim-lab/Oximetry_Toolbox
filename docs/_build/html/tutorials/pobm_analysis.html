@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Oximetry time series analysis &mdash; PhysioZoo OBM  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Preprocessing" href="pobm_preprocessing.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> PhysioZoo OBM
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">POBM API REFERENCE:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../pobm.html">pobm package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pobm_preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Oximetry time series analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction"><strong>Introduction</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#performing-oximetry-analysis"><strong>Performing oximetry analysis</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exporting-oximetry-biomarkers"><strong>Exporting oximetry biomarkers</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exporting-figures"><strong>Exporting figures</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#consecutive-windows-analysis"><strong>Consecutive windows analysis</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-biomarker-parameters"><strong>Setting biomarker parameters</strong></a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PhysioZoo OBM</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Oximetry time series analysis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/pobm_analysis.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="oximetry-time-series-analysis">
+<h1>Oximetry time series analysis<a class="headerlink" href="#oximetry-time-series-analysis" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial you will learn how to use <strong>PhysioZoo OBM</strong> to compute the oximetry biomarkers and export the computed values.
+(link: <a class="reference external" href="https://physiozoo.com/">https://physiozoo.com/</a>)</p>
+<div class="section" id="introduction">
+<h2><strong>Introduction</strong><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>SpO2 is a measure of the amount of oxygen-loaded hemoglobin in the blood, relative to the amount of oxygen-unloaded hemoglobin. The extraction of digital biomarkers from the oxygen saturation time series is a critical step in the process of diagnosis and monitoring of patient pulmonary function. Indeed, studying the variability of the oxygen saturation signal may provide information on the underlying physiological control systems. <strong>PhysioZoo OBM</strong> provides the framework and the tools for extracting oximetry biomarkers from the SpO2 signal.</p>
+</div>
+<div class="section" id="performing-oximetry-analysis">
+<h2><strong>Performing oximetry analysis</strong><a class="headerlink" href="#performing-oximetry-analysis" title="Permalink to this headline">¶</a></h2>
+<p>Start by loading some example data by clicking File -&gt; Open data file -&gt; SpO2/SpO2_example.txt. The program will start the analysis automatically and will display the following window:</p>
+<img alt="../_images/pobm_mainmenu.PNG" class="align-center" src="../_images/pobm_mainmenu.PNG" />
+<p>Refering to the figure above: (A) the selected window (shaded in blue) defines the time interval for which the oximetry biomarkers are computed. In the lower panel (B), the overall oximetry signal is plotted. Two windows are drawn on it: one window with a red frame and another one with a blue frame (and alpha color from within). The red window defines the part of the oximetry time series plotted in the larger upper figure (A). The blue frame defines the part of the oximetry time series for which the biomarkers will be computed. The two windows can be modified (extended/shrunk/moved) using the mouse. Pannel (C) shows all the oximetry biomarkers that have been computed.</p>
+<p>Congrats! You have made your first oximetry analysis with <strong>PhysioZoo OBM</strong>!
+The biomarkers are divided into five different categories: General, Desaturations, Hypoxic Burden, Complexity and Periodicity. You can choose to compute only certain categories (to save time), into the tab “OBM”.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Every time you move the analysis window to another location the newly selected segment will be automatically analyzed. You can disable this by deselecting the checkbox “Auto Compute” located under the “Compute” button.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The length of the selected window is important. Some biomarkers require algorithm with high complexity, and thus may take some time to run on too long windows. You can modify the size of the window under “Display”.</p>
+</div>
+</div>
+<div class="section" id="exporting-oximetry-biomarkers">
+<h2><strong>Exporting oximetry biomarkers</strong><a class="headerlink" href="#exporting-oximetry-biomarkers" title="Permalink to this headline">¶</a></h2>
+<p>You can export the oximetry biomarkers and the prefiltered SpO2 signal generated by <strong>PhysioZoo OBM</strong>. Go to File -&gt; Save SpO2 measures. The following window will display:</p>
+<img alt="../_images/pobm_save_measures.PNG" class="align-center" src="../_images/pobm_save_measures.PNG" />
+<p>You can select the computation(s) you want to save with the checkboxes:</p>
+<ul class="simple">
+<li><p><strong>SpO2 Measures</strong>: The 44 oximetry biomarkers computed by the software.</p></li>
+<li><p><strong>Preprocessed SpO2</strong>: the oximetry time series after it was preprocessed by the filter you specified under Main-&gt; Preprocessing.</p></li>
+</ul>
+<p>Select the location where you want to save the oximetry measures. Open the file and see the list of oximetry measures together with their definitions and values for the window that was selected.</p>
+<img alt="../_images/pobm_example_measures.PNG" class="align-center" src="../_images/pobm_example_measures.PNG" />
+</div>
+<div class="section" id="exporting-figures">
+<h2><strong>Exporting figures</strong><a class="headerlink" href="#exporting-figures" title="Permalink to this headline">¶</a></h2>
+<p>Using <strong>PhysioZoo OBM</strong> you can export some summary graphs such as the distribution of the time series, histogram of the desaturations characteristics etc. Figures can be exported in high quality format and thus easily included in your research reports and/or papers. For exporting figures click File -&gt; Export figures. You will be prompted with the following window on which you can choose what figures you want to export. After clicking ‘Save As’ you will be able to choose the format of the figure.</p>
+<img alt="../_images/pobm_save_figures.PNG" class="align-center" src="../_images/pobm_save_figures.PNG" />
+</div>
+<div class="section" id="consecutive-windows-analysis">
+<h2><strong>Consecutive windows analysis</strong><a class="headerlink" href="#consecutive-windows-analysis" title="Permalink to this headline">¶</a></h2>
+<p>You might want to track the evolution of the oximetry biomarkers over the time. For example, for monitoring patients it would be useful to see how the oximetry biomarkers vary over time. For that purpose <strong>PhysioZoo OBM</strong> enables the analysis to be performed on consecutive windows.</p>
+<p>Click the “Single” Submenu in the left panel and click on the “Use full length” button. Then press the “Compute” button located on the top right of the interface. You will see the following screen, which contains all the oximetry biomarkers for each consecutive window over the whole recording.</p>
+<img alt="../_images/pobm_consecutive_windows.PNG" class="align-center" src="../_images/pobm_consecutive_windows.PNG" />
+<p>You can also enable the analysis window to be overlapping by using the “Overlap” entry in the Analysis menu. By default the value is 0% (i.e. no overlap between successive windows). Change it to 50% and re-run the analysis.</p>
+<p>You can export all oximetry biomarkers from all consecutive windows (Main -&gt; Save SpO2 measures).</p>
+<p>If you want to export figures, then select with the mouse the window you want to save the figures for.</p>
+</div>
+<div class="section" id="setting-biomarker-parameters">
+<h2><strong>Setting biomarker parameters</strong><a class="headerlink" href="#setting-biomarker-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The oximetry biomarkers have a number of associated parameters which can be adjusted by the user. For example, desaturations can be detected with a relative threshold of 3% or 5%. In order to change those parameters, click on tab “Options”. Then you have six tabs, one for filtering and one for each of the five categories of biomarkers. After changing the value of a specific parameter, click on “Compute” in order to compute again the biomarkers with the new parameter.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="pobm_preprocessing.html" class="btn btn-neutral float-left" title="Preprocessing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

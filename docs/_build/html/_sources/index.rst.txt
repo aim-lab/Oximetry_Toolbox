@@ -11,7 +11,8 @@
    :caption: POBM API REFERENCE:
 
    pobm
-
+   tutorials/pobm_preprocessing.rst
+   tutorials/pobm_analysis.rst
 
 
 Indices and tables

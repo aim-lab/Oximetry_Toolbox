@@ -86,6 +86,8 @@
               <p class="caption"><span class="caption-text">POBM API REFERENCE:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../pobm.html">pobm package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/pobm_preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/pobm_analysis.html">Oximetry time series analysis</a></li>
 </ul>
 
             
@@ -244,8 +246,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">desaturations</span><span class="p">,</span> <span class="n">desaturation_valid</span><span class="p">,</span> <span class="n">desaturation_length_all</span><span class="p">,</span> <span class="n">desaturation_int_100_all</span><span class="p">,</span> \
-        <span class="n">desaturation_int_max_all</span><span class="p">,</span> <span class="n">desaturation_depth_100_all</span><span class="p">,</span> <span class="n">desaturation_depth_max_all</span><span class="p">,</span> \
-        <span class="n">desaturation_slope_all</span> <span class="o">=</span> <span class="n">desat_embedding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+        <span class="n">desaturation_int_max_all</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">desat_embedding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">begin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
 
         <span class="n">time_spo2_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)))</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">desaturation</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">desaturations</span><span class="p">):</span>
