@@ -2,8 +2,8 @@
 
 Oximetry digital biomarkers for the analysis of continuous oximetry (SpO2) time series.
 
-Based on the paper Levy Jeremy, Álvarez Daniel, Rosenberg Aviv A., del Campo Felix and Behar Joachim A. "Oximetry digital biomarkers for assessing respiratory function during sleep: standards of measurement, physiological interpretation, and clinical use". 
-Accepted for publication in NPJ Digital Medicine.
+Based on the paper 
+Jeremy Levy, Daniel ́Alvarez, Aviv A Rosenberg, Alexandra Alexandrovich, F ́elix Del Campo, and Joachim ABehar.  Digital oximetry biomarkers for assessing respiratory function:  standards of measurement, physiologicalinterpretation, and clinical use.NPJ digital medicine, 4(1):1–14, 2021
 
 ## Description
 
