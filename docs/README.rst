@@ -1,14 +1,19 @@
 
 PhysioZoo OBM documentation
-===========
+=================================
 
 Oximetry digital biomarkers for the analysis of continuous oximetry (SpO2) time series.
 
 Based on the paper 
 Jeremy Levy, Daniel ́Alvarez, Aviv A Rosenberg, Alexandra Alexandrovich, F ́elix Del Campo, and Joachim ABehar.  Digital oximetry biomarkers for assessing respiratory function:  standards of measurement, physiologicalinterpretation, and clinical use.NPJ digital medicine, 4(1):1–14, 2021
 
+..  youtube:: 1m0nQ4MIOdE
+    :width: 640
+    :height: 480
+
+
 Description
------------
+----------------------
 
 Five types of biomarkers may be evaluated:
 
@@ -23,7 +28,7 @@ Five types of biomarkers may be evaluated:
 5.  Hypoxic burden: time-based measures quantifying the overall degree of hypoxemia imposed to the heart and other organs during the recording period.
 
 Installation
-------------
+-----------------------
 
 Available on pip, with the command: 
 pip install pobm
@@ -31,7 +36,7 @@ pip install pobm
 pip project: https://pypi.org/project/pobm/
 
 Requirements
-------------
+-----------------------
 
 numpy==1.18.2
 
@@ -44,6 +49,6 @@ lempel-ziv-complexity==0.2.2
 All the requirements are installed when the toolbox is installed, no need for additional commands.
 
 Documentation
--------------
+------------------------
 
 Available at https://oximetry-toolbox.readthedocs.io/en/latest/

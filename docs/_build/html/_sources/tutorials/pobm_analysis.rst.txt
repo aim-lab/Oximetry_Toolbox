@@ -1,5 +1,5 @@
 Oximetry time series analysis
-==========
+==============================
 
 In this tutorial you will learn how to use **PhysioZoo OBM** to compute the oximetry biomarkers and export the computed values.
 (link: https://physiozoo.com/)
@@ -10,7 +10,7 @@ SpO2 is a measure of the amount of oxygen-loaded hemoglobin in the blood, relati
 
 
 **Performing oximetry analysis**
-------------------------------
+------------------------------------------------------------
 
 Start by loading some example data by clicking File -> Open data file -> SpO2/SpO2_example.txt. The program will start the analysis automatically and will display the following window:
 
