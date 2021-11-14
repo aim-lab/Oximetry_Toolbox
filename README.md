@@ -5,6 +5,10 @@ Oximetry digital biomarkers for the analysis of continuous oximetry (SpO2) time 
 Based on the paper 
 Jeremy Levy, Daniel ́Alvarez, Aviv A Rosenberg, Alexandra Alexandrovich, F ́elix Del Campo, and Joachim ABehar.  Digital oximetry biomarkers for assessing respiratory function:  standards of measurement, physiologicalinterpretation, and clinical use.NPJ digital medicine, 4(1):1–14, 2021
 
+..  youtube:: 1m0nQ4MIOdE
+    :width: 640
+    :height: 480
+    
 ## Description
 
 Five types of biomarkers may be evaluated:
