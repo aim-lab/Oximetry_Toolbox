@@ -46,11 +46,15 @@ class DesaturationsMeasures:
         self.end = []
         self.counter_desat = []
 
-    def compute(self, signal) -> DesaturationsMeasuresResults:
+    def compute(self, signal: np.ndarray, begin:np.ndarray=None, end:np.ndarray=None) -> DesaturationsMeasuresResults:
         """
         Computes all the biomarkers of this category.
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
+        :param begin: Numpy array of indices of beginning of each desaturation event. Default value is None.
+        :type begin: Numpy array
+        :param end: Numpy array of indices of end of each desaturation event. begin and end should have the same length. Default value is None.
+        :type end: Numpy array
         :return: DesaturationsMeasuresResults class containing the following features:
 
             * ODI: Oxygen Desaturation Index
@@ -83,19 +87,60 @@ class DesaturationsMeasures:
             # Compute the biomarkers
             results_desat = desat_class.compute(spo2_signal)
 
-        """
+            # Compute the biomarkers with known desaturation locations
+            results_desat = desat_class.compute(spo2_signal, begin, end)
+
+        """        
+        # Initial data checks
         _check_shape_(signal)
 
         warnings.simplefilter('ignore', np.RankWarning)
         warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-        if self.relative is True:
-            self.desaturation_detector(signal)
-        else:
-            self.__hard_threshold_detector(signal)
+        if (begin is None) or (end is None):
+            if self.relative is True:
+                self.desaturation_detector(signal)
+            else:
+                self.__hard_threshold_detector(signal)
 
-        self.group_meta_desat(signal)
+            self.group_meta_desat(signal)
+        else:
+            if isinstance(begin, int):
+                begin = np.array([begin])
+            if isinstance(end, int):
+                end = np.array([end])
+
+            if len(begin) != len(end):
+                raise WrongParameter("The parameters begin and end should have the same length")
+
+            assert all(begin>0) and all(end>0) and all((end-begin)>0), "All events indexes should be strictly positive and end values should be after begin values"
+            assert end[-1]<signal.shape[0], "Last annotated event should not cross the end of the signal"        
+
+            # Sort arrays according to begin
+            s_idx = np.argsort(begin)
+            begin = begin[s_idx]
+            end = end[s_idx]
+
+            # Move begin and end to class attirbutes
+            self.begin = begin
+            self.end = end
+            self.min_desat = [x + np.argmin(signal[x:y]) for (x,y) in zip(begin,end)]
+            self.counter_desat = []
+
         self.remove_small_desats()
+        
+        return self._get_desaturation_features(signal)
+
+    def _get_desaturation_features(self, signal) -> DesaturationsMeasuresResults:
+        """
+        Computes all the biomarkers of this category from pre-loaded signal and desaturation intervals (see compute functions).
+
+        :param signal: 1-d array, of shape (N,) where N is the length of the signal
+
+        """
+        # Check if begin and end are empty to prevent errors when calling this function directly
+        if len(self.begin)==0 or len(self.end)==0:
+            return self.compute(signal)
 
         ODI = len(self.begin) / len(signal) * 3600
 
@@ -398,7 +443,7 @@ class DesaturationsMeasures:
         for i in range(len(signal)):
             if i == 0:
                 continue
-            if signal[i] != signal[i]:  # Check for NaN
+            if np.isnan(signal[i]):  # Check for NaN
                 continue
             if (signal[i - 1] >= hard_threshold) and (signal[i] < hard_threshold):
                 if turn_begin is True:
