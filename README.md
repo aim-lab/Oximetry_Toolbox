@@ -32,11 +32,11 @@ pip project: https://pypi.org/project/pobm/
 
 ## Requirements
 
-numpy==1.18.2
+numpy > 1.18.2
 
-scikit-learn==0.22.2
+scikit-learn > 0.22.2
 
-scipy==1.4.1
+scipy > 1.4.1
 
 lempel-ziv-complexity==0.2.2
 

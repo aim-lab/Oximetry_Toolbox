@@ -10,13 +10,13 @@ idna==2.10
 imagesize==1.2.0
 importlib-metadata==3.3.0
 Jinja2==2.11.2
-joblib==1.0.0
+joblib==1.2.0
 keyring==21.5.0
 lempel-ziv-complexity==0.2.2
 m2r2==0.2.7
 MarkupSafe==1.1.1
 mistune==0.8.4
-numpy==1.19.3
+numpy==1.22
 packaging==20.8
 pkginfo==1.6.1
 Pygments==2.7.3
@@ -47,3 +47,4 @@ typing-extensions==3.7.4.3
 urllib3==1.26.2
 webencodings==0.5.1
 zipp==3.4.0
+scipy==1.21.6
