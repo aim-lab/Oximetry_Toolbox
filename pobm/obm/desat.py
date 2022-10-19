@@ -92,7 +92,7 @@ class DesaturationsMeasures:
             from pobm._ResultsClasses import DesatMethodEnum
 
             # Initialize the class with the desired parameters
-            desat_class = DesaturationsMeasures(ODI_Threshold=3, , threshold_method=DesatMethodEnum.Relative)
+            desat_class = DesaturationsMeasures(ODI_Threshold=3, threshold_method=DesatMethodEnum.Relative)
 
             # Compute the biomarkers
             results_desat = desat_class.compute(spo2_signal)
@@ -109,11 +109,11 @@ class DesaturationsMeasures:
 
         if (begin is None) or (end is None):
             if self.threshold_method == DesatMethodEnum.Relative:
-                self.desaturation_detector(signal)
+                self.__desaturation_detector(signal)
             elif (self.threshold_method == DesatMethodEnum.Hard) or (self.threshold_method == DesatMethodEnum.Quantile):
                 self.__hard_threshold_detector(signal)
 
-            self.group_meta_desat(signal)
+            self.__group_meta_desat(signal)
         else:
             if isinstance(begin, int):
                 begin = np.array([begin])
@@ -138,11 +138,11 @@ class DesaturationsMeasures:
             self.min_desat = [x + np.argmin(signal[x:y]) for (x, y) in zip(begin, end)]
             self.counter_desat = []
 
-        self.remove_small_desats()
+        self.__remove_small_desats()
 
-        return self._get_desaturation_features(signal)
+        return self.__get_desaturation_features(signal)
 
-    def _get_desaturation_features(self, signal) -> DesaturationsMeasuresResults:
+    def __get_desaturation_features(self, signal) -> DesaturationsMeasuresResults:
         """
         Computes all the biomarkers of this category from pre-loaded signal and desaturation intervals (see compute functions).
 
@@ -247,7 +247,7 @@ class DesaturationsMeasures:
 
         return desaturation_features
 
-    def group_meta_desat(self, signal):
+    def __group_meta_desat(self, signal):
         end_before = - self.min_dist_meta_event - 5
 
         new_idx_desat = np.zeros(shape=(len(self.begin)), dtype=np.int8)
@@ -284,7 +284,7 @@ class DesaturationsMeasures:
         counter_desat = Counter(new_idx_desat)
         self.counter_desat = list(counter_desat.values())
 
-    def remove_small_desats(self):
+    def __remove_small_desats(self):
         new_begin, new_end, new_min, new_counter = [], [], [], []
         for i_begin, i_end, i_min, i_counter in zip(self.begin, self.end, self.min_desat, self.counter_desat):
             if i_end - i_begin > self.desat_min_length:
@@ -298,7 +298,7 @@ class DesaturationsMeasures:
         self.min_desat = new_min
         self.counter_desat = new_counter
 
-    def desaturation_detector(self, signal):
+    def __desaturation_detector(self, signal):
         """
         Runs desaturation detector, compute the ODI biomarker according to [6]_
 
