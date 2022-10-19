@@ -1,6 +1,7 @@
 import numpy as np
 from dataclasses import dataclass
 import dataclasses
+from enum import IntEnum
 
 
 @dataclass
@@ -14,6 +15,11 @@ class OverallGeneralMeasuresResult:
     M: float
     ZC: float
     DI: float
+
+    # Added biomarkers
+    K: float
+    SK: float
+    MAD: float
 
     def __str__(self):
         return str(dict(dataclasses.asdict(self)))
@@ -109,3 +115,13 @@ class PSDResults:
 
     def __str__(self):
         return str(dict(dataclasses.asdict(self)))
+
+
+class DesatMethodEnum(IntEnum):
+    """
+    Select the method to apply to detect the desaturations
+    """
+
+    Relative = 1
+    Hard = 2
+    Quantile = 3

@@ -4,7 +4,7 @@ from pobm._ErrorHandler import _check_shape_, WrongParameter
 import numpy as np
 import warnings
 
-from pobm._ResultsClasses import DesaturationsMeasuresResults
+from pobm._ResultsClasses import DesaturationsMeasuresResults, DesatMethodEnum
 
 
 class DesaturationsMeasures:
@@ -12,16 +12,21 @@ class DesaturationsMeasures:
     Class that calculates the desaturation features from SpO2 time series.
     """
 
-    def __init__(self, ODI_Threshold: int = 3, hard_threshold: int = 90, relative: bool = True,
+    def __init__(self, ODI_Threshold: int = 3, hard_threshold: int = 90,
+                 threshold_method: DesatMethodEnum = DesatMethodEnum.Relative, quantile_threshold: float = 0.10,
                  desat_max_length: int = 90, min_dist_meta_event: int = 0, desat_min_length: int = 0):
         """
 
-        :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index.
+        :param threshold_method: Select the threshold method to detect desaturations
+        :type threshold_method: DesatMethodEnum, optional
+
+        :param ODI_Threshold: Threshold to compute Oxygen Desaturation Index. Used only if threshold_method = DesatMethodEnum.Relative
         :type ODI_Threshold: int, optional
-        :param hard_threshold: Hard threshold to detect desaturations.
+        :param hard_threshold: Hard threshold to detect desaturations. Used only if threshold_method = DesatMethodEnum.Hard
         :type hard_threshold: int, optional
-        :param relative: Whether to use a relative or hard threshold to detect desaturations.
-        :type relative: bool, optional
+        :param quantile_threshold: Threshold to detect desaturations. Used only if threshold_method = DesatMethodEnum.Quantile
+        :type quantile_threshold: float, optional
+
         :param desat_max_length: The maximum length of desaturations.
         :type desat_max_length: int, optional
         :param min_dist_meta_event: The maximal distance between 2 desaturations to convert them into a meta desat
@@ -35,9 +40,12 @@ class DesaturationsMeasures:
         if desat_max_length <= 0:
             raise WrongParameter("desat_max_length should be strictly positive")
 
+        self.threshold_method = threshold_method
+
         self.ODI_Threshold = ODI_Threshold
         self.hard_threshold = hard_threshold
-        self.relative = relative
+        self.quantile_threshold = quantile_threshold
+
         self.desat_max_length = desat_max_length
         self.min_dist_meta_event = min_dist_meta_event
         self.desat_min_length = desat_min_length
@@ -46,15 +54,16 @@ class DesaturationsMeasures:
         self.end = []
         self.counter_desat = []
 
-    def compute(self, signal: np.ndarray, begin:np.ndarray=None, end:np.ndarray=None) -> DesaturationsMeasuresResults:
+    def compute(self, signal: np.ndarray, begin: np.ndarray = None,
+                end: np.ndarray = None) -> DesaturationsMeasuresResults:
         """
         Computes all the biomarkers of this category.
 
         :param signal: 1-d array, of shape (N,) where N is the length of the signal
         :param begin: Numpy array of indices of beginning of each desaturation event. Default value is None.
-        :type begin: Numpy array
+        :type begin: Numpy array, optional
         :param end: Numpy array of indices of end of each desaturation event. begin and end should have the same length. Default value is None.
-        :type end: Numpy array
+        :type end: Numpy array, optional
         :return: DesaturationsMeasuresResults class containing the following features:
 
             * ODI: Oxygen Desaturation Index
@@ -80,9 +89,10 @@ class DesaturationsMeasures:
         .. code-block:: python
 
             from pobm.obm.desat import DesaturationsMeasures
+            from pobm._ResultsClasses import DesatMethodEnum
 
             # Initialize the class with the desired parameters
-            desat_class = DesaturationsMeasures(ODI_Threshold=3)
+            desat_class = DesaturationsMeasures(ODI_Threshold=3, , threshold_method=DesatMethodEnum.Relative)
 
             # Compute the biomarkers
             results_desat = desat_class.compute(spo2_signal)
@@ -90,7 +100,7 @@ class DesaturationsMeasures:
             # Compute the biomarkers with known desaturation locations
             results_desat = desat_class.compute(spo2_signal, begin, end)
 
-        """        
+        """
         # Initial data checks
         _check_shape_(signal)
 
@@ -98,9 +108,9 @@ class DesaturationsMeasures:
         warnings.filterwarnings("ignore", category=RuntimeWarning)
 
         if (begin is None) or (end is None):
-            if self.relative is True:
+            if self.threshold_method == DesatMethodEnum.Relative:
                 self.desaturation_detector(signal)
-            else:
+            elif (self.threshold_method == DesatMethodEnum.Hard) or (self.threshold_method == DesatMethodEnum.Quantile):
                 self.__hard_threshold_detector(signal)
 
             self.group_meta_desat(signal)
@@ -113,8 +123,9 @@ class DesaturationsMeasures:
             if len(begin) != len(end):
                 raise WrongParameter("The parameters begin and end should have the same length")
 
-            assert all(begin>0) and all(end>0) and all((end-begin)>0), "All events indexes should be strictly positive and end values should be after begin values"
-            assert end[-1]<signal.shape[0], "Last annotated event should not cross the end of the signal"        
+            assert all(begin > 0) and all(end > 0) and all((end - begin) > 0), \
+                "All events indexes should be strictly positive and end values should be after begin values"
+            assert end[-1] < signal.shape[0], "Last annotated event should not cross the end of the signal"
 
             # Sort arrays according to begin
             s_idx = np.argsort(begin)
@@ -124,11 +135,11 @@ class DesaturationsMeasures:
             # Move begin and end to class attirbutes
             self.begin = begin
             self.end = end
-            self.min_desat = [x + np.argmin(signal[x:y]) for (x,y) in zip(begin,end)]
+            self.min_desat = [x + np.argmin(signal[x:y]) for (x, y) in zip(begin, end)]
             self.counter_desat = []
 
         self.remove_small_desats()
-        
+
         return self._get_desaturation_features(signal)
 
     def _get_desaturation_features(self, signal) -> DesaturationsMeasuresResults:
@@ -139,7 +150,7 @@ class DesaturationsMeasures:
 
         """
         # Check if begin and end are empty to prevent errors when calling this function directly
-        if len(self.begin)==0 or len(self.end)==0:
+        if len(self.begin) == 0 or len(self.end) == 0:
             return DesaturationsMeasuresResults(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [], [])
 
         ODI = len(self.begin) / len(signal) * 3600
@@ -436,7 +447,12 @@ class DesaturationsMeasures:
         :param signal: The SpO2 signal, of shape (N,)
         :return: ODI
         """
-        hard_threshold = self.hard_threshold
+
+        if self.threshold_method == DesatMethodEnum.Hard:
+            hard_threshold = self.hard_threshold
+        else:
+            hard_threshold = np.quantile(signal, self.quantile_threshold)
+
         begin_desat, min_desat, end_desat = [], [], []
         turn_begin = True
 

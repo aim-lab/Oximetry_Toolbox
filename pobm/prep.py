@@ -1,5 +1,5 @@
 import numpy as np
-from scipy import signal
+import scipy
 
 
 def set_range(signal, Range_min=50, Range_max=100):
@@ -67,7 +67,7 @@ def dfilter(signal, Diff=4):
     return signal_filtered
 
 
-def median_spo2(signal_spo2, FilterLength=9):
+def median_spo2(signal, FilterLength=9):
     """
     Apply a median filter to the SpO2 signal.
     Median filter used to smooth the spo2 time series and avoid sporadic increase/decrease of spo2 which could 
@@ -82,7 +82,7 @@ def median_spo2(signal_spo2, FilterLength=9):
 
     """
 
-    data_med = signal.medfilt(np.round(signal_spo2), FilterLength)
+    data_med = scipy.signal.medfilt(np.round(signal), FilterLength)
 
     return data_med
 

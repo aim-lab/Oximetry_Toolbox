@@ -1,5 +1,6 @@
 import numpy as np
 import warnings
+from scipy.stats import kurtosis, skew, median_absolute_deviation
 
 from pobm._ErrorHandler import _check_shape_, _check_window_delta_, WrongParameter
 from pobm._ResultsClasses import OverallGeneralMeasuresResult
@@ -47,6 +48,9 @@ class OverallGeneralMeasures:
             * M: Percentage of the signal x% below median oxygen saturation.
             * ZC: Number of zero-crossing points.
             * DI: Delta Index.
+            * K: Kurtosis.
+            * SK: Skew.
+            * MAD: Mean absolute deviation.
 
         Example:
         
@@ -73,7 +77,10 @@ class OverallGeneralMeasures:
                                             self.__apply_percentile(signal),
                                             self.__below_median(signal),
                                             self.__num_zc(signal),
-                                            self.__delta_index(signal))
+                                            self.__delta_index(signal),
+                                            kurtosis(signal),
+                                            float(skew(signal, axis=None)),
+                                            median_absolute_deviation(signal))
 
     def __apply_percentile(self, signal):
         """
