@@ -140,7 +140,7 @@ class DesaturationsMeasures:
         """
         # Check if begin and end are empty to prevent errors when calling this function directly
         if len(self.begin)==0 or len(self.end)==0:
-            return self.compute(signal)
+            return DesaturationsMeasuresResults(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [], [])
 
         ODI = len(self.begin) / len(signal) * 3600
 
