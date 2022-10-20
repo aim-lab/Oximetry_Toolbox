@@ -136,7 +136,7 @@ class DesaturationsMeasures:
             self.begin = begin
             self.end = end
             self.min_desat = [x + np.argmin(signal[x:y]) for (x, y) in zip(begin, end)]
-            self.counter_desat = []
+            self.counter_desat = [1]*len(self.begin)
 
         self.__remove_small_desats()
 
