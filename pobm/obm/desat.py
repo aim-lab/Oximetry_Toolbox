@@ -138,6 +138,9 @@ class DesaturationsMeasures:
             self.min_desat = [x + np.argmin(signal[x:y]) for (x, y) in zip(begin, end)]
             self.counter_desat = []
 
+            # Check if in the preprocessed signal there are some desaturations with only NaN
+            self.__remove_nan_desats(signal)
+
         self.__remove_small_desats()
 
         return self.__get_desaturation_features(signal)
@@ -297,6 +300,23 @@ class DesaturationsMeasures:
         self.end = new_end
         self.min_desat = new_min
         self.counter_desat = new_counter
+
+    def __remove_nan_desats(self, signal):
+        """
+        Check if there are annotated desaturations with only NaN signal and remove them.
+
+        :param signal: 1-d array, of shape (N,) where N is the length of the signal
+
+        """
+        idx = np.array([True]*len(self.begin))
+        for i, (i_begin, i_end) in enumerate(zip(self.begin, self.end)):
+            idx[i] = ~np.all(np.isnan(signal[i_begin:i_end]))
+
+        
+        self.begin = self.begin[idx]
+        self.end = self.end[idx]
+        self.min_desat = [self.min_desat[i] for i,x in enumerate(idx) if x]
+        self.counter_desat = [self.counter_desat[i] for i,x in enumerate(idx) if x]
 
     def __desaturation_detector(self, signal):
         """
