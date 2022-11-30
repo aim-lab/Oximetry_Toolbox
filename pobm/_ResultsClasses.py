@@ -31,6 +31,10 @@ class ODIMeasureResult:
     begin: np.array
     end: np.array
 
+    def __post_init__(self):
+        self.begin = np.array(self.begin) if isinstance(self.begin, list) else self.begin
+        self.end = np.array(self.end) if isinstance(self.end, list) else self.end
+
     def __str__(self):
         return str({"ODI": self.ODI, "begin": self.begin.flatten().tolist(), "end": self.end.flatten().tolist()})
 
@@ -60,6 +64,10 @@ class DesaturationsMeasuresResults:
 
     begin: np.array
     end: np.array
+
+    def __post_init__(self):
+        self.begin = np.array(self.begin) if isinstance(self.begin, list) else self.begin
+        self.end = np.array(self.end) if isinstance(self.end, list) else self.end
 
     def __str__(self):
         desat_measures = dict(dataclasses.asdict(self))
