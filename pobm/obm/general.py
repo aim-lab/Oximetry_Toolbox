@@ -1,6 +1,6 @@
 import numpy as np
 import warnings
-from scipy.stats import kurtosis, skew, median_absolute_deviation
+from scipy.stats import kurtosis, skew, median_abs_deviation
 
 from pobm._ErrorHandler import _check_shape_, _check_window_delta_, WrongParameter
 from pobm._ResultsClasses import OverallGeneralMeasuresResult
@@ -80,7 +80,7 @@ class OverallGeneralMeasures:
                                             self.__delta_index(signal),
                                             kurtosis(signal),
                                             float(skew(signal, axis=None)),
-                                            median_absolute_deviation(signal))
+                                            median_abs_deviation(signal))
 
     def __apply_percentile(self, signal):
         """
