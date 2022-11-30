@@ -107,7 +107,8 @@ class DesaturationsMeasures:
         warnings.simplefilter('ignore', np.RankWarning)
         warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-        if (begin is None) or (end is None):
+        if (begin is None or len(begin)==0) or (end is None or len(end)==0):
+            # Detect desaturations if begin,end are None or empty
             if self.threshold_method == DesatMethodEnum.Relative:
                 self.__desaturation_detector(signal)
             elif (self.threshold_method == DesatMethodEnum.Hard) or (self.threshold_method == DesatMethodEnum.Quantile):
