@@ -1,5 +1,5 @@
 
-PhysioZoo OBM documentation
+PhysioZoo SpO2 documentation
 =================================
 
 Oximetry digital biomarkers for the analysis of continuous oximetry (SpO2) time series.
