@@ -52,3 +52,5 @@ Documentation
 ------------------------
 
 Available at https://oximetry-toolbox.readthedocs.io/en/latest/
+
+An example code is available at [Notebook](https://github.com/aim-lab/SPO2_tutorial/blob/main/MIT_Workshop_POBM_last.ipynb).
