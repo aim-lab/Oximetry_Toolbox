@@ -42,6 +42,10 @@ lempel-ziv-complexity==0.2.2
 
 All the requirements are installed when the toolbox is installed, no need for additional commands.
 
+An example code is available at [Notebook](https://github.com/aim-lab/SPO2_tutorial/blob/main/MIT_Workshop_POBM_last.ipynb).
+
+
+
 ## Documentation
 
 Available at https://oximetry-toolbox.readthedocs.io/en/latest/
