@@ -20,5 +20,5 @@ build:
     python: "mambaforge-22.9"
     
 # We specify the all the requirements in the conda env file.
-# conda:
-#     environment: docs/environment.yml
+conda:
+    environment: docs/environment.yml
