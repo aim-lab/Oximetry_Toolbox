@@ -17,8 +17,9 @@ sphinx:
 build:
   os: "ubuntu-22.04"
   tools:
-    python: "mambaforge-22.9"
+    python: "3.10"
     
 # We specify the all the requirements in the conda env file.
-conda:
-    environment: docs/environment.yml
+python:
+  install:
+    - requirements: requirements.txt
