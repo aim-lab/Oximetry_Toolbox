@@ -17,7 +17,7 @@ sphinx:
 build:
   os: "ubuntu-22.04"
   tools:
-    python: "3.10"
+    python: "3.7"
     
 # We specify the all the requirements in the conda env file.
 python:
