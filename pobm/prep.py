@@ -54,17 +54,19 @@ def dfilter(signal, Diff=4):
     :type Diff: int, optional
 
     :return: preprocessed signal, 1-d numpy array.
-
     """
+    signal = np.asarray(signal)
+    mask = np.zeros(len(signal), dtype=bool)
+    mask[0] = True  # Always keep the first element
 
-    signal_filtered = []
-    for i, data in enumerate(signal):
-        if i == 0:
-            signal_filtered.append(data)
-        else:
-            if (((signal_filtered[-1] - data) / signal_filtered[-1]) * 100) < Diff:
-                signal_filtered.append(data)
-    return signal_filtered
+    last_kept = signal[0]
+    for i in range(1, len(signal)):
+        percent_change = ((last_kept - signal[i]) / last_kept) * 100
+        if percent_change < Diff:
+            mask[i] = True
+            last_kept = signal[i]
+
+    return signal[mask]
 
 
 def median_spo2(signal, FilterLength=9):
